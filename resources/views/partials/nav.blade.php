@@ -17,10 +17,10 @@
                     <a href="{!! URL::to('') !!}"><i class="fa fa-home"></i> Home</a>
                 </li>
                 <li class="{{ (Request::is('about') ? 'active' : '') }}">
-                    <a href="{!! URL::to('about') !!}">About</a>
+                    <a href="{!! URL::to('about') !!}">Sobre</a>
                 </li>
                 <li class="{{ (Request::is('contact') ? 'active' : '') }}">
-                    <a href="{!! URL::to('contact') !!}">Contact</a>
+                    <a href="{!! URL::to('contact') !!}">Contato</a>
                 </li>
             </ul>
 
@@ -29,7 +29,7 @@
                     <li class="{{ (Request::is('auth/login') ? 'active' : '') }}"><a href="{!! URL::to('auth/login') !!}"><i
                                     class="fa fa-sign-in"></i> Login</a></li>
                     <li class="{{ (Request::is('auth/register') ? 'active' : '') }}"><a
-                                href="{!! URL::to('auth/register') !!}">Register</a></li>
+                                href="{!! URL::to('auth/register') !!}">Registrar</a></li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"

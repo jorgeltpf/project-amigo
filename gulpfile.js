@@ -26,7 +26,8 @@ var paths = {
     'colorbox': 'vendor/jquery-colorbox',
     'dataTables': 'vendor/datatables/media',
     'dataTablesBootstrap3Plugin': 'vendor/datatables-bootstrap3-plugin/media',
-    'flag': 'vendor/flag-sprites/dist'
+    'flag': 'vendor/flag-sprites/dist',
+    'mask': 'vendor/igorescobar-jQuery-Mask-Plugin-535b4e4'
 };
 
 elixir.config.sourcemaps = false;
@@ -66,7 +67,8 @@ elixir(function (mix) {
     mix.scripts([
         paths.jquery + '/jquery.js',
         paths.bootstrap + '/javascripts/bootstrap.js',
-        paths.colorbox + '/jquery.colorbox.js'
+        paths.colorbox + '/jquery.colorbox.js',
+        paths.mask + '/jquery.mask.js'
     ], 'public/js/site.js', 'resources/');
 
     // Compile SASS and output to default resource directory.
