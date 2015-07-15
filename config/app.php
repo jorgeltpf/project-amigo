@@ -143,6 +143,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        'App\Models\ModelsServiceProvider',
 
 		/*
 		 * 3rd Party Service Providers...
@@ -152,6 +153,7 @@ return [
 		Laracasts\Flash\FlashServiceProvider::class,
 		Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        'Zizaco\Entrust\EntrustServiceProvider'
 
     ],
 
@@ -210,6 +212,7 @@ return [
 		'Flash'     =>  laracasts\Flash\Flash::class,
 		'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Entrust' => 'Zizaco\Entrust\EntrustFacade'
 
     ],
 
