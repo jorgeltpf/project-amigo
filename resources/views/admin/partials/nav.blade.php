@@ -85,7 +85,7 @@
     <li class="{{set_active('admin/users*')}}">
         <a href="{{url('admin/users')}}">
             <i class="glyphicon glyphicon-user"></i>
-            <span class="hidden-sm text"> Users</span>
+            <span class="hidden-sm text"> {{ trans("admin/admin.users") }}</span>
         </a>
     </li>
 </ul>
