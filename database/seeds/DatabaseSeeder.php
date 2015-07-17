@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
 		$this->call('LanguagesTableSeeder');
 		$this->call('ArticleCategoriesTableSeeder');
 		$this->call('ArticlesTableSeeder');
+        //$this->call('PermissionTableSeeder');
+        //$this->call('RoleTableSeeder');
 
         Model::reguard();
     }
