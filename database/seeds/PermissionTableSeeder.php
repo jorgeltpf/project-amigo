@@ -11,11 +11,25 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-        $permissions = \App\Permission::create([
-        	'name' => 'create_user',
+        $permissions = \App\Models\Permission::create([
+        	'name' => 'create-user',
         	'display_name' => 'Criar Usuário',
         	'description' => 'Permite a criação de usuários',
     	]);
-        $permissions->roles()->sync([1,1]);
+        $permissions->roles()->attach([1]);
+
+        $permissions = \App\Models\Permission::create([
+            'name' => 'edit-user',
+            'display_name' => 'Editar Usuário',
+            'description' => 'Permite a edição de usuários',
+        ]);
+        $permissions->roles()->attach([1]);
+
+        $permissions = \App\Models\Permission::create([
+            'name' => 'delete-user',
+            'display_name' => 'Excluir Usuário',
+            'description' => 'Permite a excluir de usuários',
+        ]);
+        $permissions->roles()->attach([1]);
     }
 }

@@ -13,12 +13,9 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
 
-    use EntrustUserTrait; // add this trait to your user model
-    use SoftDeletes;
+    use Authenticatable, CanResetPassword, EntrustUserTrait, SoftDeletes; // add this trait to your user model
 
     protected $dates = ['deleted_at'];
-
-    use Authenticatable, CanResetPassword;
 
     /**
      * The database table used by the model.
@@ -52,6 +49,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
     public function roles() {
-        return $this->belongsToMany('App\Role');
+        return $this->belongsToMany('App\Models\Role');
     }
 }

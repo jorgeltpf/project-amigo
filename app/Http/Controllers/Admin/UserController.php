@@ -27,7 +27,20 @@ class UserController extends AdminController {
      * @return Response
      */
     public function getCreate() {
-        return view('admin.users.create_edit');
+        // $user = \Auth::user()->hasRole('admin');
+        // Auth::id()
+        // print_r($user);
+        $user = \App\User::find(1);
+        $role = \App\Models\Role::find(1);
+        // dd(\Auth::user()->hasRole('admin'));
+        // dd($user->hasRole('admin'));
+        // dd($user->hasRole('owner'));
+        dd($user->can('create_geshf'));
+        // if (!$user->hasRole('admin')) {
+            // return response('Unauthorized.', 401);
+        // } else {
+            return view('admin.users.create_edit');
+        // }
     }
 
     /**
