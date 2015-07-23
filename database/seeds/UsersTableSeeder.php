@@ -26,6 +26,15 @@ class UsersTableSeeder extends Seeder {
 			'confirmation_code' => md5(microtime() . env('APP_KEY')),
 		]);
 
+		\App\User::create([
+			'name' => 'Test Client',
+			'username' => 'test_client',
+			'email' => 'client@client.com',
+			'password' => bcrypt('client'),
+			'confirmed' => 1,
+			'confirmation_code' => md5(microtime() . env('APP_KEY')),
+		]);
+
 	}
 
 }
