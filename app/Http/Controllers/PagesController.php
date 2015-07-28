@@ -14,7 +14,12 @@ class PagesController extends Controller {
 
 	public function about()
 	{
-		return view('pages.about');
+		$title = "Teste";
+		$menu_name = "Teste";
+		$categoryItems = ['1','2','3','4'];
+		$carouselItems = ['1','2','3','4'];
+		$stab = ['1','2','3','4'];
+		return view('pages.about', compact('title', 'menu_name', 'categoryItems', 'carouselItems', 'stab'));
 	}
 
 	public function contact()

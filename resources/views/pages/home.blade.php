@@ -38,7 +38,7 @@
 
     <!-- {!! Form::open() !!} -->
 
-    <div id="address" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" style="display:none;">
+    <div id="address" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" style="visibility:hidden; opacity:0; transition:visibility 0s linear 0.5s,opacity 0.5s linear;">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="panel-title">Confirme o seu endereço</div>
@@ -75,7 +75,7 @@
                                     <input type="text" class="form-control" id="city" name="city" value="" readonly="readonly">
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="number">UF</label>
+                                  <label for="number">UF</label>
                                     <input type="text" class="form-control" id="state" name="state" value="" readonly="readonly">
                                 </div>
                             </div>
@@ -142,7 +142,9 @@
         // $("#myModal").modal('show');
         $('.cep').mask('99999-999');
         $("#btn-cep").click(function() {
-            $('#address').css('display', 'block');
+            $('#address').css('visibility', 'visible');
+            $('#address').css('opacity', '1');
+            $('#address').css('transition-delay', '0s');
             if ($('#cep').val()) {
                 $.ajax({
                     type: "GET",

@@ -27,7 +27,8 @@ var paths = {
     'dataTables': 'vendor/datatables/media',
     'dataTablesBootstrap3Plugin': 'vendor/datatables-bootstrap3-plugin/media',
     'flag': 'vendor/flag-sprites/dist',
-    'mask': 'vendor/igorescobar-jQuery-Mask-Plugin-535b4e4'
+    'mask': 'vendor/jQuery-Mask-Plugin'
+    // 'mask': 'vendor/igorescobar-jQuery-Mask-Plugin-535b4e4'
 };
 
 elixir.config.sourcemaps = false;
@@ -36,6 +37,8 @@ elixir(function (mix) {
 
     // Run bower install
     mix.task('bower');
+
+    // mix.copy('resources/' + paths.mask, 'public/js');
 
     // Copy fonts straight to public
     mix.copy('resources/' + paths.bootstrap + '/fonts/bootstrap/**', 'public/fonts');
@@ -47,6 +50,12 @@ elixir(function (mix) {
     // Copy flag resources
     mix.copy('resources/' + paths.flag + '/css/flag-sprites.min.css', 'public/css/flags.css');
     mix.copy('resources/' + paths.flag + '/img/flags.png', 'public/img/flags.png');
+
+    // TESTE COM O GULP
+    mix.sass('shop.scss', 'resources/assets/build/shop.css');
+    mix.styles([
+        'assets/build/shop.css'
+    ], 'public/css/shop.css', 'resources/');
 
     // Compile SASS and output to default resource directory
     mix.sass('site.scss', 'resources/assets/build/site.css', {
@@ -96,6 +105,7 @@ elixir(function (mix) {
     mix.version([
         'css/site.css',
         'css/admin.css',
+        'css/shop.css',
         'js/site.js',
         'js/admin.js'
     ]);
