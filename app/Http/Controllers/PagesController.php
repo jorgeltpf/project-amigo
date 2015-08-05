@@ -27,4 +27,8 @@ class PagesController extends Controller {
 		return view('pages.contact');
 	}
 
+	public function people()
+	{
+		return view('pages.people');
+	}
 }

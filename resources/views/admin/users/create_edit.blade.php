@@ -3,21 +3,36 @@
 	<li class="active"><a href="#tab-general" data-toggle="tab">{{{
 			trans('admin/modal.general') }}}</a></li>
 </ul>
-<form class="form-horizontal" method="post"
-	action="@if (isset($user)){{ URL::to('admin/users/' . $user->id . '/edit') }}@endif"
-	autocomplete="off">
-	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+@if(isset($user))
+{!!
+	Form::model(
+		$user,
+		[
+			'method' => 'POST',
+			'action' => ['Admin\UserController@postEdit', $user->id]
+		]
+	)
+!!}
+@else
+{!!
+	Form::open(['action' => ['Admin\UserController@postCreate']])
+!!}
+@endif
+
+	<!-- <input type="hidden" name="_token" value="{{{ csrf_token() }}}" /> -->
 	<div class="tab-content">
 		<div class="tab-pane active" id="tab-general">
 			<div class="col-md-12">
 				<div class="form-group">
+					<!-- {!! Form::label('name', '{{ trans("admin/users.name") }}', ['class' => 'col-md-2 control-label', 'for' => 'name']) !!} -->
 					<label class="col-md-2 control-label" for="name">{{
 						trans('admin/users.name') }}</label>
 					<div class="col-md-10">
-						<input class="form-control" tabindex="1"
+						{!! Form::input('text','name', null, ['class' => 'form-control', 'tabindex' => '1', 'placeholder' => "Nome"]) !!}
+<!-- 						<input class="form-control" tabindex="1"
 							placeholder="{{ trans('admin/users.name') }}" type="text"
 							name="name" id="name"
-							value="{{{ Input::old('name', isset($user) ? $user->name : null) }}}">
+							value="{{{ Input::old('name', isset($user) ? $user->name : null) }}}"> -->
 					</div>
 				</div>
 			</div>
@@ -45,8 +60,7 @@
 							placeholder="{{ trans('admin/users.email') }}" name="email"
 							id="email"
 							value="{{{ Input::old('email', isset($user) ? $user->email : null) }}}" />
-						{!! $errors->first('email', '<label class="control-label"
-							for="email">:message</label>')!!}
+						{!! $errors->first('email', '<label class="control-label" for="email">:message</label>')!!}
 					</div>
 				</div>
 			</div>
@@ -78,7 +92,15 @@
 				</div>
 			</div>
 			<div class="col-md-12">
-				<div class="form-">
+				<div class="form-group">
+					{!! Form::label('role_list', 'Perfis:', ['class' => 'col-md-2 control-label']) !!}
+					<div class="col-md-6">
+						{!! Form::select('role_list', $roles, null, ['id' => 'role_list', 'class' => 'form-control']) !!}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
 					<label class="col-md-2 control-label" for="confirm">{{
 						trans('admin/users.activate_user') }}</label>
 					<div class="col-md-6">
@@ -97,7 +119,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-md-12">
-			<button type="reset" class="btn btn-sm btn-warning close_popup">
+			<button type="reset" class="btn btn-sm btn-danger close_popup">
 				<span class="glyphicon glyphicon-ban-circle"></span> {{
 				trans("admin/modal.cancel") }}
 			</button>
@@ -115,11 +137,18 @@
 			</button>
 		</div>
 	</div>
+@if (isset($user))
+{!! Form::close() !!}
+@else
 </form>
+@endif
 @stop @section('scripts')
 <script type="text/javascript">
 	$(function() {
-		$("#roles").select2()
+		$("#roles").select2();
+		// $('#role_list').select2({
+		// 	placeholder: "Choose a tag:"
+		// });
 	});
 </script>
 @stop

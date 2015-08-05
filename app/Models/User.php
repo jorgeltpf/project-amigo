@@ -48,7 +48,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Article');
 	}
 
-    public function roles() {
+    public function roles()
+    {
         return $this->belongsToMany('App\Models\Role');
+    }
+
+    /**
+    *   Retorna uma lista com o perfil associado ao usuário
+    *   @return array
+    */
+
+    public function getRoleListAttribute()
+    {
+        return $this->roles->lists('id')->toArray();
+        // return $this->category()->lists('id')->toArray();
     }
 }

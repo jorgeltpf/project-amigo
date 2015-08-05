@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\User;
+use App\Models\Role;
 use App\Http\Requests\Admin\UserRequest;
 use App\Http\Requests\Admin\UserEditRequest;
 use App\Http\Requests\Admin\DeleteRequest;
@@ -15,6 +16,7 @@ class UserController extends AdminController {
     *
     * @return Response
     */
+
     public function index()
     {
         // Show the page
@@ -26,7 +28,10 @@ class UserController extends AdminController {
      *
      * @return Response
      */
-    public function getCreate() {
+
+    public function getCreate()
+    {
+        $roles = Role::lists('display_name', 'id');
         // $user = \Auth::user()->hasRole('admin');
         // Auth::id()
         // print_r($user);
@@ -39,7 +44,7 @@ class UserController extends AdminController {
         // if (!$user->hasRole('admin')) {
             // return response('Unauthorized.', 401);
         // } else {
-            return view('admin.users.create_edit');
+            return view('admin.users.create_edit', compact('roles'));
         // }
     }
 
@@ -48,16 +53,19 @@ class UserController extends AdminController {
      *
      * @return Response
      */
-    public function postCreate(UserRequest $request) {
 
-        $user = new User ();
-        $user -> name = $request->name;
-		$user -> username = $request->username;
-        $user -> email = $request->email;
-        $user -> password = bcrypt($request->password);
-        $user -> confirmation_code = str_random(32);
-        $user -> confirmed = $request->confirmed;
-        $user -> save();
+    public function postCreate(UserRequest $request) {
+        $user = new User();
+        $user->name = $request->name;
+		$user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->confirmation_code = str_random(32);
+        $user->confirmed = $request->confirmed;
+        $user->save();
+        $role = array($request->role_list);
+
+        $this->syncRoles($user, $role);
     }
 
     /**
@@ -66,10 +74,13 @@ class UserController extends AdminController {
      * @param $user
      * @return Response
      */
+
     public function getEdit($id) {
 
         $user = User::find($id);
-        return view('admin.users.create_edit', compact('user'));
+        $roles = Role::lists('display_name', 'id');
+
+        return view('admin.users.create_edit', compact('user', 'roles'));
     }
 
     /**
@@ -78,22 +89,32 @@ class UserController extends AdminController {
      * @param $user
      * @return Response
      */
-    public function postEdit(UserEditRequest $request, $id) {
 
+    public function postEdit(UserEditRequest $request, $id)
+    {
         $user = User::find($id);
-        $user -> name = $request->name;
-        $user -> confirmed = $request->confirmed;
+        $user->name = $request->name;
+        $user->confirmed = $request->confirmed;
 
         $password = $request->password;
         $passwordConfirmation = $request->password_confirmation;
+        $roles = array($request->role_list);
 
         if (!empty($password)) {
             if ($password === $passwordConfirmation) {
-                $user -> password = bcrypt($password);
+                $user->password = bcrypt($password);
             }
         }
-        $user -> save();
+
+        $user->save();
+        $this->syncRoles($user, $roles);
     }
+
+    private function syncRoles(User $user, array $roles)
+    {
+        $user->roles()->sync($roles);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

@@ -1,5 +1,5 @@
 @extends('app')
-@section('title') About :: @parent @stop
+@section('title') Sobre :: @parent @stop
 @section('content')
  <!--    <div class="row">
         <div class="page-header">

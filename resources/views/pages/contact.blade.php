@@ -1,5 +1,5 @@
 @extends('app')
-@section('title') Contact :: @parent @stop
+@section('title') Contato :: @parent @stop
 @section('styles')
 {!! HTML::style('css/shop-homepage.css') !!} 
 @stop

@@ -1,19 +1,17 @@
-@extends('app')
 
 @section('styles')
 <!-- {!! HTML::style('css/shop.css') !!}  -->
     <link href="{{ elixir('css/shop.css') }}" rel="stylesheet">
 @endsection
 
-@section('title')
+@section('title') {{{ $title }}} :: @parent @stop
+
+@section('content')
  <div class="row">
     <div class="page-header">
         <h2>{{$title}}</h2>
     </div>
 </div>
-@endsection
-
-@section('content')
 <div class="container">
         <div class="row">
 

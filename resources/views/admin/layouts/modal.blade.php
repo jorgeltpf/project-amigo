@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="pt-br">
 
 <head id="Starter-Site">
 
@@ -9,7 +9,7 @@
 <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-<title>Administration</title>
+<title>Administração</title>
 
 <meta name="keywords" content="@yield('keywords')" />
 <meta name="author" content="@yield('author')" />
