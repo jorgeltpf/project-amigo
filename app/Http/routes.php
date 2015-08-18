@@ -22,6 +22,16 @@ Route::get('news/{id}', 'ArticlesController@show');
 Route::get('video/{id}', 'VideoController@show');
 Route::get('photo/{id}', 'PhotoController@show');
 
+Route::get('weekdays', 'WeekDaysController@list_week'
+    // function() {
+    // if (Request::ajax()) {
+    //     return "teste";
+    // };
+    // }
+);
+
+// Route::resource('establishments', 'EstablishmentsController');
+
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
@@ -126,4 +136,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('users/{id}/delete', 'UserController@postDelete');
     Route::get('users/data', 'UserController@data');
 
+    // Route::resource('establishments', 'EstablishmentsController');
+    Route::get('establishments/', 'EstablishmentsController@index');
+    Route::get('establishments/create', 'EstablishmentsController@create');
+    Route::post('establishments/create', 'EstablishmentsController@store');
+    Route::get('establishments/{id}/edit', 'EstablishmentsController@edit');
+    Route::post('establishments/{id}/edit', 'EstablishmentsController@postEdit');
+    Route::get('establishments/{id}/delete', 'EstablishmentsController@getDelete');
+    Route::post('establishments/{id}/delete', 'EstablishmentsController@postDelete');
+    Route::get('establishments/data', 'EstablishmentsController@data');
 });

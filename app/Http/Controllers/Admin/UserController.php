@@ -32,20 +32,8 @@ class UserController extends AdminController {
     public function getCreate()
     {
         $roles = Role::lists('display_name', 'id');
-        // $user = \Auth::user()->hasRole('admin');
-        // Auth::id()
-        // print_r($user);
-        // $user = \App\User::find(1);
-        // $role = \App\Models\Role::find(1);
-        // dd(\Auth::user()->hasRole('admin'));
-        // dd($user->hasRole('admin'));
-        // dd($user->hasRole('owner'));
-        // dd($user->can('create_geshf'));
-        // if (!$user->hasRole('admin')) {
-            // return response('Unauthorized.', 401);
-        // } else {
-            return view('admin.users.create_edit', compact('roles'));
-        // }
+
+        return view('admin.users.create_edit', compact('roles'));
     }
 
     /**
@@ -148,7 +136,15 @@ class UserController extends AdminController {
      */
     public function data()
     {
-        $users = User::select(array('users.id','users.name','users.email','users.confirmed', 'users.created_at'));
+        $users = User::select(
+            array(
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.confirmed',
+                'users.created_at'
+            )
+        );
 
         return Datatables::of($users)
             ->edit_column('confirmed', '@if ($confirmed=="1") <span class="glyphicon glyphicon-ok"></span> @else <span class=\'glyphicon glyphicon-remove\'></span> @endif')

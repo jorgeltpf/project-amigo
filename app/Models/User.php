@@ -9,13 +9,14 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Carbon\Carbon;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
 
     use Authenticatable, CanResetPassword, EntrustUserTrait, SoftDeletes; // add this trait to your user model
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['created_at, deleted_at'];
 
     /**
      * The database table used by the model.
@@ -61,6 +62,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getRoleListAttribute()
     {
         return $this->roles->lists('id')->toArray();
-        // return $this->category()->lists('id')->toArray();
+    }
+
+    public function setCreatedAtAttribute($date) {
+        $this->attributes['created_at'] =  Carbon::parse($date);
+    }
+
+    public function getCreatedAtAttribute($date) {
+        if (is_null($date))
+            return null;
+        else
+            return Carbon::parse($date)->format('d/m/Y H:i:s');
     }
 }
