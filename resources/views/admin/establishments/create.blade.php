@@ -171,11 +171,11 @@
 
 	 	// Adiciona campos para cadastro dos dias da semana e horários
 	 	$('#add-field').on('click', function() {
-			if (($('.week-input .form-control').length+1) > 7) {
+			if (($('.week-input select.form-control').length+1) > 7) {
                 alert("Apenas 7 dias podem ser selecionados");
                 return false;
             }
-            var id = ($('#week-input .control-group').length + 1).toString();
+            var id = ($('.week-input select.form-control').length + 1).toString();
         	$('#week-input').after(
         		createWeekDiv(id, weekdays)
     		);
@@ -184,9 +184,14 @@
 		// Altera o botão do dia para inputs com horário
 		$(document).on('click', '.open-hor', function() {
 			var id = $(this).attr('id');
+			var len = $('.week-input select.form-control').length;
+			var timeClick = $(this).closest('.week-input').find('select').attr('id');
+			var idSel = timeClick.split('-')[1];
+			var buttonId = id.split('-')[1];
+
 			$(this).parent().after(
-				'<div class="col-sm-1 col-md-1"><input id="initial-'+id+'" type="text" class="hour form-control" placeholder="00:00"><div class="help">Aberto</div></div>'+
-				'<div class="col-sm-1 col-md-1"><input id="final-'+id+'" type="text" class="hour form-control" placeholder="00:00"><div class="help">Fechado</div></div>'
+				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour form-control" placeholder="00:00"><div class="help">Aberto</div></div>'+
+				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour form-control" placeholder="00:00"><div class="help">Fechado</div></div>'
 			);
 			$('.hour').mask('00:00');
 			$(this).parent().css('display', 'none');
@@ -205,6 +210,7 @@
 	function createWeekDiv(id, option) {
 		var html = "";
 		var selects = [];
+		var len = $('.week-input select.form-control').length+1;
 		if ($('.sel-week :selected')) {
 			$('.sel-week :selected').each(function(key, val) {
 				selects.push($(val).text());
@@ -213,7 +219,7 @@
 		html += '<div class="form-group week-input">';
 		html += '<label class="control-label col-xs-2">Dias</label>';
         html += '<div class="col-sm-2">';
-        html +=	'<select class="sel-week form-control">';
+        html +=	'<select id="sel-'+len+'" name="weekday['+len+'][day]" class="sel-week form-control">';
         if (option) {
         	$.each(option, function(key, val) {
         		if (selects.indexOf(val.name) == -1) {

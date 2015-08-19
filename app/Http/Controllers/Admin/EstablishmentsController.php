@@ -73,12 +73,17 @@ class EstablishmentsController extends AdminController
         $establishments['state'] = $request->state;
         $establishments['country'] = $request->country;
         $establishments['phone'] = $request->phone;
-        $establishments['cell_phone'] = trim(preg_replace('~[\\\\/:*?"<>|()-]~', ' ', $request->cell_phone));
-        $establishments['cep'] = trim(preg_replace('~[\\\\/:*?"<>|()-]~', ' ', $request->cep));
-        var_dump($request);
+        $establishments['cell_phone'] = $request->cell_phone;
+        $establishments['cep'] = $request->cep;
+
+        // $weekdays = $request->weekday;
+
+        // dd($establishments);
         // $establishments = Establishment::create($establishments);
 
-        // $establishments->save();
+
+        $establishments->save();
+        // $this->syncWeekDays($establishments, $weekdays);
         // return redirect('establishments');
     }
 
@@ -146,5 +151,9 @@ class EstablishmentsController extends AdminController
             )
             ->remove_column('id')
             ->make();
+    }
+
+    public function syncWeekDays(Establishment $establishments, array $weekdays) {
+        $establishments->weekdays()->sync($weekdays);
     }
 }

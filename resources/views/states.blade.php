@@ -31,5 +31,5 @@
 ?>
 {!! Form::label('state', 'Estado:', ['class' => 'control-label col-xs-2', 'for' => 'est_state']) !!}
 <div class="col-xs-10">
-	{!! Form::select('states[]', $states, 'RS', ['id' => 'states', 'class' => 'form-control']) !!}
+	{!! Form::select('state', $states, 'RS', ['id' => 'states', 'class' => 'form-control']) !!}
 </div>

@@ -32,7 +32,7 @@ class Establishment extends Model
 
     // Envia o tel sem máscara
     public function setPhoneAttribute($value) {
-        $this->attributes['phone'] = trim(preg_replace('~[\\\\/:*?"<>|()-]~', ' ', $value));
+        $this->attributes['phone'] = trim(preg_replace('~[\\\\/:*?"<>|()-]~', '', $value));
     }
 
     // Busca o tel já com máscara
@@ -43,9 +43,9 @@ class Establishment extends Model
             return "(".substr($value, 0, 2).") ".substr($value, 2, 4)."-".substr($value, 6);
     }
 
-    // public function setCellPhoneAttribute($value) {
-    //     $this->attributes['cell_phone'] = "(".substr($value, 0, 2).") ".substr($value, 2, 4)."-".substr($value, 6);
-    // }
+    public function setCellPhoneAttribute($value) {
+        $this->attributes['cell_phone'] = trim(preg_replace('~[\\\\/:*?"<>|()-]~', '', $value));
+    }
 
     // Busca o cel já com máscara
     public function getCellPhoneAttribute($value) {
@@ -55,9 +55,9 @@ class Establishment extends Model
             return "(".substr($value, 0, 2).") ".substr($value, 2, 4)."-".substr($value, 6);
     }
 
-    // public function setCepAttribute($value) {
-    //     $this->attributes['cep'] = substr($value, 0, 5)."-".substr($value, 5);
-    // }
+    public function setCepAttribute($value) {
+        $this->attributes['cep'] = trim(preg_replace('~[\\\\/:*?"<>|()-]~', '', $value));
+    }
 
     // Busca o Cep já com máscara
     public function getCepAttribute($value) {
@@ -65,6 +65,11 @@ class Establishment extends Model
             return null;
         else
             return substr($value, 0, 5)."-".substr($value, 5);
+    }
+
+    // Envia o cnpj sem máscara
+    public function setCnpjAttribute($value) {
+        $this->attributes['cnpj'] = trim(preg_replace('~[\\\\/:*?"<>.|()-]~', '', $value));
     }
 
     public function weekdays() {
