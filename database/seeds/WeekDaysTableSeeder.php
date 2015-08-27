@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\WeekDay;
 
-class WeekDaysSeeder extends Seeder
+class WeekDaysTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

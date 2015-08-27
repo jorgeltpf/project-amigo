@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
-class Establishment extends Model
-{
+class Establishment extends Model {
 	use SoftDeletes;
 
     protected $fillable = array(
@@ -73,6 +72,6 @@ class Establishment extends Model
     }
 
     public function weekdays() {
-        return $this->belongsToMany('App\Models\WeekDay');
+        return $this->belongsToMany('App\Models\WeekDay')->withPivot('time_on', 'time_off', 'shift');
     }
 }

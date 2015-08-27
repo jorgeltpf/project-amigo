@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
 		$this->call('ArticlesTableSeeder');
         $this->call('RoleTableSeeder');
         $this->call('PermissionTableSeeder');
+        $this->call('WeekDaysTableSeeder');
 
         Model::reguard();
     }

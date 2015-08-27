@@ -27,7 +27,8 @@ var paths = {
     'dataTables': 'vendor/datatables/media',
     'dataTablesBootstrap3Plugin': 'vendor/datatables-bootstrap3-plugin/media',
     'flag': 'vendor/flag-sprites/dist',
-    'mask': 'vendor/jQuery-Mask-Plugin'
+    'mask': 'vendor/jQuery-Mask-Plugin',
+    'masks_def': 'vendor/js',
     // 'mask': 'vendor/igorescobar-jQuery-Mask-Plugin-535b4e4'
 };
 
@@ -77,7 +78,8 @@ elixir(function (mix) {
         paths.jquery + '/jquery.js',
         paths.bootstrap + '/javascripts/bootstrap.js',
         paths.colorbox + '/jquery.colorbox.js',
-        paths.mask + '/jquery.mask.js'
+        paths.mask + '/jquery.mask.js',
+        paths.masks_def + '/masks_def.js'
     ], 'public/js/site.js', 'resources/');
 
     // Compile SASS and output to default resource directory.

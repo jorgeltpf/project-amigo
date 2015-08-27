@@ -27,6 +27,7 @@ class CreateEstablishmentsTable extends Migration
             $table->string('country', 50);
             $table->string('cep');
             $table->string('cnpj', 14);
+            $table->string('image', 255)->nullable();
             $table->integer('delivery_max_time');
             $table->boolean('status');
             $table->timestamps();
