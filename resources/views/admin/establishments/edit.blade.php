@@ -33,7 +33,7 @@
 			'method' => 'POST',
 			'id' => 'est',
 			'class' => 'form-horizontal',
-			'action' => ['Admin\EstablishmentsController@postEdit', $establishments->id]
+			'action' => ['Admin\EstablishmentsController@update', $establishments->id]
 		]
 	)
 !!}

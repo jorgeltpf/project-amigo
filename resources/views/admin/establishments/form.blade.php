@@ -1,6 +1,12 @@
 		
+		<style type="text/css">
+			.input-xs {
+				width: 62px;
+			}
+		</style>
 		<fieldset>
     		<legend class="text-center">Informações Básicas</legend>
+    		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 		    <div class="form-group">
 		    	{!! Form::label('name', 'Nome:', ['class' => 'control-label col-xs-2', 'for' => 'est_name']) !!}
 		        <div class="col-xs-10">
@@ -100,32 +106,34 @@
         			<button type="button" class="btn btn-success">Noite</button>
 		        </div>
 		    </div>
+
+		    @if(isset($adjustWeeks))
+		    	@foreach($adjustWeeks as $keys => $weeks)
+			    <div class="form-group week-input">
+			        <!-- <div class="col-xs-offset-2 col-xs-10"> -->
+			        	<label class="control-label col-xs-2">Dias</label>
+			        	<div class="col-sm-2">
+			        		<select id="sel-{!! $weeks['week_day_id'] !!}" name="weekday[{!! $weeks['week_day_id'] !!}][day]" class="sel-week form-control">
+			        			<option value={!! $weeks['week_day_id'] !!}>{!! $weeks['name'] !!}</option>
+			        		</select>
+			        	</div>
+			        	@foreach($weeks['days'] as $keys => $days)
+							<!-- <div class="col-sm-1"><button type="button" id="btn-m'+id+'" class="btn btn-success open-hor">Manhã</button></div> -->
+							<div class="col-sm-1 col-md-1">
+								<input name="weekday[{!! $weeks['week_day_id'] !!}][time_on_{!! $weeks['week_day_id'] !!}_"+setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_on'] !!}">
+								<div class="help">Aberto</div>
+							</div>
+							<div class="col-sm-1 col-md-1">
+								<input name="weekday[{!! $weeks['week_day_id'] !!}][time_off_{!! $weeks['week_day_id'] !!}_"+setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_off'] !!}">
+								<div class="help">Fechado</div>
+							</div>
+						@endforeach
+			        <!-- </div> -->
+			    </div>
+			    @endforeach
+		    @endif
+
 	    </fieldset>
-	    @if(isset($adjustWeeks))
-	    	@foreach($adjustWeeks as $keys => $weeks)
-		    <div class="form-group" id="week-input">
-		        <div class="col-xs-offset-2 col-xs-10">
-		        	<label class="control-label col-xs-2">Dias</label>
-		        	<div class="col-sm-2">
-		        		<select id="sel-{!! $weeks['week_day_id'] !!}" name="weekday[{!! $weeks['week_day_id'] !!}][day]" class="sel-week form-control">
-		        			<option value={!! $weeks['week_day_id'] !!}>{!! $weeks['name'] !!}</option>
-		        		</select>
-		        	</div>
-		        	@foreach($weeks['days'] as $keys => $days)
-						<!-- <div class="col-sm-1"><button type="button" id="btn-m'+id+'" class="btn btn-success open-hor">Manhã</button></div> -->
-						<div class="col-sm-1 col-md-1">
-							<input name="weekday[{!! $weeks['week_day_id'] !!}][time_on_{!! $weeks['week_day_id'] !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="hour form-control" placeholder="00:00" value="{!! $days['time_on'] !!}">
-							<div class="help">Aberto</div>
-						</div>
-						<div class="col-sm-1 col-md-1">
-							<input name="weekday[{!! $weeks['week_day_id'] !!}][time_off_{!! $weeks['week_day_id'] !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="hour form-control" placeholder="00:00" value="{!! $days['time_off'] !!}">
-							<div class="help">Fechado</div>
-						</div>
-					@endforeach
-		        </div>
-		    </div>
-		    @endforeach
-	    @endif
 	    <div class="form-group">
 	        <div class="col-xs-offset-2 col-xs-10">
 	            <button type="submit" class="btn btn-success">Salvar</button>
@@ -165,8 +173,8 @@
 			var buttonId = id.split('-')[1];
 
 			$(this).parent().after(
-				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour form-control" placeholder="00:00"><div class="help">Aberto</div></div>'+
-				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour form-control" placeholder="00:00"><div class="help">Fechado</div></div>'
+				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour form-control input-xs" placeholder="00:00"><div class="help">Aberto</div></div>'+
+				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour form-control input-xs" placeholder="00:00"><div class="help">Fechado</div></div>'
 			);
 			$('.hour').mask('00:00');
 			$(this).parent().css('display', 'none');
@@ -181,6 +189,22 @@
 			$this.parents('div.week-input').remove();
 		});
 	});
+
+	function setShift(key) {
+        var shift = "";
+        switch (key) {
+            case '1':
+                shift = 'm';
+                break;
+            case '2':
+                shift = 't';
+                break;
+            case '3':
+                shift = 'n';
+                break;
+         }
+         return shift;
+	}
 
 	function createWeekDiv(id, option) {
 		var html = "";

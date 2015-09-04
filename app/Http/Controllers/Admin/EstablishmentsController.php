@@ -55,7 +55,7 @@ class EstablishmentsController extends AdminController {
      */
     public function store(Request $request) {
         $establishments = new Establishment();
-        // dd($request->all());
+
         // $establishments = $request->all();
         $establishments['status'] = true;
         $establishments['name'] = $request->name;
@@ -82,7 +82,6 @@ class EstablishmentsController extends AdminController {
         }
         $establishments['image'] = $image;
 
-        // dd($establishments);
         // $establishments = Establishment::create($establishments);
 
         $establishments->save();
@@ -184,6 +183,9 @@ class EstablishmentsController extends AdminController {
         //     $q->where('establishment_id', '=', $id);
         // })->get();
         $adjustWeeks = [];
+        // Migué
+        $weekdays = array_reverse($weekdays);
+
         foreach ($weekdays as $key => $value) {
             $adjustWeeks[$value['pivot']['week_day_id']]['id'] = $value['id'];
             $adjustWeeks[$value['pivot']['week_day_id']]['name'] = $value['name'];
@@ -192,12 +194,9 @@ class EstablishmentsController extends AdminController {
             $adjustWeeks[$value['pivot']['week_day_id']]['days'][$value['pivot']['shift']]['shift'] = $value['pivot']['shift'];
             $adjustWeeks[$value['pivot']['week_day_id']]['days'][$value['pivot']['shift']]['time_on'] = $value['pivot']['time_on'];
             $adjustWeeks[$value['pivot']['week_day_id']]['days'][$value['pivot']['shift']]['time_off'] = $value['pivot']['time_off'];
-
-            // $adjustWeeks[$value['pivot']['week_day_id']]['days'][$aux]['shift'] = $value['pivot']['shift'];
-            // $adjustWeeks[$value['pivot']['week_day_id']]['days'][$aux]['time_on'] = $value['pivot']['time_on'];
-            // $adjustWeeks[$value['pivot']['week_day_id']]['days'][$aux]['time_off'] = $value['pivot']['time_off'];
         }
-dd($adjustWeeks);
+        // $adjustWeeks = sort($adjustWeeks);
+        dd($adjustWeeks);
         return view('admin.establishments.edit', compact('establishments', 'adjustWeeks'));
     }
 
@@ -209,7 +208,16 @@ dd($adjustWeeks);
      * @return Response
      */
     public function update(Request $request, $id) {
-        //
+        $establishments = Establishment::find($id);
+        $except = ['_method', 'weekday'];
+        $input = array_except(Input::all(), $except);
+        if (!empty($request['weekday'])) {
+            dd($request['weekday']);
+            $weekdays = $establishments->weekdays()->detach();
+            $this->syncWeekDays($establishments, $request['weekday']);
+        }
+        $establishments->update($input);
+        return redirect('admin/establishments');
     }
 
     /**
