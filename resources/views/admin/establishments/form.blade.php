@@ -110,25 +110,46 @@
 		    @if(isset($adjustWeeks))
 		    	@foreach($adjustWeeks as $keys => $weeks)
 			    <div class="form-group week-input">
-			        <!-- <div class="col-xs-offset-2 col-xs-10"> -->
-			        	<label class="control-label col-xs-2">Dias</label>
-			        	<div class="col-sm-2">
-			        		<select id="sel-{!! $weeks['week_day_id'] !!}" name="weekday[{!! $weeks['week_day_id'] !!}][day]" class="sel-week form-control">
-			        			<option value={!! $weeks['week_day_id'] !!}>{!! $weeks['name'] !!}</option>
-			        		</select>
-			        	</div>
-			        	@foreach($weeks['days'] as $keys => $days)
-							<!-- <div class="col-sm-1"><button type="button" id="btn-m'+id+'" class="btn btn-success open-hor">Manhã</button></div> -->
+		        	<label class="control-label col-xs-2">Dias</label>
+		        	<div class="col-sm-2">
+		        		<select id="sel-{!! $weeks['week_day_id'] !!}" name="weekday[{!! $weeks['week_day_id'] !!}][day]" class="sel-week form-control">
+		        			<option value={!! $weeks['week_day_id'] !!}>{!! $weeks['name'] !!}</option>
+		        		</select>
+		        	</div>
+		        	@for($i=1; $i<4; $i++)
+		        		@if(!empty($weeks['days'][$i]['time_on']))
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $weeks['week_day_id'] !!}][time_on_{!! $weeks['week_day_id'] !!}_"+setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_on'] !!}">
+								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $weeks['days'][$i]['time_on'] !!}">
 								<div class="help">Aberto</div>
 							</div>
+						@else
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $weeks['week_day_id'] !!}][time_off_{!! $weeks['week_day_id'] !!}_"+setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_off'] !!}">
+								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="">
+								<div class="help">Aberto</div>
+							</div>
+						@endif
+						@if(!empty($weeks['days'][$i]['time_off']))
+							<div class="col-sm-1 col-md-1">
+								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $weeks['days'][$i]['time_off'] !!}">
 								<div class="help">Fechado</div>
 							</div>
-						@endforeach
-			        <!-- </div> -->
+						@else
+							<div class="col-sm-1 col-md-1">
+								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="">
+								<div class="help">Fechado</div>
+							</div>
+						@endif
+		        	@endfor
+<!-- 		        	@foreach($weeks['days'] as $keys => $days)
+						<div class="col-sm-1 col-md-1">
+							<input name="weekday[{!! $weeks['week_day_id'] !!}][time_on_{!! $weeks['week_day_id'] !!}_"setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_on'] !!}">
+							<div class="help">Aberto</div>
+						</div>
+						<div class="col-sm-1 col-md-1">
+							<input name="weekday[{!! $weeks['week_day_id'] !!}][time_off_{!! $weeks['week_day_id'] !!}_"+setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_off'] !!}">
+							<div class="help">Fechado</div>
+						</div>
+					@endforeach -->
 			    </div>
 			    @endforeach
 		    @endif

@@ -104,16 +104,18 @@ class EstablishmentsController extends AdminController {
             $timeOff = "";
             $saveWeek = array();
             $aux = 0;
+            // $teste = [];            
+            // dd($weekdays);
             foreach ($weekdays as $key => $numbers) {
-                $timeKeys = array_keys($numbers);
+                $timeKeys = array_keys(array_filter($numbers));
                 foreach ($timeKeys as $day_key => $days) {
                     // $teste[$aux][] = explode('_',$day_key);
                     // $saveWeek[$aux][]['week_day_id'] = $numbers['day'];
                     // $saveWeek[$aux][]['establishment_id'] = $establishments['id'];
                     if (!empty($days)) {
                         if (strpos($days,'time_on') !== false) {
-                            $saveWeek[$aux][$this->setShift(substr($days, -2, 1))]['time_on'] = $numbers[$days];
                             $saveWeek[$aux][$this->setShift(substr($days, -2, 1))]['shift'] = $this->setShift(substr($days, -2, 1));
+                            $saveWeek[$aux][$this->setShift(substr($days, -2, 1))]['time_on'] = $numbers[$days];
                             $saveWeek[$aux][$this->setShift(substr($days, -2, 1))]['week_day_id'] = $numbers['day'];
                             $saveWeek[$aux][$this->setShift(substr($days, -2, 1))]['establishment_id'] = $establishments['id'];
                         }
@@ -125,12 +127,12 @@ class EstablishmentsController extends AdminController {
                         }
                     }
                 }
-
-                $establishments->weekdays()->sync($saveWeek[$aux]);
+                $teste[$aux] = $saveWeek[$aux];
+                $establishments->weekdays()->attach($saveWeek[$aux]);
                 $aux += 1;
             }
         }
-
+// dd($teste);
         // $establishments->weekdays()->sync($saveWeek);
         // $establishments->weekdays()->saveMany($saveWeek);
     }
@@ -146,12 +148,15 @@ class EstablishmentsController extends AdminController {
         $shift = "";
         switch ($value) {
             case 'm':
+            case '1':
                 $shift = 1;
                 break;
             case 't':
+            case '2':
                 $shift = 2;
                 break;
             case 'n':
+            case '3':
                 $shift = 3;
                 break;
          }
@@ -185,7 +190,7 @@ class EstablishmentsController extends AdminController {
         $adjustWeeks = [];
         // Migué
         $weekdays = array_reverse($weekdays);
-
+// dd($weekdays);
         foreach ($weekdays as $key => $value) {
             $adjustWeeks[$value['pivot']['week_day_id']]['id'] = $value['id'];
             $adjustWeeks[$value['pivot']['week_day_id']]['name'] = $value['name'];
@@ -196,7 +201,7 @@ class EstablishmentsController extends AdminController {
             $adjustWeeks[$value['pivot']['week_day_id']]['days'][$value['pivot']['shift']]['time_off'] = $value['pivot']['time_off'];
         }
         // $adjustWeeks = sort($adjustWeeks);
-        dd($adjustWeeks);
+        // dd($adjustWeeks);
         return view('admin.establishments.edit', compact('establishments', 'adjustWeeks'));
     }
 
@@ -210,14 +215,36 @@ class EstablishmentsController extends AdminController {
     public function update(Request $request, $id) {
         $establishments = Establishment::find($id);
         $except = ['_method', 'weekday'];
+
         $input = array_except(Input::all(), $except);
+
         if (!empty($request['weekday'])) {
-            dd($request['weekday']);
+            //dd($request['weekday']);
             $weekdays = $establishments->weekdays()->detach();
             $this->syncWeekDays($establishments, $request['weekday']);
         }
+
+        $image = "";
+        if (Input::hasFile('image')) {
+            $file = Input::file('image');
+            $filename = $file->getClientOriginalName();
+            $extension = $file -> getClientOriginalExtension();
+            $image = sha1($filename . time()) . '.' . $extension;
+        }
+        $input['image'] = $image;
+dd($input);
+        if (Input::hasFile('image')) {
+            $destinationPath = public_path() . '/images/establishments/'.$establishments->id.'/';
+            Input::file('image')->move($destinationPath, $image);
+        }
+
         $establishments->update($input);
         return redirect('admin/establishments');
+    }
+
+    public function postDelete(DeleteRequest $request, $id) {
+        $establishments = Establishment::find($id);
+        $establishments->delete();
     }
 
     /**
