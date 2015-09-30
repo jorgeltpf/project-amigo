@@ -180,7 +180,7 @@
                         }
                     },
                     error: function() {
-                        alert("failure");
+                        alert("Ocorreu um erro!");
                     }
                 });
             } else {

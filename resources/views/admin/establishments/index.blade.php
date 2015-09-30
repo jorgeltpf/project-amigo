@@ -43,7 +43,17 @@
                 "sPaginationType": "bootstrap",
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/establishments/data') }}"
+                "ajax": "{{ URL::to('admin/establishments/data') }}",
+                "fnDrawCallback": function (oSettings) {
+                    $(".iframe").colorbox({
+                        iframe: true,
+                        width: "80%",
+                        height: "80%",
+                        onClosed: function () {
+                            window.location.reload();
+                        }
+                    });
+                }
             });
 		});
 	</script>

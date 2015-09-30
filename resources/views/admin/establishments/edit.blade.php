@@ -33,7 +33,8 @@
 			'method' => 'POST',
 			'id' => 'est',
 			'class' => 'form-horizontal',
-			'action' => ['Admin\EstablishmentsController@update', $establishments->id]
+			'action' => ['Admin\EstablishmentsController@update', $establishments->id],
+			'enctype' => "multipart/form-data"
 		]
 	)
 !!}

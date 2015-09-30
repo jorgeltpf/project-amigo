@@ -57,42 +57,48 @@
 	    <fieldset>
 			<legend class="text-center">Localização</legend>
 		    <div class="form-group">
-		    	{!! Form::label('cep', 'CEP:', ['class' => 'control-label col-xs-2', 'for' => 'est_cep']) !!}
+		    	{!! Form::label('cep', 'CEP:', ['class' => 'control-label col-xs-2', 'for' => 'cep']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'cep', null, ['class' => 'form-control cep', 'id' => 'est_cep', 'placeholder' => 'CEP']) !!}
+		        	{!! Form::input('text', 'cep', null, ['class' => 'form-control cep', 'id' => 'cep', 'placeholder' => 'CEP']) !!}
 		        </div>
 		    </div>
 		    <div class="form-group">
-		    	{!! Form::label('street', 'Rua:', ['class' => 'control-label col-xs-2', 'for' => 'est_street']) !!}
+		    	{!! Form::label('street', 'Rua:', ['class' => 'control-label col-xs-2', 'for' => 'street']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'street', null, ['class' => 'form-control', 'id' => 'est_street', 'placeholder' => 'Rua']) !!}
+		        	{!! Form::input('text', 'street', null, ['class' => 'form-control', 'id' => 'street', 'placeholder' => 'Rua']) !!}
 		        </div>
 		    </div>
 		    <div class="form-group">
-		    	{!! Form::label('street_number', 'Número:', ['class' => 'control-label col-xs-2', 'for' => 'est_number']) !!}
+		    	{!! Form::label('neighborhood', 'Bairro:', ['class' => 'control-label col-xs-2', 'for' => 'neighborhood']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'street_number', null, ['class' => 'form-control st_number', 'id' => 'est_number', 'placeholder' => 'Número']) !!}
+		        	{!! Form::input('text', 'neighborhood', null, ['class' => 'form-control', 'id' => 'neighborhood', 'placeholder' => 'Bairro']) !!}
 		        </div>
 		    </div>
 		    <div class="form-group">
-		    	{!! Form::label('complement', 'Complemento:', ['class' => 'control-label col-xs-2', 'for' => 'est_complement']) !!}
+		    	{!! Form::label('street_number', 'Número:', ['class' => 'control-label col-xs-2', 'for' => 'number']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'complement', null, ['class' => 'form-control', 'id' => 'est_complement', 'placeholder' => 'Complemento']) !!}
+		        	{!! Form::input('text', 'street_number', null, ['class' => 'form-control st_number', 'id' => 'number', 'placeholder' => 'Número']) !!}
 		        </div>
 		    </div>
 		    <div class="form-group">
-		    	{!! Form::label('city', 'Cidade:', ['class' => 'control-label col-xs-2', 'for' => 'est_city']) !!}
+		    	{!! Form::label('complement', 'Complemento:', ['class' => 'control-label col-xs-2', 'for' => 'complement']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'city', null, ['class' => 'form-control', 'id' => 'est_city', 'placeholder' => 'Cidade']) !!}
+		        	{!! Form::input('text', 'complement', null, ['class' => 'form-control', 'id' => 'complement', 'placeholder' => 'Complemento']) !!}
+		        </div>
+		    </div>
+		    <div class="form-group">
+		    	{!! Form::label('city', 'Cidade:', ['class' => 'control-label col-xs-2', 'for' => 'city']) !!}
+		        <div class="col-xs-10">
+		        	{!! Form::input('text', 'city', null, ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'Cidade']) !!}
 		        </div>
 		    </div>
 		    <div class="form-group">
 		    	@include ('states')
 		    </div>
 		    <div class="form-group">
-		    	{!! Form::label('country', 'País:', ['class' => 'control-label col-xs-2', 'for' => 'est_country']) !!}
+		    	{!! Form::label('country', 'País:', ['class' => 'control-label col-xs-2', 'for' => 'country']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'country', 'Brasil', ['class' => 'form-control', 'id' => 'est_country', 'placeholder' => 'País']) !!}
+		        	{!! Form::input('text', 'country', 'Brasil', ['class' => 'form-control', 'id' => 'country', 'placeholder' => 'País']) !!}
 		        </div>
 		    </div>
 	    </fieldset>
@@ -140,6 +146,7 @@
 							</div>
 						@endif
 		        	@endfor
+		        		<div class="col-sm-1"><button type="button" class="btn btn-danger remove-div"><span class="glyphicon glyphicon-remove"></span></button></div>
 <!-- 		        	@foreach($weeks['days'] as $keys => $days)
 						<div class="col-sm-1 col-md-1">
 							<input name="weekday[{!! $weeks['week_day_id'] !!}][time_on_{!! $weeks['week_day_id'] !!}_"setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_on'] !!}">
@@ -158,15 +165,61 @@
 	    <div class="form-group">
 	        <div class="col-xs-offset-2 col-xs-10">
 	            <button type="submit" class="btn btn-success">Salvar</button>
-	            <button type="button" class="btn btn-primary">
-	            	<span class="glyphicon glyphicon-backward"></span> Voltar
+	            <button type="submit" class="btn btn-primary">
+	            	<a href="{{{ URL::to('admin/establishments/') }}}"></a>
+                    <span class="glyphicon glyphicon-backward"></span> Voltar
+
             	</button>
+
 	        </div>
 	    </div>
 
 @section('scripts')
+
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#cep').on('change', function() {
+			if ($('#cep').val()) {
+				$.ajax({
+                    type: "GET",
+                    url: "http://viacep.com.br/ws/"+$('#cep').val()+"/json/",
+                    // data: $('form.contact').serialize(),
+                    success: function(data) {
+                        if (data) {
+                            if (data.logradouro) {
+                                $('#street').val(data.logradouro);
+                            } else {
+                                $('#street').val('').removeAttr('readonly');
+                            }
+                            if (data.bairro) {
+                                $('#neighborhood').val(data.bairro);
+                            } else {
+                                $('#neighborhood').val('').removeAttr('readonly');
+                            }
+                            if (data.localidade) {
+                                $('#city').val(data.localidade);
+                            } else {
+                                $('#city').val('').removeAttr('readonly');   
+                            }
+                            if (data.complemento) {
+                                $('#complement').val(data.complemento);
+                            } else {
+                                $('#complement').val('').removeAttr('readonly');   
+                            }
+                            if (data.uf) {
+                                $('#state').val(data.uf);
+                            } else {
+                                $('#state').val('').removeAttr('readonly');   
+                            }
+                        }
+                    },
+                    error: function() {
+                        alert("Ocorreu um erro!");
+                    }
+                });
+			}
+		})
+
 		var weekdays = "";
 		// Ajax para buscar os dias da semana
 		$.get('/weekdays', function(data) {

@@ -23,6 +23,7 @@ class EstablishmentsController extends AdminController {
      */
     public function index() {
         $establishments = Establishment::all();
+
         return view('admin.establishments.index', compact('establishments'));
     }
 
@@ -95,6 +96,9 @@ class EstablishmentsController extends AdminController {
         // $weekdays['establishment_id'] = $establishments->id;
 
         $this->syncWeekDays($establishments, $weekdays);
+
+        flash()->success('Cadastro salvo com sucesso!');
+
         return redirect('admin/establishments');
     }
 
@@ -232,14 +236,22 @@ class EstablishmentsController extends AdminController {
             $image = sha1($filename . time()) . '.' . $extension;
         }
         $input['image'] = $image;
-dd($input);
-        if (Input::hasFile('image')) {
-            $destinationPath = public_path() . '/images/establishments/'.$establishments->id.'/';
-            Input::file('image')->move($destinationPath, $image);
-        }
 
+        // if (Input::hasFile('image')) {
+        //     $destinationPath = public_path() . '/images/establishments/'.$establishments->id.'/';
+        //     Input::file('image')->move($destinationPath, $image);
+        // }
         $establishments->update($input);
+//dd($input);
+
+        flash()->success('Cadastro editado com sucesso!');
+
         return redirect('admin/establishments');
+    }
+
+    public function getDelete($id) {
+        $establishments = $id;
+        return view('admin/establishments/delete', compact('establishments'));
     }
 
     public function postDelete(DeleteRequest $request, $id) {
@@ -254,7 +266,13 @@ dd($input);
      * @return Response
      */
     public function destroy($id) {
-        //
+        $establishments = Establishment::findOrFail($id);
+
+        $establishments->delete();
+
+        flash()->success('Estabelecimento excluído com sucesso!');
+
+        return view('admin/establishments/index');
     }
 
     /**
@@ -268,11 +286,12 @@ dd($input);
 
         return Datatables::of($establishment)
             ->add_column('actions',
-                '<a href="{{{ URL::to(\'admin/establishments/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm iframe" ><span class="glyphicon glyphicon-pencil"></span> {{ trans("admin/modal.edit") }}</a>
+                '<a href="{{{ URL::to(\'admin/establishments/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span> {{ trans("admin/modal.edit") }}</a>
                 <a href="{{{ URL::to(\'admin/establishments/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 <input type="hidden" name="row" value="{{$id}}" id="row">'
             )
             ->remove_column('id')
             ->make();
+            // href="{{{ URL::to(\'admin/establishments/\' . $id . \'/delete\' ) }}}" 
     }
 }

@@ -42,8 +42,8 @@
 <body>
 @include('partials.nav')
 
-@include('flash::message')
 <div class="container">
+@include('flash::message')
 @yield('content')
 </div>
 @include('partials.footer')
