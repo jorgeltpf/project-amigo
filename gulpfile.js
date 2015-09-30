@@ -67,6 +67,7 @@ elixir(function (mix) {
         ]
     });
 
+
     // Merge Site CSSs.
     mix.styles([
         paths.colorbox + '/example3/colorbox.css',

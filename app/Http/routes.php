@@ -145,4 +145,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('establishments/{id}/delete', 'EstablishmentsController@getDelete');
     Route::post('establishments/{id}/delete', 'EstablishmentsController@postDelete');
     Route::get('establishments/data', 'EstablishmentsController@data');
+
+    //Products
+    Route::get('products/', 'ProductsController@index');
+    Route::get('products/data', 'ProductsController@data');
+
 });
