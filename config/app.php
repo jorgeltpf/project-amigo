@@ -153,7 +153,8 @@ return [
 		Laracasts\Flash\FlashServiceProvider::class,
 		Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        'Zizaco\Entrust\EntrustServiceProvider'
+        'Zizaco\Entrust\EntrustServiceProvider',
+        Proengsoft\JsValidation\JsValidationServiceProvider::class,
 
     ],
 
@@ -212,7 +213,8 @@ return [
 		'Flash'     =>  laracasts\Flash\Flash::class,
 		'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Entrust' => 'Zizaco\Entrust\EntrustFacade'
+        'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
 
     ],
 

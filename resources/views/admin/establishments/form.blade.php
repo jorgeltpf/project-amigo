@@ -175,6 +175,8 @@
 	    </div>
 
 @section('scripts')
+ 
+ {!! $validator !!}
 
 <script type="text/javascript">
 	$(document).ready(function() {

@@ -13,7 +13,8 @@
 		"intervention/image": "2.2.0",
         "barryvdh/laravel-debugbar": "^2.0@dev",
         "zizaco/entrust": "dev-laravel-5",
-        "caouecs/laravel4-lang": "~2.0"
+        "caouecs/laravel4-lang": "~2.0",
+        "proengsoft/laravel-jsvalidation": "~1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -47,7 +48,8 @@
             "php artisan clear-compiled"
         ],
         "post-update-cmd": [
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan vendor:publish --provider=\"Proengsoft\\JsValidation\\JsValidationServiceProvider\" --tag=public --force"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""

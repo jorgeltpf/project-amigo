@@ -14,8 +14,15 @@ use App\Http\Requests\Admin\EstablishmentsEditRequest;
 use App\Http\Requests\Admin\DeleteRequest;
 use App\Http\Controllers\Controller;
 use Datatables;
+use JsValidator;
 
 class EstablishmentsController extends AdminController {
+    protected $validationRules = [
+        'name' => 'required|max:255',
+        'cnpj' => 'required|max:13',
+        'email' => 'required|email|unique:users'
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -184,6 +191,7 @@ class EstablishmentsController extends AdminController {
      * @return Response
      */
     public function edit($id) {
+        $validator = JsValidator::make($this->validationRules);
         $establishments = Establishment::find($id);
 
         $weekdays = $establishments->weekdays->toArray();
@@ -206,7 +214,7 @@ class EstablishmentsController extends AdminController {
         }
         // $adjustWeeks = sort($adjustWeeks);
         // dd($adjustWeeks);
-        return view('admin.establishments.edit', compact('establishments', 'adjustWeeks'));
+        return view('admin.establishments.edit', compact('establishments', 'adjustWeeks', 'validator'));
     }
 
     /**
