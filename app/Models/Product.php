@@ -16,6 +16,7 @@ class Product extends Model {
 		'price'
 	);
 
+
 public function product_types()
   {
     return $this->hasOne('App\Models\ProductType');
