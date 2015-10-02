@@ -11,8 +11,15 @@ use App\Models\ProductType;
 use App\Http\Requests;
 use App\Http\Controllers\AdminController;
 use Datatables;
+use JsValidator;
+
 class ProductsController extends AdminController
 {
+    protected $validationRules = [
+        'name' => 'required',
+        'price' => 'required',
+        'description' => 'required'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +37,7 @@ class ProductsController extends AdminController
      * @return Response
      */
     public function create(){
+        $validator = JsValidator::make($this->validationRules);
         $product_types_list = ProductType::lists('description', 'id');
         $product_types_list = $product_types_list->sort();
         return view('admin.products.create', compact('product_types_list'));
@@ -41,9 +49,19 @@ class ProductsController extends AdminController
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $product = new Product();
+
+       //dd($request);
+       $product['name']             = $request->name;
+       $product['price']            = $request->price;
+       $product['description']      = $request->description;
+       $product['product_type_id']  = $request->product_types_list;
+
+       $product->save();
+       flash()->success('Cadastro salvo com sucesso!');
+
+       return redirect('admin/products');
     }
 
     /**

@@ -150,7 +150,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     //Products
     Route::get('products/', 'ProductsController@index');
     Route::get('products/create', 'ProductsController@create');
-    Route::get('products/store', 'ProductsController@store');
+    Route::post('products/create', 'ProductsController@store');
     Route::get('products/data', 'ProductsController@data');
 
 });
