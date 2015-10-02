@@ -17,9 +17,12 @@ class Product extends Model {
 	);
 
 
-public function product_types()
-  {
+public function product_types() {
     return $this->hasOne('App\Models\ProductType');
   }
+
+public function getProductTypesListAttribute(){
+	return $this->product_types->lists('id');
+}
 
 }

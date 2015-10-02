@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 use Illuminate\Support\Facades\Input;
-
+use App\Models\ProductType;
 
 use App\Http\Requests;
 use App\Http\Controllers\AdminController;
@@ -29,9 +29,10 @@ class ProductsController extends AdminController
      *
      * @return Response
      */
-    public function create()
-    {
-        //
+    public function create(){
+        $product_types_list = ProductType::lists('description', 'id');
+        $product_types_list = $product_types_list->sort();
+        return view('admin.products.create', compact('product_types_list'));
     }
 
     /**
