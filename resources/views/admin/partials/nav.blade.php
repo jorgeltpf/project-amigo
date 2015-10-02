@@ -90,8 +90,14 @@
     </li>
     <li class="{{set_active('admin/establishments*')}}">
         <a href="{{url('admin/establishments')}}">
-            <i class="glyphicon glyphicon-tower"></i>
+            <i class="glyphicon glyphicon-home"></i>
             <span class="hidden-sm text"> Estab</span>
+        </a>
+    </li>
+    <li class="{{set_active('admin/products*')}}">
+        <a href="{{url('admin/products')}}">
+            <i class="glyphicon glyphicon-glass"></i>
+            <span class="hidden-sm text"> Produtos</span>
         </a>
     </li>
 </ul>
