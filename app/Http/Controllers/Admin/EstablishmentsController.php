@@ -19,8 +19,17 @@ use JsValidator;
 class EstablishmentsController extends AdminController {
     protected $validationRules = [
         'name' => 'required|max:255',
-        'cnpj' => 'required|max:13',
-        'email' => 'required|email|unique:users'
+        'cnpj' => 'required',
+        'email' => 'required|email|unique:users',
+        'phone' => 'required',
+        'cell_phone' => 'required',
+        'cep' => 'required',
+        'street' => 'required',
+        'neighborhood' => 'required',
+        'street_number' => 'required',
+        'complement' => 'required',
+        'city' => 'required',
+        'country' => 'required'
     ];
 
     /**
@@ -52,7 +61,8 @@ class EstablishmentsController extends AdminController {
         // );
         // $weekdays = \DB::table('week_days')->select('id', 'name')->get();
         // $weekdays = WeekDay::all();
-        return view('admin.establishments.create');
+        $validator = JsValidator::make($this->validationRules);
+        return view('admin.establishments.create', compact('validator'));
     }
 
     /**

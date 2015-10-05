@@ -13,8 +13,7 @@ use App\Http\Controllers\AdminController;
 use Datatables;
 use JsValidator;
 
-class ProductsController extends AdminController
-{
+class ProductsController extends AdminController {
     protected $validationRules = [
         'name' => 'required',
         'price' => 'required',
@@ -25,8 +24,7 @@ class ProductsController extends AdminController
      *
      * @return Response
      */
-    public function index()
-    {
+    public function index() {
         //
         return view('admin.products.index');
     }
@@ -36,11 +34,11 @@ class ProductsController extends AdminController
      *
      * @return Response
      */
-    public function create(){
+    public function create() {
         $validator = JsValidator::make($this->validationRules);
         $product_types_list = ProductType::lists('description', 'id');
         $product_types_list = $product_types_list->sort();
-        return view('admin.products.create', compact('product_types_list'));
+        return view('admin.products.create', compact('product_types_list', 'validator'));
     }
 
     /**

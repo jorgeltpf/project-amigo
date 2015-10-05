@@ -91,7 +91,7 @@
     <li class="{{set_active('admin/establishments*')}}">
         <a href="{{url('admin/establishments')}}">
             <i class="glyphicon glyphicon-home"></i>
-            <span class="hidden-sm text"> Estab</span>
+            <span class="hidden-sm text"> Estabelecimento</span>
         </a>
     </li>
     <li class="{{set_active('admin/products*')}}">

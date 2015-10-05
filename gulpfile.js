@@ -53,6 +53,9 @@ elixir(function (mix) {
     mix.copy('resources/' + paths.flag + '/css/flag-sprites.min.css', 'public/css/flags.css');
     mix.copy('resources/' + paths.flag + '/img/flags.png', 'public/img/flags.png');
 
+    // JsValidation: PUBLIC TO RESOURCES
+    mix.copy('resources/vendor/jsvalidation/js/', 'public/vendor/jsvalidation/js');
+
     // TESTE COM O GULP
     mix.sass('shop.scss', 'resources/assets/build/shop.css');
     mix.styles([
