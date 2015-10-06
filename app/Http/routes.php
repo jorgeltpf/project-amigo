@@ -147,6 +147,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     // Route::delete('establishments/{id}/delete', 'EstablishmentsController@destroy');
     Route::get('establishments/data', 'EstablishmentsController@data');
 
+    //Promotions
+    Route::get('promotions/', 'PromotionsController@index');
+    Route::get('promotions/create', 'PromotionsController@create');
+    Route::post('promotions/create', 'PromotionsController@store');
+    Route::get('promotions/{id}/edit', 'PromotionsController@edit');
+    Route::post('promotions/{id}/edit', 'PromotionsController@update');
+    Route::get('promotions/{id}/delete', 'PromotionsController@getDelete');
+    Route::post('promotions/{id}/delete', 'PromotionsController@postDelete');
+    Route::get('promotions/data', 'PromotionsController@data');
+
     //Products
     Route::get('products/', 'ProductsController@index');
     Route::get('products/create', 'ProductsController@create');

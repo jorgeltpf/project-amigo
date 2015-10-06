@@ -1,14 +1,14 @@
 @extends('admin.layouts.default')
 
-@section('title') Produtos :: @parent @stop
+@section('title') Promoções :: @parent @stop
 
 @section('main')
     <div class="page-header">
         <h3>
-            Produtos
+            Promoções
             <div class="pull-right">
                 <div class="pull-right">
-                    <a href="{{{ URL::to('admin/products/create') }}}"
+                    <a href="{{{ URL::to('admin/promotions/create') }}}"
                        class="btn btn-sm btn-primary iframe">
                        <span class="glyphicon glyphicon-plus-sign"></span>
                        {{ trans("admin/modal.new") }}
@@ -22,8 +22,10 @@
         <thead>
         <tr>
             <th>Nome</th>
-            <th>Tipo</th>
-            <th>Preço</th>
+            <th>Estabelecimento</th>
+            <th>Produto</th>
+            <th>Início</th>
+            <th>Fim</th>
             <th>{{ trans("admin/admin.action") }}</th>
         </tr>
         </thead>
@@ -42,7 +44,7 @@
                 "sPaginationType": "bootstrap",
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/products/data') }}"
+                "ajax": "{{ URL::to('admin/promotions/data') }}"
             });
 		});
 	</script>

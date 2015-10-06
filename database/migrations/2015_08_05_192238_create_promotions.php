@@ -15,6 +15,7 @@ class CreatePromotions extends Migration
         Schema::create('promotions', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
+            $table->string('name');
             $table->integer('establishment_id');
             $table->foreign('establishment_id')->references('id')->on('establishments');
             $table->integer('product_id');
