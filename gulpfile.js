@@ -54,7 +54,7 @@ elixir(function (mix) {
     mix.copy('resources/' + paths.flag + '/img/flags.png', 'public/img/flags.png');
 
     // JsValidation: PUBLIC TO RESOURCES
-    mix.copy('resources/vendor/jsvalidation/js/', 'public/vendor/jsvalidation/js');
+    mix.copy('./public/vendor/jsvalidation/js', 'resources/' + paths.validation + '/');
 
     // TESTE COM O GULP
     mix.sass('shop.scss', 'resources/assets/build/shop.css');

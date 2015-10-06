@@ -22,7 +22,7 @@
 		    <div class="form-group">
 		    	{!! Form::label('price', 'Preço:', ['class' => 'control-label col-xs-2', 'for' => 'prod_price']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'price', null, ['class' => 'form-control', 'id' => 'prod_price', 'placeholder' => 'Preço']) !!}
+		        	{!! Form::input('text', 'price', null, ['class' => 'form-control money', 'id' => 'prod_price', 'placeholder' => 'Preço']) !!}
 		        </div>
 		    </div>
 		    <div class="form-group">

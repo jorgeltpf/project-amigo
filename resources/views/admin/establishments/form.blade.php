@@ -165,7 +165,7 @@
 	    <div class="form-group">
 	        <div class="col-xs-offset-2 col-xs-10">
 	            <button type="submit" class="btn btn-success">Salvar</button>
-	            <button type="submit" class="btn btn-primary">
+	            <button type="button" class="btn btn-primary">
 	            	<a href="{{{ URL::to('admin/establishments/') }}}"></a>
                     <span class="glyphicon glyphicon-backward"></span> Voltar
 
