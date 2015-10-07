@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use Helpers;
 
 class Product extends Model {
 	use SoftDeletes;
@@ -17,12 +18,20 @@ class Product extends Model {
 	);
 
 
-public function product_types() {
-    return $this->hasOne('App\Models\ProductType');
-  }
+	public function product_types() {
+    	return $this->hasOne('App\Models\ProductType');
+  	}
 
-public function getProductTypesListAttribute(){
-	return $this->product_types->lists('id');
-}
+	public function getProductTypesListAttribute() {
+		return $this->product_types->lists('id');
+	}
+
+	public function getPriceAttribute($price) {
+		return convertCurrency($price);
+	}
+
+	public function setPriceAttribute($price) {
+	 	$this->attributes['price'] = convertCurrencyDB($price);
+	}
 
 }

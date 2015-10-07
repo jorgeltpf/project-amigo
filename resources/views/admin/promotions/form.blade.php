@@ -34,13 +34,13 @@
 		    <div class="form-group">
 		    	{!! Form::label('initial_period', 'Início:', ['class' => 'control-label col-xs-2', 'for' => 'initial_period']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'initial_period', null, ['class' => 'form-control', 'id' => 'initial_period', 'placeholder' => 'Início']) !!}
+		        	{!! Form::input('text', 'initial_period', null, ['class' => 'form-control date', 'id' => 'initial_period', 'placeholder' => 'Início']) !!}
 		        </div>
 		    </div>
 		    <div class="form-group">
 		    	{!! Form::label('final_period', 'Final:', ['class' => 'control-label col-xs-2', 'for' => 'final_period']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'final_period', null, ['class' => 'form-control', 'id' => 'final_period', 'placeholder' => 'Final']) !!}
+		        	{!! Form::input('text', 'final_period', null, ['class' => 'form-control date', 'id' => 'final_period', 'placeholder' => 'Final']) !!}
 		        </div>
 		    </div>
 		    

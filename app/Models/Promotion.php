@@ -26,10 +26,34 @@ class Promotion extends Model {
 	}
 
 	public function getEstablishmentsListAttribute() {
-		return $this->establishments->lists('id');
+		// return $this->establishments->lists('id');
 	}
 
 	public function getProductsListAttribute() {
-		return $this->products->lists('id');
+		// return $this->products->lists('id');
 	}
+
+	public function getDiscountAttribute($discount) {
+		return convertCurrency($discount);
+	}
+
+	public function setDiscountAttribute($discount) {
+		$this->attributes['discount'] = convertCurrencyDB($discount);
+	}
+
+	public function getInitialPeriodAttribute($date) {
+		return convertDate($date);
+	}
+
+	// public function setInitialPeriodAttribute($date) {
+	// 	return convertDateDB($date);
+	// }
+
+	public function getFinalPeriodAttribute($date) {
+		return convertDate($date);
+	}
+
+	// public function setFinalPeriodAttribute($date) {
+	// 	return convertDateDB($date);
+	// }
 }

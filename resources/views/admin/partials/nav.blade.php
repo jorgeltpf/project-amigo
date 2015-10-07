@@ -100,5 +100,11 @@
             <span class="hidden-sm text"> Produtos</span>
         </a>
     </li>
+    <li class="{{set_active('admin/promotions*')}}">
+        <a href="{{url('admin/promotions')}}">
+            <i class="glyphicon glyphicon-tag"></i>
+            <span class="hidden-sm text"> Promoções</span>
+        </a>
+    </li>
 </ul>
 </div>

@@ -7,6 +7,7 @@ use App\Models\Promotion;
 use App\Models\Product;
 use App\Models\Establishment;
 
+use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\Http\Controllers\AdminController;
 
@@ -39,7 +40,6 @@ class PromotionsController extends AdminController {
         $validator = JsValidator::make($this->validationRules);        
         $establishments_list = Establishment::lists('name', 'id');
         $products_list = Product::lists('name', 'id');
-        // $products_list = $products_list->sort();
         return view('admin.promotions.create', compact('establishments_list','products_list', 'validator'));
     }
 
@@ -49,19 +49,18 @@ class PromotionsController extends AdminController {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request) {
+        $promotions = new Promotion();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        //
+        $input = Input::all();
+
+        $input['establishment_id'] = $input['establishments_list'];
+        $input['product_id'] = $input['products_list'];
+        Promotion::create($input);
+
+        flash()->success('Cadastro salvo com sucesso!');
+
+        return redirect('admin/promotions');
     }
 
     /**
@@ -75,7 +74,7 @@ class PromotionsController extends AdminController {
         $promotions = Promotion::find($id);
         $establishments_list = Establishment::lists('name', 'id');
         $products_list = Product::lists('name', 'id');
-        return view('admin.promotions.edit', compact('promotions', 'establishments_list', 'products_list'));
+        return view('admin.promotions.edit', compact('promotions', 'validator', 'establishments_list', 'products_list'));
     }
 
     /**
@@ -85,8 +84,7 @@ class PromotionsController extends AdminController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -102,11 +100,11 @@ class PromotionsController extends AdminController {
     }
 
     public function data() {
-        $promotion = Promotion::orderBy('promotions.id', 'DESC')
-            ->join('establishments', 'establishments.id', '=', 'promotions.establishment_id')
-            ->join('products', 'products.id', '=', 'promotions.product_id')
+        $promotion = Promotion::join('establishments', 'promotions.establishment_id', '=', 'establishments.id')
+            ->join('products', 'promotions.product_id', '=', 'products.id')
+            ->orderBy('promotions.id', 'DESC')
             ->select(array('promotions.id', 'promotions.name', 'establishments.name', 'products.name',
-                'promotions.initial_period', 'promotions.final_period'));
+               'promotions.initial_period', 'promotions.final_period'));
 
         return Datatables::of($promotion)
             ->add_column('actions',

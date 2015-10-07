@@ -20,7 +20,8 @@ class EstablishmentsController extends AdminController {
     protected $validationRules = [
         'name' => 'required|max:255',
         'cnpj' => 'required',
-        'email' => 'required|email|unique:users',
+        // 'email' => 'required|email|unique:users',
+        'email' => 'required|email',
         'phone' => 'required',
         'cell_phone' => 'required',
         'cep' => 'required',
@@ -84,6 +85,7 @@ class EstablishmentsController extends AdminController {
         $establishments['street_number'] = $request->street_number;
         $establishments['complement'] = $request->complement;
         $establishments['street_number'] = $request->street_number;
+        $establishments['neighborhood'] = $request->neighborhood;
         $establishments['city'] = $request->city;
         $establishments['state'] = $request->state;
         $establishments['country'] = $request->country;
