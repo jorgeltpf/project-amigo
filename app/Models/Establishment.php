@@ -74,4 +74,10 @@ class Establishment extends Model {
     public function weekdays() {
         return $this->belongsToMany('App\Models\WeekDay')->withPivot('time_on', 'time_off', 'shift');
     }
+
+    public function promotions() {
+        // return $this->hasOne('App\Models\Promotion');
+        return $this->hasMany('App\Models\Establishment', 'establishment_id');
+        // return $this->belongsTo('App\Models\Promotion', 'establishment_id');
+    }
 }

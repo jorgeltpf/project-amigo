@@ -23,9 +23,7 @@
         <tr>
             <th>Nome</th>
             <th>Estabelecimento</th>
-            <th>Produto</th>
             <th>Início</th>
-            <th>Fim</th>
             <th>{{ trans("admin/admin.action") }}</th>
         </tr>
         </thead>
@@ -44,7 +42,17 @@
                 "sPaginationType": "bootstrap",
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/promotions/data') }}"
+                "ajax": "{{ URL::to('admin/promotions/data') }}",
+                "fnDrawCallback": function (oSettings) {
+                    $(".iframe").colorbox({
+                        iframe: true,
+                        width: "80%",
+                        height: "80%",
+                        onClosed: function () {
+                            window.location.reload();
+                        }
+                    });
+                }
             });
 		});
 	</script>

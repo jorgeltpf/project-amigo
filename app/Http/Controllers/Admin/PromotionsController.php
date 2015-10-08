@@ -31,6 +31,18 @@ class PromotionsController extends AdminController {
         return view('admin.promotions.index', compact('promotions'));
     }
 
+    private function createPromotion($request) {
+        $promotion = Promotion::create($request);
+
+        $this->syncProducts($promotion, $request['products_list']);
+
+        return $promotion;
+    }
+
+    private function syncProducts(Promotion $promotion, array $products) {
+        $promotion->products()->sync($products);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,13 +62,15 @@ class PromotionsController extends AdminController {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $promotions = new Promotion();
-
+//         $promotions = new Promotion();
         $input = Input::all();
-
+// dd($input);
         $input['establishment_id'] = $input['establishments_list'];
-        $input['product_id'] = $input['products_list'];
-        Promotion::create($input);
+
+        $this->createPromotion($input);
+        // $input['establishment_id'] = $input['establishments_list'];
+        // $input['product_id'] = $input['products_list'];
+        // Promotion::create($input);
 
         flash()->success('Cadastro salvo com sucesso!');
 
@@ -71,7 +85,7 @@ class PromotionsController extends AdminController {
      */
     public function edit($id) {
         $validator = JsValidator::make($this->validationRules);
-        $promotions = Promotion::find($id);
+        $promotions = Promotion::with('Products')->find($id);
         $establishments_list = Establishment::lists('name', 'id');
         $products_list = Product::lists('name', 'id');
         return view('admin.promotions.edit', compact('promotions', 'validator', 'establishments_list', 'products_list'));
@@ -85,7 +99,14 @@ class PromotionsController extends AdminController {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $promotions = Promotion::find($id);
+        // $input = Input::all();
+        // dd($request);
+        $promotions->update($request->all());
+
+        $this->syncProducts($promotions, $request->input('products_list'));
+
+        return redirect('admin/promotions/');
     }
 
     /**
@@ -94,16 +115,22 @@ class PromotionsController extends AdminController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function getDelete($id) {
+        $promotions = $id;
+        return view('admin/promotions/delete', compact('promotions'));
+    }
+
+    public function postDelete($id) {
+        $promotions = Promotion::find($id);
+        $promotions->products()->detach();
+        $promotions->delete();
+        flash()->success('Promoção excluída com sucesso!');
     }
 
     public function data() {
         $promotion = Promotion::join('establishments', 'promotions.establishment_id', '=', 'establishments.id')
-            ->join('products', 'promotions.product_id', '=', 'products.id')
             ->orderBy('promotions.id', 'DESC')
-            ->select(array('promotions.id', 'promotions.name', 'establishments.name', 'products.name',
+            ->select(array('promotions.id', 'promotions.name', 'establishments.name',
                'promotions.initial_period', 'promotions.final_period'));
 
         return Datatables::of($promotion)

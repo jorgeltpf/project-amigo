@@ -29,7 +29,8 @@ var paths = {
     'flag': 'vendor/flag-sprites/dist',
     'mask': 'vendor/jQuery-Mask-Plugin',
     'masks_def': 'vendor/js',
-    'validation': 'vendor/jsvalidation/js/'
+    'validation': 'vendor/jsvalidation/js/',
+    'select2': 'vendor/select2/'
     // 'mask': 'vendor/igorescobar-jQuery-Mask-Plugin-535b4e4'
 };
 
@@ -56,6 +57,8 @@ elixir(function (mix) {
     // JsValidation: PUBLIC TO RESOURCES
     mix.copy('./public/vendor/jsvalidation/js', 'resources/' + paths.validation + '/');
 
+    // mix.copy('resources/' + paths.select2 + '/css/', 'public/css/');
+
     // TESTE COM O GULP
     mix.sass('shop.scss', 'resources/assets/build/shop.css');
     mix.styles([
@@ -67,7 +70,8 @@ elixir(function (mix) {
         includePaths: [
             'resources/' + paths.bootstrap + '/stylesheets/',
             'resources/' + paths.bootswatch + '/',
-            'resources/' + paths.fontawesome + '/scss/'
+            'resources/' + paths.fontawesome + '/scss/',
+            // 'resources/' + paths.select2 + '/css/',
         ]
     });
 
@@ -85,7 +89,8 @@ elixir(function (mix) {
         paths.colorbox + '/jquery.colorbox.js',
         paths.mask + '/jquery.mask.js',
         paths.masks_def + '/masks_def.js',
-        paths.validation + '/jsvalidation.js'
+        paths.validation + '/jsvalidation.js',
+        // paths.select2 + '/js/select2.min.js',
     ], 'public/js/site.js', 'resources/');
 
     // Compile SASS and output to default resource directory.

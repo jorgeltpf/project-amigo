@@ -16,21 +16,20 @@ class Promotion extends Model {
 		'discount'
 	);
 
+    public function establishments() {
+        return $this->belongsTo('App\Models\Establishment', 'establishment_id');
+    }
 
-	public function establishments() {
-		return $this->hasOne('App\Models\Establishment');
-	}
-
-	public function products() {
-		return $this->hasOne('App\Models\Product');
-	}
+    public function products() {
+        return $this->belongsToMany('App\Models\Product');
+    }
 
 	public function getEstablishmentsListAttribute() {
-		// return $this->establishments->lists('id');
+		return $this->establishments->lists('id');
 	}
 
 	public function getProductsListAttribute() {
-		// return $this->products->lists('id');
+		return $this->products->lists('id')->toArray();
 	}
 
 	public function getDiscountAttribute($discount) {

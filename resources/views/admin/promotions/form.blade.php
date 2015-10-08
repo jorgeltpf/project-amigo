@@ -22,9 +22,10 @@
 		    <div class="form-group">
 		    	{!! Form::label('products_list', 'Produtos:', ['class' => 'control-label col-xs-2', 'for' => 'products_list']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::select('products_list', $products_list, null,['class' => 'form-control', 'id' => 'products_list']) !!}
+		        	{!! Form::select('products_list[]', $products_list, null,['class' => 'form-control', 'id' => 'products_list', 'multiple']) !!}
 		        </div>
 		    </div>
+
 		    <div class="form-group">
 		    	{!! Form::label('discount', 'Desconto:', ['class' => 'control-label col-xs-2', 'for' => 'promo_discount']) !!}
 		        <div class="col-xs-10">
@@ -43,7 +44,6 @@
 		        	{!! Form::input('text', 'final_period', null, ['class' => 'form-control date', 'id' => 'final_period', 'placeholder' => 'Final']) !!}
 		        </div>
 		    </div>
-		    
 
 	    </fieldset>
 	    <div class="form-group">
@@ -64,8 +64,9 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		
-		
+		// $('#products_list').select2({
+		// 	placeholder: "Choose a tag:"
+		// });
 	});
 
 </script>
