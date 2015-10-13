@@ -17,18 +17,17 @@ class Product extends Model {
 		'price'
 	);
 
-
-	public function product_types() {
-    	return $this->hasOne('App\Models\ProductType');
-  	}
+    public function product_types() {
+    	return $this->belongsTo('App\Models\ProductType');
+    }
 
 	public function promotions() {
     	return $this->hasMany('App\Models\Promotion');
   	}
 
-	public function getProductTypesListAttribute() {
-		return $this->product_types->lists('id');
-	}
+	//public function getProductTypesListAttribute() {
+		//return $this->product_types->lists('id');
+	//}
 
 	public function getPriceAttribute($price) {
 		return convertCurrency($price);

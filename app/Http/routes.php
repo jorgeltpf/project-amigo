@@ -162,5 +162,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('products/create', 'ProductsController@create');
     Route::post('products/create', 'ProductsController@store');
     Route::get('products/data', 'ProductsController@data');
+    Route::get('products/{id}/edit', 'ProductsController@edit');
+    Route::post('products/{id}/edit', 'ProductsController@update');
+    Route::get('products/{id}/delete', 'ProductsController@getDelete');
+    Route::post('products/{id}/delete', 'ProductsController@postDelete');
 
 });

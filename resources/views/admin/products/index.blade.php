@@ -9,7 +9,7 @@
             <div class="pull-right">
                 <div class="pull-right">
                     <a href="{{{ URL::to('admin/products/create') }}}"
-                       class="btn btn-sm btn-primary iframe">
+                       class="btn btn-sm btn-primary">
                        <span class="glyphicon glyphicon-plus-sign"></span>
                        {{ trans("admin/modal.new") }}
                     </a>
@@ -42,7 +42,17 @@
                 "sPaginationType": "bootstrap",
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/products/data') }}"
+                "ajax": "{{ URL::to('admin/products/data') }}",
+                "fnDrawCallback": function (oSettings) {
+                    $(".iframe").colorbox({
+                        iframe: true,
+                        width: "80%",
+                        height: "80%",
+                        onClosed: function () {
+                            window.location.reload();
+                        }
+                    });
+                }
             });
 		});
 	</script>

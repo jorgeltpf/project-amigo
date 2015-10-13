@@ -50,16 +50,15 @@ class ProductsController extends AdminController {
     public function store(Request $request){
         $product = new Product();
 
-       //dd($request);
-       $product['name']             = $request->name;
-       $product['price']            = $request->price;
-       $product['description']      = $request->description;
-       $product['product_type_id']  = $request->product_types_list;
+        $product['name']             = $request->name;
+        $product['price']            = $request->price;
+        $product['description']      = $request->description;
+        $product['product_type_id']  = $request->product_type_id;
 
-       $product->save();
-       flash()->success('Cadastro salvo com sucesso!');
+        $product->save();
+        flash()->success('Cadastro salvo com sucesso!');
 
-       return redirect('admin/products');
+        return redirect('admin/products');
     }
 
     /**
@@ -79,9 +78,12 @@ class ProductsController extends AdminController {
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $validator = JsValidator::make($this->validationRules);
+        $products = Product::find($id);
+        $product_types_list = ProductType::lists('description', 'id');
+        $product_types_list = $product_types_list->sort();
+        return view('admin.products.edit', compact('products', 'validator', 'product_types_list'));
     }
 
     /**
@@ -91,9 +93,17 @@ class ProductsController extends AdminController {
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $product = Product::find($id);
+        $product['name']             = $request->name;
+        $product['price']            = $request->price;
+        $product['description']      = $request->description;
+        $product['product_type_id']  = $request->product_type_id;
+
+        $product->update();
+        flash()->success('Cadastro salvo com sucesso!');
+
+        return redirect('admin/products');
     }
 
     /**
@@ -107,6 +117,16 @@ class ProductsController extends AdminController {
         //
     }
 
+    public function getDelete($id) {
+        $products = $id;
+        return view('admin/products/delete', compact('products'));
+    }
+
+    public function postDelete(Request $request, $id) {
+        $products = Product::find($id);
+        $products->delete();
+    }
+
     public function data() {
 
 
@@ -117,7 +137,7 @@ class ProductsController extends AdminController {
 
         return Datatables::of($product)
             ->add_column('actions',
-                '<a href="{{{ URL::to(\'admin/products/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm iframe" ><span class="glyphicon glyphicon-pencil"></span> {{ trans("admin/modal.edit") }}</a>
+                '<a href="{{{ URL::to(\'admin/products/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span> {{ trans("admin/modal.edit") }}</a>
                 <a href="{{{ URL::to(\'admin/products/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 <input type="hidden" name="row" value="{{$id}}" id="row">'
             )

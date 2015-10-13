@@ -10,5 +10,4 @@ class ProductType extends Model
 		'description'
 	];
 
-
 }
