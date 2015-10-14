@@ -135,7 +135,7 @@ class PromotionsController extends AdminController {
 
         return Datatables::of($promotion)
             ->add_column('actions',
-                '<a href="{{{ URL::to(\'admin/promotions/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span> {{ trans("admin/modal.edit") }}</a>
+                '<a href="{{{ URL::to(\'admin/promotions/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span> {{ trans("admin/modal.edit") }}</a>
                 <a href="{{{ URL::to(\'admin/promotions/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 <input type="hidden" name="row" value="{{$id}}" id="row">'
             )

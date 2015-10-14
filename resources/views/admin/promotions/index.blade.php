@@ -9,7 +9,7 @@
             <div class="pull-right">
                 <div class="pull-right">
                     <a href="{{{ URL::to('admin/promotions/create') }}}"
-                       class="btn btn-sm btn-primary iframe">
+                       class="btn btn-sm btn-primary">
                        <span class="glyphicon glyphicon-plus-sign"></span>
                        {{ trans("admin/modal.new") }}
                     </a>
