@@ -17,9 +17,20 @@ use JsValidator;
 class PromotionsController extends AdminController {
     protected $validationRules = [
         'name' => 'required',
-        'initial_period' => 'required',
-        'final_period' => 'required'
+        'discount' => 'required',
+        'products_list' => 'required',
+        'initial_period' => 'required|date_format:"d/m/Y"|before:final_period',
+        'final_period' => 'required|date_format:"d/m/Y"|after:initial_period'
     ];
+
+    protected $messages = array(
+        'name.required' => 'É preciso preencher o nome da promoção',
+        'discount.required' => 'É preciso preencher o desconto da promoção',
+        'initial_period.required' => 'É preciso preencher a data inicial da promoção',
+        'final_period.required' => 'É preciso preencher a data final da promoção',
+        'initial_period.before' => 'A data inicial precisa ser menor que a data final',
+        'final_period.after' => 'A data final precisa ser maior que a data inicial',
+    );
 
     /**
      * Display a listing of the resource.
@@ -49,7 +60,7 @@ class PromotionsController extends AdminController {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $validator = JsValidator::make($this->validationRules);        
+        $validator = JsValidator::make($this->validationRules, $this->messages);        
         $establishments_list = Establishment::lists('name', 'id');
         $products_list = Product::lists('name', 'id');
         return view('admin.promotions.create', compact('establishments_list','products_list', 'validator'));
@@ -84,7 +95,7 @@ class PromotionsController extends AdminController {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $validator = JsValidator::make($this->validationRules);
+        $validator = JsValidator::make($this->validationRules, $this->messages);
         $promotions = Promotion::with('Products')->find($id);
         $establishments_list = Establishment::lists('name', 'id');
         $products_list = Product::lists('name', 'id');

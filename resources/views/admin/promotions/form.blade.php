@@ -35,13 +35,13 @@
 		    <div class="form-group">
 		    	{!! Form::label('initial_period', 'Início:', ['class' => 'control-label col-xs-2', 'for' => 'initial_period']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'initial_period', null, ['class' => 'form-control date', 'id' => 'initial_period', 'placeholder' => 'Início']) !!}
+		        	{!! Form::input('date', 'initial_period', null, ['class' => 'form-control date datepicker', 'id' => 'initial_period', 'placeholder' => 'Início']) !!}
 		        </div>
 		    </div>
 		    <div class="form-group">
 		    	{!! Form::label('final_period', 'Final:', ['class' => 'control-label col-xs-2', 'for' => 'final_period']) !!}
 		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'final_period', null, ['class' => 'form-control date', 'id' => 'final_period', 'placeholder' => 'Final']) !!}
+		        	{!! Form::input('date', 'final_period', null, ['class' => 'form-control date datepicker', 'id' => 'final_period', 'placeholder' => 'Final']) !!}
 		        </div>
 		    </div>
 
@@ -50,7 +50,7 @@
 	        <div class="col-xs-offset-2 col-xs-10">
 	            <button type="submit" class="btn btn-success">Salvar</button>
 	            <button type="submit" class="btn btn-primary">
-	            	<a href="{{{ URL::to('admin/promoucts/') }}}"></a>
+	            	<a href="{{{ URL::to('admin/promotions/') }}}"></a>
                     <span class="glyphicon glyphicon-backward"></span> Voltar
 
             	</button>
@@ -64,6 +64,13 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('.datepicker').datepicker({
+			format: "dd/mm/yyyy",
+            language: "pt-BR",
+            autoclose: true,
+            startDate: '+0d'
+		});
+
 		// $('#products_list').select2({
 		// 	placeholder: "Choose a tag:"
 		// });

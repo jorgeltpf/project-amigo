@@ -30,7 +30,9 @@ var paths = {
     'mask': 'vendor/jQuery-Mask-Plugin',
     'masks_def': 'vendor/js',
     'validation': 'vendor/jsvalidation/js/',
-    'select2': 'vendor/select2/'
+    'select2': 'vendor/select2/',
+    'datepicker': '/vendor/bootstrap3-datepicker-gulp/'
+    // 'datepicker': '/vendor/bootstrap-datepicker/dist/'
     // 'mask': 'vendor/igorescobar-jQuery-Mask-Plugin-535b4e4'
 };
 
@@ -68,6 +70,8 @@ elixir(function (mix) {
     // Compile SASS and output to default resource directory
     mix.sass('site.scss', 'resources/assets/build/site.css', {
         includePaths: [
+            // paths.datepicker + '/css/bootstrap-datepicker.css',
+            'resources/' + paths.datepicker + '/scss/',
             'resources/' + paths.bootstrap + '/stylesheets/',
             'resources/' + paths.bootswatch + '/',
             'resources/' + paths.fontawesome + '/scss/',
@@ -90,6 +94,8 @@ elixir(function (mix) {
         paths.mask + '/jquery.mask.js',
         paths.masks_def + '/masks_def.js',
         paths.validation + '/jsvalidation.js',
+        paths.datepicker + '/js/bootstrap-datepicker.js',
+        paths.datepicker + '/js/locales/bootstrap-datepicker.pt-BR.js',
         // paths.select2 + '/js/select2.min.js',
     ], 'public/js/site.js', 'resources/');
 
