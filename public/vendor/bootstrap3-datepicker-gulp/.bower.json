@@ -1,0 +1,23 @@
+{
+  "name": "bootstrap3-datepicker-gulp",
+  "version": "1.5.2",
+  "main": [
+    "scss/datepicker.scss",
+    "js/bootstrap-datepicker.js"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "jquery": ">=1.7.1"
+  },
+  "ignore": [],
+  "homepage": "https://github.com/BrettLefty/bootstrap3-datepicker-gulp",
+  "_release": "1.5.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.5.2",
+    "commit": "3eaa541f167178bbc1d9fec926aa7567231971c2"
+  },
+  "_source": "git://github.com/BrettLefty/bootstrap3-datepicker-gulp.git",
+  "_target": "1.5.2",
+  "_originalSource": "bootstrap3-datepicker-gulp"
+}
