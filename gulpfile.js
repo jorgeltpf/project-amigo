@@ -2,6 +2,12 @@ var gulp = require("gulp");
 var bower = require("gulp-bower");
 var elixir = require("laravel-elixir");
 
+
+gulp.task('modernizr', function() {
+  gulp.src('./*.js')
+    .pipe(modernizr())
+    .pipe(gulp.dest("build/"))
+});
 gulp.task('bower', function() {
     return bower();
 });
@@ -31,7 +37,8 @@ var paths = {
     'masks_def': 'vendor/js',
     'validation': 'vendor/jsvalidation/js/',
     'select2': 'vendor/select2/',
-    'datepicker': '/vendor/bootstrap3-datepicker-gulp/'
+    'datepicker': '/vendor/bootstrap3-datepicker-gulp/',
+    'modernizr' : 'vendor/js'
     // 'datepicker': '/vendor/bootstrap-datepicker/dist/'
     // 'mask': 'vendor/igorescobar-jQuery-Mask-Plugin-535b4e4'
 };
@@ -99,6 +106,8 @@ elixir(function (mix) {
         paths.validation + '/jsvalidation.js',
         paths.datepicker + '/js/bootstrap-datepicker.js',
         paths.datepicker + '/js/locales/bootstrap-datepicker.pt-BR.js',
+        paths.modernizr + '/modernizr-custom.js'
+
         // paths.select2 + '/js/select2.min.js',
     ], 'public/js/site.js', 'resources/');
 

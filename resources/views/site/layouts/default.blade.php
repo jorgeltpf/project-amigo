@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="pt-br" class="no-js">
+
 <head>
     <meta charset="utf-8"/>
     <title>@section('title') Amigo Entregador @show</title>

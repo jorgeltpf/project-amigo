@@ -1,0 +1,13 @@
+{
+  "name": "bootstrap3-datepicker-gulp",
+  "version": "1.5.2",
+  "main": [
+    "scss/datepicker.scss",
+    "js/bootstrap-datepicker.js"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "jquery" : ">=1.7.1"
+  },
+  "ignore": []
+}

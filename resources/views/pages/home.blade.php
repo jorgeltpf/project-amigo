@@ -199,6 +199,8 @@
             //     }
             // });
         });
-    </script>
+
+
+
 @endsection
 @stop

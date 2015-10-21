@@ -1,0 +1,20 @@
+{
+  "name": "bootstrap3-datepicker-gulp",
+  "description": "Forked bootstrap-datepicker for use with gulp and scss.",
+  "version": "1.5.2",
+  "license": "Apache-2.0",
+  "keywords": [
+    "datepicker",
+    "twitter-bootstrap"
+  ],
+  "main": "./js/bootstrap-datepicker.js",
+  "homepage": "https://github.com/BrettLefty/bootstrap3-datepicker-gulp",
+  "author": "Brett Morgan <brett@brettmorgan.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BrettLefty/bootstrap3-datepicker-gulp.git"
+  },
+  "dependencies": {
+    "jquery" : ">=1.7.1"
+  }
+}
