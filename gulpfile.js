@@ -59,6 +59,9 @@ elixir(function (mix) {
     // JsValidation: PUBLIC TO RESOURCES
     mix.copy('./public/vendor/jsvalidation/js', 'resources/' + paths.validation + '/');
 
+    // Datepicker: PUBLIC TO RESOURCES
+    mix.copy('./public/vendor/bootstrap3-datepicker-gulp/', 'resources/' + paths.datepicker + '/');
+
     // mix.copy('resources/' + paths.select2 + '/css/', 'public/css/');
 
     // TESTE COM O GULP
