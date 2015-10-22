@@ -1,6 +1,7 @@
 var gulp = require("gulp");
 var bower = require("gulp-bower");
 var elixir = require("laravel-elixir");
+var modernizr = require("gulp-modernizr");
 
 
 gulp.task('modernizr', function() {
@@ -49,6 +50,7 @@ elixir(function (mix) {
 
     // Run bower install
     mix.task('bower');
+    mix.task('modernizr');
 
     // mix.copy('resources/' + paths.mask, 'public/js');
 
