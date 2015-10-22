@@ -1,14 +1,14 @@
 var gulp = require("gulp");
 var bower = require("gulp-bower");
 var elixir = require("laravel-elixir");
-var modernizr = require("gulp-modernizr");
+// var modernizr = require("gulp-modernizr");
 
 
-gulp.task('modernizr', function() {
-  gulp.src('./*.js')
-    .pipe(modernizr())
-    .pipe(gulp.dest("build/"))
-});
+// gulp.task('modernizr', function() {
+//   gulp.src('./*.js')
+//     .pipe(modernizr())
+//     .pipe(gulp.dest("build/"))
+// });
 gulp.task('bower', function() {
     return bower();
 });
@@ -50,7 +50,7 @@ elixir(function (mix) {
 
     // Run bower install
     mix.task('bower');
-    mix.task('modernizr');
+    // mix.task('modernizr');
 
     // mix.copy('resources/' + paths.mask, 'public/js');
 
