@@ -71,9 +71,7 @@
             startDate: '+0d'
 		});
 
-		// $('#products_list').select2({
-		// 	placeholder: "Choose a tag:"
-		// });
+		$('#products_list').select2();
 	});
 
 </script>

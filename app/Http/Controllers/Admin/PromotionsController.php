@@ -19,8 +19,8 @@ class PromotionsController extends AdminController {
         'name' => 'required',
         'discount' => 'required',
         'products_list' => 'required',
-        'initial_period' => 'required|date_format:"d/m/Y"|before:final_period',
-        'final_period' => 'required|date_format:"d/m/Y"|after:initial_period'
+        'initial_period' => 'required|date_format:"d/m/Y"|before_equal:final_period',
+        'final_period' => 'required|date_format:"d/m/Y"|after_equal:initial_period'
     ];
 
     protected $messages = array(
@@ -140,6 +140,8 @@ class PromotionsController extends AdminController {
 
     public function data() {
         $promotion = Promotion::join('establishments', 'promotions.establishment_id', '=', 'establishments.id')
+            ->join('product_promotion', 'product_promotion.promotion_id', '=', 'promotion.id')
+            ->join('products', 'product_promotion.product_id', '=', 'products.id')
             ->orderBy('promotions.id', 'DESC')
             ->select(array('promotions.id', 'promotions.name', 'establishments.name',
                'promotions.initial_period', 'promotions.final_period'));
