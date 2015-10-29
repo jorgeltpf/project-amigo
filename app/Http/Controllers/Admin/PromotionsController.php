@@ -13,12 +13,14 @@ use App\Http\Controllers\AdminController;
 
 use Datatables;
 use JsValidator;
+use Validator;
 
 class PromotionsController extends AdminController {
     protected $validationRules = [
         'name' => 'required',
         'discount' => 'required',
-        'products_list' => 'required',
+        'products_list[]' => 'required',
+        'establishments_list[]' => 'required',
         'initial_period' => 'required|date_format:"d/m/Y"|before_equal:final_period',
         'final_period' => 'required|date_format:"d/m/Y"|after_equal:initial_period'
     ];
@@ -30,6 +32,8 @@ class PromotionsController extends AdminController {
         'final_period.required' => 'É preciso preencher a data final da promoção',
         'initial_period.before' => 'A data inicial precisa ser menor que a data final',
         'final_period.after' => 'A data final precisa ser maior que a data inicial',
+        'products_list[]' => 'É preciso selecionar produto(s) que compõe a promoção',
+        'establishments_list[]' => 'É preciso selecionar um estabelecimento que compõe a promoção',
     );
 
     /**
@@ -42,14 +46,20 @@ class PromotionsController extends AdminController {
         return view('admin.promotions.index', compact('promotions'));
     }
 
+    /**
+     * Função que cria uma nova promoção e em seguida salva os produtos 
+     * que estão associados a promoção (n:n)
+     */
     private function createPromotion($request) {
         $promotion = Promotion::create($request);
-
         $this->syncProducts($promotion, $request['products_list']);
-
         return $promotion;
     }
 
+    /**
+     * Função para o salvamento das promoções em conjunto com os produtos, 
+     * visto que existe um relacionamento n:n
+     */
     private function syncProducts(Promotion $promotion, array $products) {
         $promotion->products()->sync($products);
     }
@@ -73,18 +83,23 @@ class PromotionsController extends AdminController {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-//         $promotions = new Promotion();
+//      $promotions = new Promotion();
+        // dd(str_replace("_equal", "", $this->validationRules['initial_period']));
+        // NECESSITA DE MELHORIAS NA FORMA DE VALIDAÇÃO
+        // $this->validationRules['initial_period'] = str_replace("_equal", "", $this->validationRules['initial_period']);
+        // $this->validationRules['final_period'] = str_replace("_equal", "", $this->validationRules['final_period']);
+        // $validation = Validator::make($request->all(), $this->validationRules);
         $input = Input::all();
-// dd($input);
+
+        // if ($validation->fails()) {
+        //     flash()->error('Selecione produtos para a produção!');
+        //     return redirect()->back()->withErrors($validation->errors());
+            
+        // }
+
         $input['establishment_id'] = $input['establishments_list'];
-
         $this->createPromotion($input);
-        // $input['establishment_id'] = $input['establishments_list'];
-        // $input['product_id'] = $input['products_list'];
-        // Promotion::create($input);
-
         flash()->success('Cadastro salvo com sucesso!');
-
         return redirect('admin/promotions');
     }
 
@@ -135,16 +150,14 @@ class PromotionsController extends AdminController {
         $promotions = Promotion::find($id);
         $promotions->products()->detach();
         $promotions->delete();
-        flash()->success('Promoção excluída com sucesso!');
+        // flash()->success('Promoção excluída com sucesso!');
     }
 
     public function data() {
         $promotion = Promotion::join('establishments', 'promotions.establishment_id', '=', 'establishments.id')
-            ->join('product_promotion', 'product_promotion.promotion_id', '=', 'promotion.id')
-            ->join('products', 'product_promotion.product_id', '=', 'products.id')
-            ->orderBy('promotions.id', 'DESC')
-            ->select(array('promotions.id', 'promotions.name', 'establishments.name',
-               'promotions.initial_period', 'promotions.final_period'));
+            ->select(array('promotions.id', 'promotions.name', 'establishments.name as establishments',
+               'promotions.initial_period', 'promotions.final_period'))
+            ->orderBy('promotions.id', 'DESC');
 
         return Datatables::of($promotion)
             ->add_column('actions',

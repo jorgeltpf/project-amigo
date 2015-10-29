@@ -24,6 +24,7 @@
             <th>Nome</th>
             <th>Estabelecimento</th>
             <th>Início</th>
+            <th>Fim</th>
             <th>{{ trans("admin/admin.action") }}</th>
         </tr>
         </thead>
@@ -36,13 +37,13 @@
 	@parent
 	<script type="text/javascript">
 		var oTable;
-		$(document).ready(function() {
-			oTable = $('#table').DataTable({
+        $(document).ready(function () {
+            oTable = $('#table').DataTable({
                 "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
                 "sPaginationType": "bootstrap",
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/promotions/data') }}",
+                "ajax": "{{ URL::to('admin/promotions/data/') }}",
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({
                         iframe: true,
@@ -54,6 +55,6 @@
                     });
                 }
             });
-		});
+        });
 	</script>
 @stop

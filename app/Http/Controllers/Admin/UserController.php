@@ -123,8 +123,7 @@ class UserController extends AdminController {
      * @param $user
      * @return Response
      */
-    public function postDelete(DeleteRequest $request,$id)
-    {
+    public function postDelete(DeleteRequest $request,$id) {
         $user= User::find($id);
         $user->delete();
     }
@@ -134,8 +133,7 @@ class UserController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function data()
-    {
+    public function data() {
         $users = User::select(
             array(
                 'users.id',
@@ -152,7 +150,6 @@ class UserController extends AdminController {
                     <a href="{{{ URL::to(\'admin/users/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 @endif')
             ->remove_column('id')
-
             ->make();
     }
 

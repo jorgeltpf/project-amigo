@@ -114,8 +114,19 @@ class VideoAlbumController extends AdminController {
      */
     public function data()
     {
-        $video_category = VideoAlbum::join('languages', 'languages.id', '=', 'video_albums.language_id')
-            ->select(array('video_albums.id','video_albums.name','languages.name as language','video_albums.id as images_count', 'video_albums.created_at'))
+        $video_category = VideoAlbum::join(
+                'languages',
+                'languages.id', '=', 'video_albums.language_id'
+            )
+            ->select(
+                array(
+                    'video_albums.id',
+                    'video_albums.name',
+                    'languages.name as language',
+                    'video_albums.id as images_count',
+                    'video_albums.created_at'
+                )
+            )
             ->orderBy('video_albums.position', 'ASC');
 
         return Datatables::of($video_category)

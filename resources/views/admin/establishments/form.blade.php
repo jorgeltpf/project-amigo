@@ -125,61 +125,69 @@
 		        	@for($i=1; $i<4; $i++)
 		        		@if(!empty($weeks['days'][$i]['time_on']))
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $weeks['days'][$i]['time_on'] !!}">
+								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs hour-open" placeholder="00:00" value="{!! $weeks['days'][$i]['time_on'] !!}">
 								<div class="help">Aberto</div>
 							</div>
 						@else
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="">
+								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs hour-open" placeholder="00:00" value="">
 								<div class="help">Aberto</div>
 							</div>
 						@endif
 						@if(!empty($weeks['days'][$i]['time_off']))
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $weeks['days'][$i]['time_off'] !!}">
+								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs hour-closed" placeholder="00:00" value="{!! $weeks['days'][$i]['time_off'] !!}">
 								<div class="help">Fechado</div>
 							</div>
 						@else
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="">
+								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs hour-closed" placeholder="00:00" value="">
 								<div class="help">Fechado</div>
 							</div>
 						@endif
 		        	@endfor
-		        		<div class="col-sm-1"><button type="button" class="btn btn-danger remove-div"><span class="glyphicon glyphicon-remove"></span></button></div>
-<!-- 		        	@foreach($weeks['days'] as $keys => $days)
-						<div class="col-sm-1 col-md-1">
-							<input name="weekday[{!! $weeks['week_day_id'] !!}][time_on_{!! $weeks['week_day_id'] !!}_"setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_on'] !!}">
-							<div class="help">Aberto</div>
-						</div>
-						<div class="col-sm-1 col-md-1">
-							<input name="weekday[{!! $weeks['week_day_id'] !!}][time_off_{!! $weeks['week_day_id'] !!}_"+setShift({!! $keys !!})+"{!! $keys !!}]" id="initial-{!! $weeks['week_day_id'] !!}" type="text" class="time form-control input-xs" placeholder="00:00" value="{!! $days['time_off'] !!}">
-							<div class="help">Fechado</div>
-						</div>
-					@endforeach -->
+	        		<div class="col-sm-1"><button type="button" class="btn btn-danger remove-div"><span class="glyphicon glyphicon-remove"></span></button></div>
 			    </div>
 			    @endforeach
 		    @endif
-
 	    </fieldset>
 	    <div class="form-group">
 	        <div class="col-xs-offset-2 col-xs-10">
-	            <button type="submit" class="btn btn-success">Salvar</button>
+	            <button type="button" class="btn btn-success save-est">Salvar</button>
 	            <button type="button" class="btn btn-primary">
 	            	<a href="{{{ URL::to('admin/establishments/') }}}"></a>
                     <span class="glyphicon glyphicon-backward"></span> Voltar
-
             	</button>
-
 	        </div>
 	    </div>
 
 @section('scripts')
  
- {!! $validator !!}
+{!! $validator !!}
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('.save-est').on('click', function() {
+			var hourTest  = [];
+			$('.hour-open').each(function(key, val) {
+				var item = {};
+				item['open'] = $(val).val();
+				hourTest.push(item);
+			});
+
+			$('.hour-closed').each(function(key, val) {
+				var item = {};
+				item['closed'] = $(val).val();
+				hourTest.push(item);
+			});
+
+			compareHour(hourTest);
+
+			if ($('.hour').val()) {
+				$('#est').submit();
+			}
+		});
+
 		$('#cep').on('change', function() {
 			if ($('#cep').val()) {
 				$.ajax({
@@ -249,8 +257,8 @@
 			var buttonId = id.split('-')[1];
 
 			$(this).parent().after(
-				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour form-control input-xs" placeholder="00:00"><div class="help">Aberto</div></div>'+
-				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour form-control input-xs" placeholder="00:00"><div class="help">Fechado</div></div>'
+				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour form-control input-xs hour-open" placeholder="00:00"><div class="help">Aberto</div></div>'+
+				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour form-control input-xs hour-closed" placeholder="00:00"><div class="help">Fechado</div></div>'
 			);
 			$('.hour').mask('00:00');
 			$(this).parent().css('display', 'none');
@@ -319,6 +327,21 @@
         html += '<div class="col-sm-1"><button type="button" class="btn btn-danger remove-div"><span class="glyphicon glyphicon-remove"></span></button></div>';
         html += '</div>';
         return html;
+	}
+
+	function compareHour(hour) {
+		var prb = false;
+		$(hour).each(function(key, val) {
+			// console.log(val['closed']);
+			if (val['open'] != undefined || val['closed'] != undefined) {
+			console.log(val['open']);
+				if (val['open'] >= val['closed']) {
+					prb = true;
+					// console.log('prb');
+				}
+			}
+		});
+		// console.log(prb);
 	}
 </script>
 @stop
