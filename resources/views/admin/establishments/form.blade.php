@@ -167,27 +167,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.save-est').on('click', function() {
-			var hourTest  = [];
-			$('.hour-open').each(function(key, val) {
-				var item = {};
-				item['open'] = $(val).val();
-				hourTest.push(item);
-			});
-
-			$('.hour-closed').each(function(key, val) {
-				var item = {};
-				item['closed'] = $(val).val();
-				hourTest.push(item);
-			});
-
-			compareHour(hourTest);
-
-			if ($('.hour').val()) {
-				$('#est').submit();
-			}
-		});
-
 		$('#cep').on('change', function() {
 			if ($('#cep').val()) {
 				$.ajax({
@@ -272,7 +251,86 @@
   				nextDiv = $($this.parents('div.week-input').next()).find('select').prepend(options);
 			$this.parents('div.week-input').remove();
 		});
+
+		$('.save-est').on('click', function() {
+			var hourTest  = [];
+			$('.hour-open').each(function(key, val) {				
+				var item = {};
+				item['open_'+key] = $(val).val();
+				hourTest.push(item);
+			});			
+
+			$('.hour-closed').each(function(key, val) {
+				var item = {};
+				item['close_'+key] = $(val).val();
+				hourTest.push(item);
+			});
+
+			compareHour(hourTest);
+
+			if ($('.hour').val()) {
+				$('#est').submit();
+			}
+		});
 	});
+
+	function compareHour(hour) {
+		var prb = [],
+			open,
+			secondsOpen,
+			close,
+			secondsClose,
+			count = 0;
+
+		$(hour).each(function(key, val) {
+			if (val['open_'+count] != undefined && val['open_'+count] != "") {			
+				open = val['open_'+count] + ":00";
+				var a = open.split(':');
+				secondsOpen = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+			}
+
+
+			if (val['close_'+count] != undefined && val['close_'+count] != "") {
+				close = val['close'+count] + ":00";
+				var split = close.split(':');
+				secondsClose = (+split[0]) * 60 * 60 + (+split[1]) * 60 + (+split[2]);
+				console.log("Close:"+secondsClose);
+			}
+console.log(val['close_'+count]);
+console.log(count);
+			// var teste = open + ":00";
+			// var a = (open + ":00").split(':');
+			// var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
+			if (open && close) {
+				if (open >= close) {
+					prb.push(true);
+				} else {
+					prb.push(false);
+				}
+			} else {
+				prb.push(true);
+			}
+			open = "";
+			close = "";
+			count += 1;
+		});
+
+		// console.log("prb: "+prb);
+		return prb;
+	}
+
+	function getHour24(timeString) {
+	    time = null;
+	    var matches = timeString.match(/^(\d{1,2}):00 (\w{2})/);
+	    console.log(timeString);
+	    if (matches != null && matches.length == 3) {
+	        time = parseInt(matches[1]);
+	        if (matches[2] == 'PM') {
+	            time += 12;
+	        }
+	    }
+	    return time;
+	}
 
 	function setShift(key) {
         var shift = "";
@@ -327,21 +385,6 @@
         html += '<div class="col-sm-1"><button type="button" class="btn btn-danger remove-div"><span class="glyphicon glyphicon-remove"></span></button></div>';
         html += '</div>';
         return html;
-	}
-
-	function compareHour(hour) {
-		var prb = false;
-		$(hour).each(function(key, val) {
-			// console.log(val['closed']);
-			if (val['open'] != undefined || val['closed'] != undefined) {
-			console.log(val['open']);
-				if (val['open'] >= val['closed']) {
-					prb = true;
-					// console.log('prb');
-				}
-			}
-		});
-		// console.log(prb);
 	}
 </script>
 @stop
