@@ -16,7 +16,32 @@
             <span class="hidden-sm text"> Dashboard</span>
         </a>
     </li>
-    <li class="{{set_active('admin/language*')}}">
+    <li class="{{set_active('admin/users*')}}">
+        <a href="{{url('admin/users')}}">
+            <i class="glyphicon glyphicon-user"></i>
+            <span class="hidden-sm text"> {{ trans("admin/admin.users") }}</span>
+        </a>
+    </li>
+    <li class="{{set_active('admin/establishments*')}}">
+        <a href="{{url('admin/establishments')}}">
+            <i class="glyphicon glyphicon-home"></i>
+            <span class="hidden-sm text"> Estabelecimento</span>
+        </a>
+    </li>
+    <li class="{{set_active('admin/products*')}}">
+        <a href="{{url('admin/products')}}">
+            <i class="glyphicon glyphicon-glass"></i>
+            <span class="hidden-sm text"> Produtos</span>
+        </a>
+    </li>
+    <li class="{{set_active('admin/promotions*')}}">
+        <a href="{{url('admin/promotions')}}">
+            <i class="glyphicon glyphicon-tag"></i>
+            <span class="hidden-sm text"> Promoções</span>
+        </a>
+    </li>
+
+    <!-- <li class="{{set_active('admin/language*')}}">
         <a href="{{url('admin/language')}}">
             <i class="fa fa-language"></i>
             <span class="hidden-sm text"> Language</span>
@@ -81,30 +106,6 @@
                 </a>
             </li>
         </ul>
-    </li>
-    <li class="{{set_active('admin/users*')}}">
-        <a href="{{url('admin/users')}}">
-            <i class="glyphicon glyphicon-user"></i>
-            <span class="hidden-sm text"> {{ trans("admin/admin.users") }}</span>
-        </a>
-    </li>
-    <li class="{{set_active('admin/establishments*')}}">
-        <a href="{{url('admin/establishments')}}">
-            <i class="glyphicon glyphicon-home"></i>
-            <span class="hidden-sm text"> Estabelecimento</span>
-        </a>
-    </li>
-    <li class="{{set_active('admin/products*')}}">
-        <a href="{{url('admin/products')}}">
-            <i class="glyphicon glyphicon-glass"></i>
-            <span class="hidden-sm text"> Produtos</span>
-        </a>
-    </li>
-    <li class="{{set_active('admin/promotions*')}}">
-        <a href="{{url('admin/promotions')}}">
-            <i class="glyphicon glyphicon-tag"></i>
-            <span class="hidden-sm text"> Promoções</span>
-        </a>
-    </li>
+    </li> -->
 </ul>
 </div>
