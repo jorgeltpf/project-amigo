@@ -1,14 +1,14 @@
 @extends('admin.layouts.default')
 
-@section('title') Produtos :: @parent @stop
+@section('title') Classes de Produto :: @parent @stop
 
 @section('main')
     <div class="page-header">
         <h3>
-            Produtos
+            Classes de Produto
             <div class="pull-right">
                 <div class="pull-right">
-                    <a href="{{{ URL::to('admin/products/create') }}}"
+                    <a href="{{{ URL::to('admin/productclasses/create') }}}"
                        class="btn btn-sm btn-primary">
                        <span class="glyphicon glyphicon-plus-sign"></span>
                        {{ trans("admin/modal.new") }}
@@ -21,10 +21,7 @@
 	<table id="table" class="table table-striped table-hover">
         <thead>
         <tr>
-            <th>Nome</th>
-            <th>Classe</th>
-            <th>Tipo</th>
-            <th>Preço</th>
+            <th>Descrição</th>
             <th>{{ trans("admin/admin.action") }}</th>
         </tr>
         </thead>
@@ -43,7 +40,7 @@
                 "sPaginationType": "bootstrap",
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/products/data') }}",
+                "ajax": "{{ URL::to('admin/productclasses/data') }}",
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({
                         iframe: true,

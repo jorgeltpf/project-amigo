@@ -17,9 +17,13 @@ class Product extends Model {
 		'price'
 	);
 
-    public function product_types() {
+    /*public function product_types() {
     	return $this->belongsTo('App\Models\ProductType');
     }
+
+    public function product_classes() {
+    	return $this->belongsTo('App\Models\ProductClass');
+    }*/
 
 	public function promotions() {
     	return $this->hasMany('App\Models\Promotion');

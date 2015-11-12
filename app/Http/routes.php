@@ -167,4 +167,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('products/{id}/delete', 'ProductsController@getDelete');
     Route::post('products/{id}/delete', 'ProductsController@postDelete');
 
+    //ProductClasses
+    Route::get('productclasses/', 'ProductClassesController@index');
+    Route::get('productclasses/create', 'ProductClassesController@create');
+    Route::post('productclasses/create', 'ProductClassesController@store');
+    Route::get('productclasses/data', 'ProductClassesController@data');
+    Route::get('productclasses/{id}/edit', 'ProductClassesController@edit');
+    Route::post('productclasses/{id}/edit', 'ProductClassesController@update');
+    Route::get('productclasses/{id}/delete', 'ProductClassesController@getDelete');
+    Route::post('productclasses/{id}/delete', 'ProductClassesController@postDelete');
+
+    //ProductTypes
+    Route::get('producttypes/', 'ProductTypesController@index');
+    Route::get('producttypes/create', 'ProductTypesController@create');
+    Route::post('producttypes/create', 'ProductTypesController@store');
+    Route::get('producttypes/data', 'ProductTypesController@data');
+    Route::get('producttypes/{id}/edit', 'ProductTypesController@edit');
+    Route::post('producttypes/{id}/edit', 'ProductTypesController@update');
+    Route::get('producttypes/{id}/delete', 'ProductTypesController@getDelete');
+    Route::post('producttypes/{id}/delete', 'ProductTypesController@postDelete');
+
 });

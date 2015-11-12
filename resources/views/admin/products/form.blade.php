@@ -14,11 +14,17 @@
 		        </div>
 		    </div>
 		    <div class="form-group">
+		    	{!! Form::label('product_classes_list', 'Classe:', ['class' => 'control-label col-xs-2', 'for' => 'prod_class']) !!}
+		        <div class="col-xs-10">
+		        	{!! Form::select('product_class_id', $product_classes_list, null,['class' => 'form-control', 'id' => 'prod_class']) !!}
+		        </div>
+		    </div>
+		    <div class="form-group">
 		    	{!! Form::label('product_types_list', 'Tipo:', ['class' => 'control-label col-xs-2', 'for' => 'prod_type']) !!}
 		        <div class="col-xs-10">
 		        	{!! Form::select('product_type_id', $product_types_list, null,['class' => 'form-control', 'id' => 'prod_type']) !!}
 		        </div>
-		    </div>
+		    </div>  
 		    <div class="form-group">
 		    	{!! Form::label('price', 'Preço:', ['class' => 'control-label col-xs-2', 'for' => 'prod_price']) !!}
 		        <div class="col-xs-10">
