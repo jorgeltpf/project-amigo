@@ -39,12 +39,28 @@ Route::controllers([
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function() {
     Route::pattern('id', '[0-9]+');
-    Route::pattern('id2', '[0-9]+');
+    Route::pattern('id2', '[0-9]+');    
+
+    Route::filter('admin', function()
+    {
+        if (!Entrust::hasRole('admin'))
+        {
+            return Redirect::to('/');
+        }
+    });
+
+    Route::when('admin/language*', 'admin');
+    Route::when('admin/newscategory*', 'admin');
+    Route::when('admin/news*', 'admin');
+    Route::when('admin/photoalbum*', 'admin');
+    Route::when('admin/photo*', 'admin');
+    Route::when('admin/videoalbum*', 'admin');
+    Route::when('admin/video*', 'admin');
+    Route::when('admin/establishments*', 'admin');
 
     # Admin Dashboard
     Route::get('dashboard', 'DashboardController@index');
 
-    # Language
     Route::get('language', 'LanguageController@index');
     Route::get('language/create', 'LanguageController@getCreate');
     Route::post('language/create', 'LanguageController@postCreate');
@@ -54,6 +70,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('language/{id}/delete', 'LanguageController@postDelete');
     Route::get('language/data', 'LanguageController@data');
     Route::get('language/reorder', 'LanguageController@getReorder');
+
 
     # News category
     Route::get('newscategory', 'ArticleCategoriesController@index');

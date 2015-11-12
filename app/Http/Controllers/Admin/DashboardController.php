@@ -14,13 +14,11 @@ use App\Models\Promotion;
 
 class DashboardController extends AdminController {
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
-	public function index()
-	{
+	public function index() {
         $title = "Dashboard";
 
         $establishments = Establishment::count();

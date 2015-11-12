@@ -22,12 +22,14 @@
             <span class="hidden-sm text"> {{ trans("admin/admin.users") }}</span>
         </a>
     </li>
+    @if (Entrust::hasRole('admin'))
     <li class="{{set_active('admin/establishments*')}}">
         <a href="{{url('admin/establishments')}}">
             <i class="glyphicon glyphicon-home"></i>
             <span class="hidden-sm text"> Estabelecimento</span>
         </a>
     </li>
+    @endif
     <li class="{{set_active('admin/products*')}}">
         <a href="{{url('admin/products')}}">
             <i class="glyphicon glyphicon-glass"></i>
@@ -41,13 +43,15 @@
         </a>
     </li>
 
-    <!-- <li class="{{set_active('admin/language*')}}">
-        <a href="{{url('admin/language')}}">
-            <i class="fa fa-language"></i>
-            <span class="hidden-sm text"> Language</span>
-        </a>
-    </li>
-    <li class="{{set_active('admin/news*')}}">
+    @if (Entrust::hasRole('admin'))
+        <li class="{{set_active('admin/language*')}}">
+            <a href="{{url('admin/language')}}">
+                <i class="fa fa-language"></i>
+                <span class="hidden-sm text"> Language</span>
+            </a>
+        </li>
+    @endif
+   <!--  <li class="{{set_active('admin/news*')}}">
         <a href="#">
             <i class="glyphicon glyphicon-bullhorn"></i> News items
             <span class="fa arrow"></span>

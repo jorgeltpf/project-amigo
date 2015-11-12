@@ -36,6 +36,7 @@
                 </a>
             </div>
         </div>
+        @if (Entrust::hasRole('admin'))
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -59,6 +60,7 @@
                 </a>
             </div>
         </div>
+        @endif
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-success">
                 <div class="panel-heading">
@@ -105,6 +107,7 @@
                 </a>
             </div>
         </div>
+
         <!-- <div class="col-lg-3 col-md-6">
             <div class="panel panel-success">
                 <div class="panel-heading">
