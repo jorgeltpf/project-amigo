@@ -32,7 +32,7 @@ class PromotionsController extends AdminController {
         'final_period.required' => 'É preciso preencher a data final da promoção',
         'initial_period.before' => 'A data inicial precisa ser menor que a data final',
         'final_period.after' => 'A data final precisa ser maior que a data inicial',
-        'products_list[]' => 'É preciso selecionar produto(s) que compõe a promoção',
+        'products_list[].required' => 'É preciso selecionar produto(s) que compõe a promoção',
         'establishments_list[]' => 'É preciso selecionar um estabelecimento que compõe a promoção',
     );
 

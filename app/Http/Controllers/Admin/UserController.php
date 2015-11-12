@@ -7,9 +7,26 @@ use App\Http\Requests\Admin\UserRequest;
 use App\Http\Requests\Admin\UserEditRequest;
 use App\Http\Requests\Admin\DeleteRequest;
 use Datatables;
+use JsValidator;
 
 
 class UserController extends AdminController {
+    protected $validationRules = [
+        'name' => 'required|max:255',
+        'username' => 'required|unique:users',
+        'email' => 'required|email|unique',
+        'password' => 'required',
+        'password_confirmation' => 'required'
+    ];
+
+    protected $messages = array(
+        'name.required' => 'É preciso preencher o nome',
+        'username.required' => 'É preciso preencher o nome de usuário',
+        'username.unique:users' => 'Este nome de usário já se encontra cadastrado no sistema',
+        'email.required' => 'É preciso preencher o e-mail',
+        'password.required' => 'É preciso preencher o campo de senha',
+        'password_confirmation.required' => 'É preciso preencher o campo de confirmação de senha',
+    );
 
     /*
     * Display a listing of the resource.
@@ -17,8 +34,7 @@ class UserController extends AdminController {
     * @return Response
     */
 
-    public function index()
-    {
+    public function index() {
         // Show the page
         return view('admin.users.index');
     }
@@ -29,11 +45,10 @@ class UserController extends AdminController {
      * @return Response
      */
 
-    public function getCreate()
-    {
+    public function getCreate() {
         $roles = Role::lists('display_name', 'id');
-
-        return view('admin.users.create_edit', compact('roles'));
+        $validator = JsValidator::make($this->validationRules, $this->messages);
+        return view('admin.users.create_edit', compact('roles', 'validator'));
     }
 
     /**
@@ -51,9 +66,17 @@ class UserController extends AdminController {
         $user->confirmation_code = str_random(32);
         $user->confirmed = $request->confirmed;
         $user->save();
-        $role = array($request->role_list);
+        if (!empty($request->role_list)) {
+            $role = array($request->role_list);
+        } else {
+            $role = [3];
+        }
 
         $this->syncRoles($user, $role);
+
+        flash()->success('Cadastro salvo com sucesso!');
+
+        return redirect('admin/users');
     }
 
     /**
@@ -64,11 +87,10 @@ class UserController extends AdminController {
      */
 
     public function getEdit($id) {
-
         $user = User::find($id);
         $roles = Role::lists('display_name', 'id');
-
-        return view('admin.users.create_edit', compact('user', 'roles'));
+        $validator = JsValidator::make($this->validationRules, $this->messages);
+        return view('admin.users.create_edit', compact('user', 'roles', 'validator'));
     }
 
     /**
@@ -78,15 +100,19 @@ class UserController extends AdminController {
      * @return Response
      */
 
-    public function postEdit(UserEditRequest $request, $id)
-    {
+    public function postEdit(UserEditRequest $request, $id) {
         $user = User::find($id);
         $user->name = $request->name;
         $user->confirmed = $request->confirmed;
 
         $password = $request->password;
         $passwordConfirmation = $request->password_confirmation;
-        $roles = array($request->role_list);
+
+        if (!empty($request->role_list)) {
+            $roles = array($request->role_list);
+        } else {
+            $roles = [3];
+        }
 
         if (!empty($password)) {
             if ($password === $passwordConfirmation) {
@@ -96,10 +122,13 @@ class UserController extends AdminController {
 
         $user->save();
         $this->syncRoles($user, $roles);
+
+        flash()->success('Cadastro salvo com sucesso!');
+
+        return redirect('admin/users');
     }
 
-    private function syncRoles(User $user, array $roles)
-    {
+    private function syncRoles(User $user, array $roles) {
         $user->roles()->sync($roles);
     }
 
@@ -110,8 +139,7 @@ class UserController extends AdminController {
      * @return Response
      */
 
-    public function getDelete($id)
-    {
+    public function getDelete($id) {
         $user = User::find($id);
         // Show the page
         return view('admin.users.delete', compact('user'));
@@ -146,7 +174,7 @@ class UserController extends AdminController {
 
         return Datatables::of($users)
             ->edit_column('confirmed', '@if ($confirmed=="1") <span class="glyphicon glyphicon-ok"></span> @else <span class=\'glyphicon glyphicon-remove\'></span> @endif')
-            ->add_column('actions', '@if ($id!="1")<a href="{{{ URL::to(\'admin/users/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm iframe" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
+            ->add_column('actions', '@if ($id!="1")<a href="{{{ URL::to(\'admin/users/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
                     <a href="{{{ URL::to(\'admin/users/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 @endif')
             ->remove_column('id')

@@ -31,11 +31,11 @@ class Admin implements Middleware {
      * @return void
      */
     public function __construct(Guard $auth,
-                                ResponseFactory $response)
-    {
+                                ResponseFactory $response) {
         $this->auth = $auth;
         $this->response = $response;
     }
+
     /**
 	 * Handle an incoming request.
 	 *
@@ -43,16 +43,13 @@ class Admin implements Middleware {
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next)
-	{
-        if ($this->auth->check())
-        {
+	public function handle($request, Closure $next) {
+        if ($this->auth->check()) {
             $admin = 0;
-            if($this->auth->user()->admin==1)
-            {
+            if ($this->auth->user()->admin==1) {
                 $admin=1;
             }
-            if($admin==0){
+            if ($admin==0) {
                 return $this->response->redirectTo('/');
             }
             return $next($request);

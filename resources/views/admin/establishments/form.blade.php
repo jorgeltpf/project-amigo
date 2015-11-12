@@ -125,23 +125,23 @@
 		        	@for($i=1; $i<4; $i++)
 		        		@if(!empty($weeks['days'][$i]['time_on']))
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs hour-open" placeholder="00:00" value="{!! $weeks['days'][$i]['time_on'] !!}">
+								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time hour form-control input-xs hour-open" placeholder="00:00" value="{!! $weeks['days'][$i]['time_on'] !!}">
 								<div class="help">Aberto</div>
 							</div>
 						@else
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs hour-open" placeholder="00:00" value="">
+								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time hour form-control input-xs hour-open" placeholder="00:00" value="">
 								<div class="help">Aberto</div>
 							</div>
 						@endif
 						@if(!empty($weeks['days'][$i]['time_off']))
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs hour-closed" placeholder="00:00" value="{!! $weeks['days'][$i]['time_off'] !!}">
+								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="final-{!! $i !!}" type="text" class="time hour form-control input-xs hour-closed" placeholder="00:00" value="{!! $weeks['days'][$i]['time_off'] !!}">
 								<div class="help">Fechado</div>
 							</div>
 						@else
 							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time form-control input-xs hour-closed" placeholder="00:00" value="">
+								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="final-{!! $i !!}" type="text" class="time hour form-control input-xs hour-closed" placeholder="00:00" value="">
 								<div class="help">Fechado</div>
 							</div>
 						@endif
@@ -153,7 +153,7 @@
 	    </fieldset>
 	    <div class="form-group">
 	        <div class="col-xs-offset-2 col-xs-10">
-	            <button type="button" class="btn btn-success save-est">Salvar</button>
+	            <button type="button" class="btn btn-success save-est" id="save-est">Salvar</button>
 	            <button type="button" class="btn btn-primary">
 	            	<a href="{{{ URL::to('admin/establishments/') }}}"></a>
                     <span class="glyphicon glyphicon-backward"></span> Voltar
@@ -167,27 +167,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.save-est').on('click', function() {
-			var hourTest  = [];
-			$('.hour-open').each(function(key, val) {
-				var item = {};
-				item['open'] = $(val).val();
-				hourTest.push(item);
-			});
-
-			$('.hour-closed').each(function(key, val) {
-				var item = {};
-				item['closed'] = $(val).val();
-				hourTest.push(item);
-			});
-
-			compareHour(hourTest);
-
-			if ($('.hour').val()) {
-				$('#est').submit();
-			}
-		});
-
 		$('#cep').on('change', function() {
 			if ($('#cep').val()) {
 				$.ajax({
@@ -228,7 +207,7 @@
                     }
                 });
 			}
-		})
+		});
 
 		var weekdays = "";
 		// Ajax para buscar os dias da semana
@@ -255,12 +234,152 @@
 			var timeClick = $(this).closest('.week-input').find('select').attr('id');
 			var idSel = timeClick.split('-')[1];
 			var buttonId = id.split('-')[1];
+			var buttonTime = buttonId.substring(0,1).toString();
 
-			$(this).parent().after(
-				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour form-control input-xs hour-open" placeholder="00:00"><div class="help">Aberto</div></div>'+
-				'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour form-control input-xs hour-closed" placeholder="00:00"><div class="help">Fechado</div></div>'
-			);
+			switch (buttonTime) {
+				case "m":
+					$(this).parent().after(
+						'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour morning form-control input-xs hour-open" placeholder="00:00"><div class="help">Aberto</div></div>'+
+						'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour morning form-control input-xs hour-closed" placeholder="00:00"><div class="help">Fechado</div></div>'
+					);
+					break;
+				case "t":
+					$(this).parent().after(
+						'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour afternoon form-control input-xs hour-open" placeholder="00:00"><div class="help">Aberto</div></div>'+
+						'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour afternoon form-control input-xs hour-closed" placeholder="00:00"><div class="help">Fechado</div></div>'
+					);
+					break;
+				case "n":
+					$(this).parent().after(
+						'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="hour night form-control input-xs hour-open" placeholder="00:00"><div class="help">Aberto</div></div>'+
+						'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour night form-control input-xs hour-closed" placeholder="00:00"><div class="help">Fechado</div></div>'
+					);
+					break;
+			}
+
+			// $(this).parent().after(
+			// 	'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="morning hour2 form-control input-xs hour-open" placeholder="00:00"><div class="help">Aberto</div></div>'+
+			// 	'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour form-control input-xs hour-closed" placeholder="00:00"><div class="help">Fechado</div></div>'
+			// );
+
+			var nightMask = function(val) {
+				var first = val.substring(0,1).toString(),
+					sec = val.substring(1,2).toString(),
+					ter = val.substring(3,4).toString(),
+					finalMask = "00:00";
+
+		  		if (first == 1) {
+		  			if (sec && (sec > 7 && sec <= 9)) {
+		  				finalMask = first + sec + ":";
+		  			} else {
+		  				finalMask = first;		  				
+		  			}
+	  				if (ter >= 0 && ter <= 5) {	  					
+	  					finalMask = finalMask+ter+"0";
+	  				} else {
+	  					finalMask = finalMask+"50";
+	  				}
+		  		} else if (first == 2) {
+		  			if (sec && (sec >= 0 && sec <= 3)) {
+		  				finalMask = first + sec + ":";
+		  			} else {
+		  				finalMask = first;
+		  			}
+	  				if (ter >= 0 && ter <= 5) {
+	  					finalMask = finalMask+ter+"0";
+	  				} else {
+	  					finalMask = finalMask+"50";
+	  				}
+		  		} else if (first == 0) {
+		  			if (sec && (sec >= 0 && sec <= 4)) {
+		  				finalMask = first + sec + ":";
+		  			} else {
+		  				finalMask = first;
+		  			}
+	  				if (ter >= 0 && ter <= 5) {
+	  					finalMask = finalMask+ter+"0";
+	  				} else {
+	  					finalMask = finalMask+"50";
+	  				}
+		  		} else {
+		  			finalMask = "18:00";
+		  		}
+		  		return finalMask;
+		  		// return phone.match('/0?[0-9]|1[0-9]|2[0-3]:^[0-5][0-9]$/');
+			};
+
+			var morningMask = function(val) {
+				var first = val.substring(0,1).toString(),
+					sec = val.substring(1,2).toString(),
+					ter = val.substring(3,4).toString(),
+					finalMask = "05:00";
+
+		  		if (first == 1) {
+		  			if (sec && (sec >= 0 && sec <= 2)) {
+		  				finalMask = first + sec + ":";
+		  			} else {
+		  				finalMask = first;		  				
+		  			}
+	  				if (ter >= 0 && ter <= 5) {	  					
+	  					finalMask = finalMask+ter+"0";
+	  				} else {
+	  					finalMask = finalMask+"50";
+	  				}
+		  		} else if (first == 0) {
+		  			if (sec && (sec >= 5 && sec <= 9)) {
+		  				finalMask = first + sec + ":";
+		  			} else {
+		  				finalMask = first;
+		  			}
+	  				if (ter >= 0 && ter <= 5) {
+	  					finalMask = finalMask+ter+"0";
+	  				} else {
+	  					finalMask = finalMask+"50";
+	  				}
+		  		} else {
+		  			finalMask = "12:50";
+		  		}
+		  		return finalMask;
+		  		// return phone.match('/0?[0-9]|1[0-9]|2[0-3]:^[0-5][0-9]$/');
+			};
+
+			// var SPMaskBehavior = function (val) {
+			//   return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+			// },
+
+			var maskNightOptions = {
+			  onKeyPress: function(val, e, field, options) {
+			      field.mask(nightMask.apply({}, arguments), options);
+			    }
+			};
+
+			var maskMorningOptions = {
+			  onKeyPress: function(val, e, field, options) {
+			      field.mask(morningMask.apply({}, arguments), options);
+			    }
+			};
+
 			$('.hour').mask('00:00');
+			$('.morning').mask(morningMask, maskMorningOptions);
+			// $('.morning').mask('AB:YS',
+			// 	{'translation': {
+   //                  A: {pattern: /[0]?[0-1]/},
+   //                  B: {pattern: /[0]?[5-9]/},
+   //                  Y: {pattern: /[0-5]/},
+   //                  S: {pattern: /[0-9]*/}
+   //            	}
+   //          });
+
+			$('.afternoon').mask('1A:YS',
+				{'translation': {
+                    A: {pattern: /[1]?[0-8]/},
+                    Y: {pattern: /[0-5]/},
+                    S: {pattern: /[0-9]*/}
+              	}
+            });
+
+			$('.night').mask(nightMask, maskNightOptions);
+
 			$(this).parent().css('display', 'none');
 			$(this).parent().remove();
 		});
@@ -272,7 +391,168 @@
   				nextDiv = $($this.parents('div.week-input').next()).find('select').prepend(options);
 			$this.parents('div.week-input').remove();
 		});
+
+		$('.save-est').on('click', function() {
+			var hourOpen = [];
+			var hourClosed = [];
+			var testHour = {
+				'open': [], 'close': []
+			};
+			$('.hour-open').each(function(key, val) {	
+				// if ($(this).val()) {			
+					var item = {};
+					if ($(this).hasClass('night')
+						&& $(this).attr('id').split('-')[0] == 'initial'
+						&& ($(this).val() > 0 && $(this).val() < "04:59")
+						) {
+						var initialhour = (parseInt($(val).val())+24+":00").toString();
+						item['open'] = initialhour;
+					} else {
+						item['open'] = $(val).val();
+					}
+					hourOpen.push(item);
+					testHour.open.push(item);
+				// }
+			});			
+
+			$('.hour-closed').each(function(key, val) {
+				// if ($(this).val()) {
+					var item = {};
+					if ($(this).hasClass('night')
+						&& $(this).attr('id').split('-')[0] == 'final'
+						) {
+						var finalhour = (parseInt($(val).val())+24+":00").toString();
+						item['close'] = finalhour;
+					} else {
+						item['close'] = $(val).val();
+					}
+					hourClosed.push(item);
+					testHour.close.push(item);
+				// }
+			});
+
+			var test = {
+		  		'initial': [],
+			  	'final': []
+			}
+			var id = "";
+
+			$('.hour').each(function(key, val) {
+			  	var array = [];
+			  	var split = $(val).attr('id').split('-');
+			  	id = split[1];
+
+			  	if (split[0] == 'initial') {
+			    	array.push($(val).val())
+			    	test.initial.push(array)
+	  			} else if (split[0] == 'final') {
+			    	array.push($(val).val())
+			    	test.final.push(array)
+			  	} 
+			});
+
+			var comp = false;
+			var info = "";
+			$(test.initial).each(function(keyI, valI) {
+			  	$(test.final).each(function(keyF, valF) {
+			    	if (keyI == keyF) {
+			      		if (valI != "" && valF == "") {
+			        		comp = true;
+			        		info = "Campo final vazio";
+			      		} else if (valI == "" && valF != "") {
+			        		comp = true;
+			        		info = "Campo inicial vazio";
+			      		} else if (valI != "" && valF != "") {
+			        		if (valI > valF) {
+			           			comp = true;
+			           			info = "Campo inicial maior que o final";
+			        		}
+		      			} else {
+			        		// alert('erro 333333!!!!'); 
+			      		}
+		    		}
+			  	})
+			});
+
+			// var comp = compareHour(hourOpen, hourClosed, testHour);
+			if (!$('.hour').val()) {
+				info = "Selecione horário(s) de funcionamento!";
+			}
+
+			if ($('.hour').val() && comp == false) {
+				$('#est').submit();
+			} else {
+				$('#save-est').qtip({
+			        content: info,
+					show: {
+						when: false,
+						ready: true,
+		           		// effect: function() {
+			            // 	$(this).slideDown();
+			            // }
+					},
+					hide: 'click',
+					api: {
+						onRender: function() {
+							// Hide the tooltip when it is clicked
+							this.elements.tooltip.click(this.hide)
+						},
+						onHide: function() {
+							// Set a state cookie
+							$('#save-est', true, { path: '/', expires: 10 });
+		 
+							// Destroy me since I have no futher use!
+							this.destroy();
+						}
+					}
+
+				});
+			}
+		});
 	});
+
+	function compareHour(hourOpen, hourClosed, testHour) {
+		var prb = false,
+			open,
+			secondsOpen,
+			close,
+			secondsClose,
+			count = testHour.open.length;
+
+		$(testHour.open).each(function(keyOpen, valOpen) {
+			$(testHour.close).each(function(keyClose, valClose) {
+				if (testHour.open[keyOpen] && testHour.close[keyClose]) {
+					// console.log(testHour.open[keyOpen]);
+					// console.log(testHour.close[keyClose]);
+				}
+			});
+		});
+
+		$(hourOpen).each(function(key, val) {
+			$(hourClosed).each(function(keyC, valC) {
+				if (val['open'].length>0 && valC['close'].length>0) {
+					if (val['open'] >= valC['close']) {
+						prb = true;
+					}
+				}
+			});
+		});
+		// alert(prb);
+		return prb;
+	}
+
+	function getHour24(timeString) {
+	    time = null;
+	    var matches = timeString.match(/^(\d{1,2}):00 (\w{2})/);
+
+	    if (matches != null && matches.length == 3) {
+	        time = parseInt(matches[1]);
+	        if (matches[2] == 'PM') {
+	            time += 12;
+	        }
+	    }
+	    return time;
+	}
 
 	function setShift(key) {
         var shift = "";
@@ -327,21 +607,6 @@
         html += '<div class="col-sm-1"><button type="button" class="btn btn-danger remove-div"><span class="glyphicon glyphicon-remove"></span></button></div>';
         html += '</div>';
         return html;
-	}
-
-	function compareHour(hour) {
-		var prb = false;
-		$(hour).each(function(key, val) {
-			// console.log(val['closed']);
-			if (val['open'] != undefined || val['closed'] != undefined) {
-			console.log(val['open']);
-				if (val['open'] >= val['closed']) {
-					prb = true;
-					// console.log('prb');
-				}
-			}
-		});
-		// console.log(prb);
 	}
 </script>
 @stop
