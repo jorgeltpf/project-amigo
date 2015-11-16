@@ -37,7 +37,9 @@ class ProductsController extends AdminController {
      */
     public function create() {
         $validator = JsValidator::make($this->validationRules);
-        $product_types_list = ProductType::lists('description', 'id');
+        $product_types_list = ProductType::join('product_species', 'product_types.product_specie_id','=','product_species.id')
+                                            ->selectRaw("CONCAT(product_types.description,' - ', product_species.description) as description, product_types.id")
+                                            ->lists('description', 'id');
         $product_types_list = $product_types_list->sort();
         $product_classes_list = ProductClass::lists('description', 'id');
         $product_classes_list = $product_classes_list->sort();
@@ -85,7 +87,9 @@ class ProductsController extends AdminController {
     public function edit($id) {
         $validator = JsValidator::make($this->validationRules);
         $products = Product::find($id);
-        $product_types_list = ProductType::lists('description', 'id');
+        $product_types_list = ProductType::join('product_species', 'product_types.product_specie_id','=','product_species.id')
+                                            ->selectRaw("CONCAT(product_types.description,' - ', product_species.description) as description, product_types.id")
+                                            ->lists('description', 'id');
         $product_types_list = $product_types_list->sort();
         $product_classes_list = ProductClass::lists('description', 'id');
         $product_classes_list = $product_classes_list->sort();
