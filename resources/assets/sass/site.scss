@@ -73,6 +73,16 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: $footer-height !important;
+
+  /* Background image para o site */
+    background: url(/img/background-21714_1920.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+   
 }
 
 #footer {
@@ -144,4 +154,8 @@ div.datepicker {
 
 text-center {
   text-align: center;
+}
+
+.page-header h2 {
+  color: white
 }

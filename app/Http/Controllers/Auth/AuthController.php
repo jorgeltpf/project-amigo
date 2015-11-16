@@ -7,8 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-class AuthController extends Controller
-{
+class AuthController extends Controller {
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -27,8 +26,7 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
@@ -38,8 +36,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data) {
         return Validator::make($data, [
             'name' => 'required|max:255',
             'username' => 'required|max:255',
@@ -49,18 +46,24 @@ class AuthController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Cria um novo usuário com papel de cliente após ser feita validação do seu login
      *
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
-    {
-        return User::create([
+    protected function create(array $data) {
+        $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'confirmation_code' => str_random(32),
         ]);
+
+        // Role padrão do cliente = 4
+        $clientRole = [4];
+
+        $user->roles()->sync([4]);
+        return $user;
     }
 }

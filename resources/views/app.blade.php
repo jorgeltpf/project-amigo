@@ -11,8 +11,7 @@
     @show @section('meta_author')
         <meta name="author" content="Jorge Titoneli"/>
     @show @section('meta_description')
-        <meta name="description"
-              content="Lorem ipsum dolor sit amet, nihil fabulas et sea, nam posse menandri scripserit no, mei."/>
+        <meta name="description" content="Comércio de alimentos e delivery."/>
     @show
 
 		<link href="{{ elixir('css/site.css') }}" rel="stylesheet">

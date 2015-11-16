@@ -58,13 +58,19 @@ class UserController extends AdminController {
      */
 
     public function postCreate(UserRequest $request) {
-        $user = new User();
-        $user->name = $request->name;
-		$user->username = $request->username;
-        $user->email = $request->email;
+  //       $user = new User();
+  //       $user->name = $request->name;
+		// $user->username = $request->username;
+  //       $user->email = $request->email;
+  //       $user->password = bcrypt($request->password);
+  //       $user->confirmation_code = str_random(32);
+  //       $user->confirmed = $request->confirmed;
+
+        $user = new User ($request->except('password','confirmation_code'));
         $user->password = bcrypt($request->password);
         $user->confirmation_code = str_random(32);
         $user->confirmed = $request->confirmed;
+
         $user->save();
         if (!empty($request->role_list)) {
             $role = array($request->role_list);
