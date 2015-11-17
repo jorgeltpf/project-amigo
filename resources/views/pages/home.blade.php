@@ -1,4 +1,4 @@
-@extends('app', [''])
+@extends('app', ['title' => 'home'])
 @section('title') Home :: @parent @stop
 @section('content')
     <div class="row">
@@ -6,7 +6,7 @@
             <h2>Encontre locais próximos</h2>
         </div>
     </div>
-    <div id="#cep-div" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div id="cep-div" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <form class="form-horizontal" role="form" method="post" action="index.php">            
             <div class="panel panel-info">
                 <div class="panel-heading">

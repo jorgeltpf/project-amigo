@@ -38,13 +38,20 @@
 
     <link rel="shortcut icon" href="{{{ asset('assets/site/ico/favicon.ico') }}}">
 </head>
+<!-- Definição de id para o body para selecionar a imagem de fundo -->
+@if (!empty($title))
+<body id="{!! $title !!}">
+@else
 <body>
+@endif
 @include('partials.nav')
 
 <div class="container">
+
 @include('flash::message')
 @yield('content')
 </div>
+
 @include('partials.footer')
 
 <!-- Scripts -->

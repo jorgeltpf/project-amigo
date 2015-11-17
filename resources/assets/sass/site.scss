@@ -62,27 +62,44 @@ $fa-font-path: "/fonts/"; // correct font-awesome font path
 
 @import "variables";
 
+@mixin background-change($background) {
+  @if $background == 'home' {
+    background: url(/img/background-21714_1920.jpg);
+  } @else if $background == 'about' {
+    background: url(/img/8785445626_587fdac14d_b.jpg);
+  } @else {
+    background: url(/img/default-image.jpg);
+  }
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 
 html {
   position: relative;
   min-height: 100%;
+
+  #home {
+    @include background-change('home');
+  }
+
+  #about {
+    @include background-change('about');
+  }
 }
 
 body {
   /* Margin bottom by footer height */
   margin-bottom: $footer-height !important;
 
-  /* Background image para o site */
-    background: url(/img/background-21714_1920.jpg);
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-attachment:fixed;
-    background-repeat: no-repeat;
-   
+  /* Background image para o site background: url(/img/background-21714_1920.jpg); */
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-attachment:fixed;
+  background-repeat: no-repeat;
 }
 
 #footer {
