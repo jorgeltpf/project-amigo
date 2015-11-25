@@ -21,9 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->string('confirmation_code');
+            $table->string('avatar')->nullable();
             $table->boolean('confirmed')->default(false);
             $table->boolean('admin')->default(false);
-            $table->rememberToken();
+            $table->rememberToken(255);
             $table->timestamps();
             $table->softDeletes();
         });
