@@ -67,6 +67,8 @@ $fa-font-path: "/fonts/"; // correct font-awesome font path
     background: url(/img/background-21714_1920.jpg);
   } @else if $background == 'about' {
     background: url(/img/8785445626_587fdac14d_b.jpg);
+  } @else if $background == 'user' {
+    background: url(/img/9213456041_7c737ba2ea_b.jpg);
   } @else {
     background: url(/img/default-image.jpg);
   }
@@ -86,6 +88,7 @@ html {
   #about {
     @include background-change('about');
   }
+
 }
 
 body {
@@ -174,5 +177,26 @@ text-center {
 }
 
 .page-header h2 {
-  color: white
+  color: $white-color;
 }
+
+.side-menu {
+  div {
+    > a {
+      font-size: 15px;
+      background-color: $white-color;
+      color: $black-color;
+      transition: color 0.3s linear; /* vendorless fallback */
+      -o-transition: color 0.3s linear; /* opera */
+      -ms-transition: color 0.3s linear; /* IE 10 */
+      -moz-transition: color 0.3s linear; /* Firefox */
+      -webkit-transition: color 0.3s linear; /*safari and chrome */
+    }
+    > a:hover {
+      background-color: $default-blue-color;
+      color: $white-color;
+      cursor: pointer;
+    }
+  }
+}
+

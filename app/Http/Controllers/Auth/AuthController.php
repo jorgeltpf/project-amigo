@@ -66,4 +66,5 @@ class AuthController extends Controller {
         $user->roles()->sync([4]);
         return $user;
     }
+
 }

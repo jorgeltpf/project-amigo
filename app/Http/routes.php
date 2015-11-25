@@ -30,7 +30,8 @@ Route::get('weekdays', 'WeekDaysController@list_week'
     // }
 );
 
-// Route::resource('establishments', 'EstablishmentsController');
+Route::resource('clients', 'ClientsController');
+// Route::get('clients', 'ClientsController@index');
 
 Route::controllers([
     'auth' => 'Auth\AuthController',

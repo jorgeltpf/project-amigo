@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
 
 use Illuminate\Http\Request;
 
@@ -25,6 +26,20 @@ class PagesController extends Controller {
 	}
 
 	public function people() {
-		return view('pages.people');
+		if (\Auth::check()) {
+			$user = \Auth::user();
+			// $user = User::find($userId);
+			$title = 'Meus Dados';
+			$menu_name = 'Meus Dados';
+			$categoryItems = [
+				'Dados cadastrais',
+				'Meus pedidos',
+				'Meus endereços',
+				'Minhas avaliações'
+			];
+			$stab = ['1','2','3','4'];
+			return view('pages.people', compact('title', 'menu_name', 'categoryItems', 'stab', 'user'));
+		}
+		return view('pages.home');
 	}
 }

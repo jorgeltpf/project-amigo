@@ -24,8 +24,8 @@
 					{{$user->name}}
 				</div>
 			</div>
-			{!! Form::open(['method' => 'POST', 'action' => ['ClientController@update', $user->id], 'class' => 'form-horizontal']) !!}
-				@include('pages.form_people')
+			{!! Form::open(['method' => 'POST', 'action' => ['ClientsController@update', $user->id], 'class' => 'form-horizontal']) !!}
+				@include('clients.form')
 			{!! Form::close() !!}
 		</div>
 	</div>
