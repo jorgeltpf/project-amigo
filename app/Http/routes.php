@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 Route::get('about', 'PagesController@about');
@@ -29,6 +30,11 @@ Route::get('weekdays', 'WeekDaysController@list_week'
     // };
     // }
 );
+
+
+//Socialite
+    Route::get('loginFacebook', 'FacebookController@login');
+    Route::get('facebook', 'FacebookController@pageFacebook');
 
 // Route::resource('establishments', 'EstablishmentsController');
 
@@ -203,5 +209,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('producttypes/{id}/edit', 'ProductTypesController@update');
     Route::get('producttypes/{id}/delete', 'ProductTypesController@getDelete');
     Route::post('producttypes/{id}/delete', 'ProductTypesController@postDelete');
+
 
 });
