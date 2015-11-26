@@ -1,23 +1,9 @@
 <?php
 var_dump(getenv('APP_ENV'));
-//dd(\App::environment());
 $env = $app->detectEnvironment(function() {
     return getenv('APP_ENV') ?: 'production';
 });
 
-$db = [];
-if ($env === 'production') {
-    $db['host'] = parse_url(getenv("DATABASE_URL"))["host"];
-    $db['database'] = substr(parse_url(getenv("DATABASE_URL"))["path"], 1);
-    $db['username'] = parse_url(getenv("DATABASE_URL"))["user"];
-    $db['password'] = parse_url(getenv("DATABASE_URL"))["password"];
-} elseif ($env === 'local') {
-    $db['host'] = getenv("DB_HOST");
-    $db['database'] = getenv("DB_DATABASE");
-    $db['username'] = getenv("DB_USERNAME");
-    $db['password'] = getenv("DB_PASSWORD");
-}
-// dd($db);
 
 return [
 
@@ -85,10 +71,10 @@ return [
 
         'pgsql' => [
             'driver'   => 'pgsql',
-            'host'     => $db['host'],
-            'database' => $db['database'],
-            'username' => $db['username'],
-            'password' => $db['password'],
+            'host'     => parse_url(getenv("DATABASE_URL"))["host"],
+            'database' => substr(parse_url(getenv("DATABASE_URL"))["path"], 1),
+            'username' => parse_url(getenv("DATABASE_URL"))["user"],
+            'password' => parse_url(getenv("DATABASE_URL"))["pass"],
             // 'host'     => env('DB_HOST', 'localhost'),
             // 'database' => env('DB_DATABASE', 'amigo_db'),
             // 'username' => env('DB_USERNAME', 'postgres_user'),
