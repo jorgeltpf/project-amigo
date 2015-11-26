@@ -3,8 +3,8 @@ var_dump(getenv('APP_ENV'));
 $env = $app->detectEnvironment(function() {
     return getenv('APP_ENV') ?: 'production';
 });
-
-
+var_dump($env);
+// dd($env);
 return [
 
     /*
@@ -71,10 +71,10 @@ return [
 
         'pgsql' => [
             'driver'   => 'pgsql',
-            'host'     => parse_url(getenv("DATABASE_URL"))["host"],
-            'database' => substr(parse_url(getenv("DATABASE_URL"))["path"], 1),
-            'username' => parse_url(getenv("DATABASE_URL"))["user"],
-            'password' => parse_url(getenv("DATABASE_URL"))["pass"],
+            'host'     => $env === 'local' ? env('DB_HOST', 'localhost') : parse_url(getenv("DATABASE_URL"))["host"],
+            'database' => $env === 'local' ? env('DB_DATABASE', 'amigo_db') : substr(parse_url(getenv("DATABASE_URL"))["path"], 1),
+            'username' => $env === 'local' ? env('DB_USERNAME', 'postgres_user') : parse_url(getenv("DATABASE_URL"))["user"],
+            'password' => $env === 'local' ? env('DB_PASSWORD', 'password') : parse_url(getenv("DATABASE_URL"))["pass"],
             // 'host'     => env('DB_HOST', 'localhost'),
             // 'database' => env('DB_DATABASE', 'amigo_db'),
             // 'username' => env('DB_USERNAME', 'postgres_user'),
