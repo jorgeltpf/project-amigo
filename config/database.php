@@ -1,8 +1,12 @@
 <?php
-var_dump(getenv('APP_ENV'));
+
+/**
+ *  Detecta o ambiente de local ou de produção para adequar as configurações de banco
+ */
 $env = $app->detectEnvironment(function() {
     return getenv('APP_ENV') ?: 'production';
 });
+// var_dump(getenv('APP_ENV'));
 var_dump($env);
 // dd($env);
 return [
