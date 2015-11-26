@@ -59,6 +59,24 @@
                                 </div>
                             </div>
                         </form>
+                        <br/><br/><br/>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <label>
+                                    Você se cadastrou com a conta do Facebook?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <a href="{!! URL::to('loginFacebook') !!}" type="button" class="btn btn-primary" style="margin-right: 15px;">
+                                        <i class="fa fa-facebook"></i> |
+                                        Fazer login com o Facebook
+                                </a>
+                            </div>
+                        </div>
+                                    
+
                     {{--</div>--}}
                 {{--</div>--}}
             {{--</div>--}}

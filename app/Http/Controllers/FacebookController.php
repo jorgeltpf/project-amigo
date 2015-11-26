@@ -2,18 +2,21 @@
  
 namespace App\Http\Controllers;
  
-class FacebookController extends Controller
-{
+class FacebookController extends Controller {
  
-    public function login()
-    {
-        return \Socialize::with('facebook')->redirect();
+    /**
+     *
+     */
+    public function login() {
+        \Socialize::with('facebook')->scopes(['email'])->redirect();
+
     }
  
-    public function pageFacebook()
-    {
+    public function pageFacebook() {
        	$user = \Socialize::with('facebook')->user();
+
        	dd($user);
+
         return $user->getEmail();
     }
  
