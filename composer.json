@@ -50,13 +50,16 @@
         "post-update-cmd": [
             "php artisan optimize",
             "php artisan vendor:publish --provider=\"Proengsoft\\JsValidation\\JsValidationServiceProvider\" --tag=public --force",
-             "php artisan clear-compiled"
+            "php artisan clear-compiled"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
+        ],
+        "compile": [
+            "bower install"
         ]
     },
     "config": {
