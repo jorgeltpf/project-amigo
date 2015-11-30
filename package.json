@@ -18,6 +18,6 @@
     "notify-send": "^0.1.2"
   },
   "scripts": {
-    "postinstall": "bower install --config.interactive=false && gulp build"
+    "postinstall": "node ./node_modules/bower/bin/bower install"
   }
 }
