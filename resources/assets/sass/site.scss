@@ -74,6 +74,14 @@ $fa-font-path: "/fonts/"; // correct font-awesome font path
   }
 }
 
+@mixin h2-font-color($color) {
+  @if $color =='white' {
+    color: white;
+  } @else {
+    color: black;
+  }
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 
@@ -176,8 +184,13 @@ text-center {
   text-align: center;
 }
 
-.page-header h2 {
-  color: $white-color;
+.page-header {
+  .h2-black h2 {
+    @include h2-font-color('black')
+  }
+  h2 {
+    @include h2-font-color('white')
+  }
 }
 
 .side-menu {

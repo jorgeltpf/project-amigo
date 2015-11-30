@@ -6,9 +6,7 @@
 $env = $app->detectEnvironment(function() {
     return getenv('APP_ENV') ?: 'production';
 });
-// var_dump(getenv('APP_ENV'));
-var_dump($env);
-// dd($env);
+
 return [
 
     /*

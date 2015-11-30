@@ -6,7 +6,7 @@
 {{-- Content --}}
 @section('content')
     <div class="row">
-        <div class="page-header">
+        <div class="page-header h2-black">
             <h2>{{{ trans('site/user.register') }}}</h2>
         </div>
     </div>
