@@ -1,9 +1,16 @@
 {
+  "name": "project-amigo-entregador",
+  "description": "food delivery",
+  "version": "0.0.1",
+  "engines": {
+    "npm": "2.11.x"
+  },
   "private": true,
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-bower": "0.0.10",
-    "laravel-elixir": "^2.0.0"
+    "laravel-elixir": "^2.0.0",
+    "bower": "^1.5.3"
   },
   "dependencies": {
     "gulp-notify": "^2.2.0",
