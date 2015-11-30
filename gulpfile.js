@@ -13,6 +13,7 @@ gulp.task('bower', function() {
     return bower();
 });
 
+gulp.tasks('heroku:prod', [default]);
 
 /*
  |--------------------------------------------------------------------------
