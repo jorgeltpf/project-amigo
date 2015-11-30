@@ -3,6 +3,7 @@
   "description": "food delivery",
   "version": "0.0.1",
   "engines": {
+    "node": "0.12.6",
     "npm": "2.11.x"
   },
   "private": true,
@@ -14,7 +15,8 @@
   },
   "dependencies": {
     "gulp-notify": "^2.2.0",
-    "notify-send": "^0.1.2"
+    "notify-send": "^0.1.2",
+    "bower": "^1.5.3"
   },
   "scripts": {
     "postinstall": "bower install --config.interactive=false && gulp build"
