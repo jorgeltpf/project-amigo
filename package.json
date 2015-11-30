@@ -14,10 +14,8 @@
     "bower": "^1.5.3"
   },
   "dependencies": {
-    "gulp": "^3.8.11",
     "gulp-notify": "^2.2.0",
     "notify-send": "^0.1.2",
-    "bower": "^1.5.3"
   },
   "scripts": {
     "postinstall": "bower install --config.interactive=false && gulp build"
