@@ -20,7 +20,6 @@
     "bower": "^1.5.3"
   },
   "scripts": {
-    "postinstall": "bower install --config.interactive=false && gulp build",
-    "gulp": "gulp",
+    "postinstall": "bower install --config.interactive=false && gulp build"
   }
 }
