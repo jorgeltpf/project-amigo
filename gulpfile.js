@@ -13,6 +13,10 @@ gulp.task('bower', function() {
     return bower();
 });
 
+gulp.task('build', function() {
+  console.log('TESTE');
+});
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
