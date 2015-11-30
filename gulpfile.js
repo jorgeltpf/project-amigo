@@ -73,6 +73,8 @@ elixir(function (mix) {
 
     mix.copy('./public/' + paths.select2, 'resources/' + paths.select2 + '/');
 
+    mix.copy('resources/' + paths.qtip2 + '/', 'public/vendor/qtip2/');
+
     // TESTE COM O GULP
     mix.sass('shop.scss', 'resources/assets/build/shop.css');
     mix.styles([
