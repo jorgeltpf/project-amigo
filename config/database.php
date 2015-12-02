@@ -9,6 +9,8 @@ $env = $app->detectEnvironment(function() {
 // var_dump(getenv('APP_ENV'));
 
 // dd($env);
+
+
 return [
 
     /*
