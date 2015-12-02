@@ -35,8 +35,12 @@ Route::resource('clients', 'ClientsController');
 // Route::get('clients', 'ClientsController@index');
 
 //Socialite
+
 Route::get('loginFacebook', 'FacebookController@login');
 Route::get('facebook', 'FacebookController@pageFacebook');
+
+Route::get('loginGitHub', 'GitHubController@login');
+Route::get('github', 'GitHubController@pageGitHub');
 
 
 Route::controllers([

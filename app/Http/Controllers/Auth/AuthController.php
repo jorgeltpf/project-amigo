@@ -52,6 +52,7 @@ class AuthController extends Controller {
      * @return User
      */
     protected function create(array $data) {
+
         $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
@@ -63,7 +64,7 @@ class AuthController extends Controller {
         // Role padrão do cliente = 4
         $clientRole = [4];
 
-        $user->roles()->sync([4]);
+        $user->roles()->sync([$clientRole]);
         return $user;
     }
 
