@@ -87,7 +87,7 @@
     </div>
 @endsection
 
-@section('scriptss')
+@section('scripts')
     @parent
     <script type="text/javascript">
         $('#myCarousel').carousel({
