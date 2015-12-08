@@ -102,6 +102,7 @@ elixir(function (mix) {
 
     // Merge Site scripts.
     mix.scripts([
+        paths.modernizr + '/modernizr-custom.js',
         paths.jquery + '/jquery.js',
         paths.bootstrap + '/javascripts/bootstrap.js',
         paths.colorbox + '/jquery.colorbox.js',
@@ -110,7 +111,6 @@ elixir(function (mix) {
         paths.validation + '/jsvalidation.js',
         paths.datepicker + '/js/bootstrap-datepicker.js',
         paths.datepicker + '/js/locales/bootstrap-datepicker.pt-BR.js',
-        paths.modernizr + '/modernizr-custom.js',
         paths.select2 + '/js/select2.min.js',
         paths.qtip2 + '/jquery.qtip.min.js'
     ], 'public/js/site.js', 'resources/');

@@ -23,16 +23,11 @@
                     </div>
                 </div>
             </div>
-<!--             <div class="form-group">
+            <div class="form-group">
                 <div class="col-sm-10 col-sm-offset-2">
-                    <button type="button" class="btn btn-primary" id="btn-cep"><i class="glyphicon glyphicon-search"></i> Buscar Restaurantes</button>
+                    <! Laravel>
                 </div>
-            </div>   -->
-        <div class="form-group">
-            <div class="col-sm-10 col-sm-offset-2">
-                <! Teste>
             </div>
-        </div>
         </form>
     </div>
 
@@ -90,56 +85,15 @@
             </div>
         </div>
     </div>
-
-  <!--   <div class="row">
-        <form class="form-horizontal">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">This Page is Disabled</div>
-                <div class="panel-body">This page is temporarily disabled by the site administrator for some reason.<br> <a href="#">Click here</a> to enable the page.</div>
-                </div>
-            </div>
-                <div class="panel panel-default">
-                <label for="street">Rua</label>
-                <input type="text" class="form-control col-sm-6" id="street" name="street" value="">
-
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon">@</span>
-                    <input type="text" class="form-control input-lg" placeholder="Username">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon">$</span>
-                    <input type="text" class="form-control" placeholder="Currency">
-                </div>
-                <br>
-                <div class="input-group input-group-sm">
-                    <span class="input-group-addon">{}</span>
-                    <input type="text" class="form-control" placeholder="Code">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="neighborhood" class="col-sm-2 control-label">Bairro</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="neighborhood" name="neighborhood" value="">
-                </div>
-            </div>
-        </form>
-    </div> -->
-    <!-- {!! Form::close() !!} -->
-
 @endsection
 
-@section('scripts')
+@section('scriptss')
     @parent
-    <script>
+    <script type="text/javascript">
         $('#myCarousel').carousel({
             interval: 4000
         });
-        // $("#myModal").modal('show');
+
         $('.cep').mask('99999-999');
         $("#btn-cep").click(function() {
             $('#address').css('visibility', 'visible');
@@ -186,21 +140,8 @@
             } else {
                 $('#address :input').removeAttr('readonly');
             }
-            // $.ajax({
-            //     type: "POST",
-            //     url: "process.php", //process to mail
-            //     data: $('form.contact').serialize(),
-            //     success: function(msg){
-            //         $("#thanks").html(msg) //hide button and show thank you
-            //         $("#form-content").modal('hide'); //hide popup  
-            //     },
-            //     error: function(){
-            //         alert("failure");
-            //     }
-            // });
         });
     </script>
-
 
 @endsection
 @stop
