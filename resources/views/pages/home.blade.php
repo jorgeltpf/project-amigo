@@ -91,8 +91,8 @@
     @parent
     <script type="text/javascript">
         $(document).ready(function() {
-            if (typeof jQuery != 'undefined') {
-                alert('jQuery.fn.jquery');
+            if (typeof jQuery == 'undefined') {
+                alert('no jQuery.fn.jquery');
             }
             $('#myCarousel').carousel({
                 interval: 4000
