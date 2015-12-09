@@ -13,8 +13,8 @@
     @show @section('meta_description')
         <meta name="description" content="Comércio de alimentos e delivery."/>
     @show
-        <!-- {!! HTML::style('css/site.css') !!} -->
-		<link href="{!! URL::asset('css/site.css') !!}" rel="stylesheet">
+        {!! HTML::style('css/site.css') !!}
+		<!-- <link href="{!! URL::asset('css/site.css') !!}" rel="stylesheet"> -->
 
     {{-- TODO: Incorporate into elixer workflow. --}}
     {{--<link rel="stylesheet"--}}
