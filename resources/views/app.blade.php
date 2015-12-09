@@ -14,7 +14,7 @@
         <meta name="description" content="Comércio de alimentos e delivery."/>
     @show
         <!-- {!! HTML::style('css/site.css') !!} -->
-		<link href="{{ URL::asset('css/site.css') }}" rel="stylesheet">
+		<link href="{!! URL::asset('css/site.css') !!}" rel="stylesheet">
 
     {{-- TODO: Incorporate into elixer workflow. --}}
     {{--<link rel="stylesheet"--}}
@@ -55,8 +55,8 @@
 @include('partials.footer')
 
 <!-- Scripts -->
-<!-- {!! HTML::script('js/site.js') !!} -->
-<script src="{{ URL::asset('js/site.js') }}"></script>
+{!! HTML::script('js/site.js') !!}
+<!-- <script src="{{ URL::asset('js/site.js') }}"></script> -->
 
 {{-- TODO: Incorporate into elixir workflow. --}}
 {{--<script src="{{asset('assets/site/js/jquery.justifiedGallery.min.js')}}"></script>--}}
