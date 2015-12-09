@@ -90,56 +90,61 @@
 @section('scripts')
     @parent
     <script type="text/javascript">
-        $('#myCarousel').carousel({
-            interval: 4000
-        });
-
-        $('.cep').mask('99999-999');
-        $("#btn-cep").click(function() {
-            $('#address').css('visibility', 'visible');
-            $('#address').css('opacity', '1');
-            $('#address').css('transition-delay', '0s');
-            if ($('#cep').val()) {
-                $.ajax({
-                    type: "GET",
-                    url: "http://viacep.com.br/ws/"+$('#cep').val()+"/json/",
-                    // data: $('form.contact').serialize(),
-                    success: function(data) {
-                        if (data) {
-                            if (data.logradouro) {
-                                $('#street').val(data.logradouro);
-                            } else {
-                                $('#street').val('').removeAttr('readonly');
-                            }
-                            if (data.bairro) {
-                                $('#neighborhood').val(data.bairro);
-                            } else {
-                                $('#neighborhood').val('').removeAttr('readonly');
-                            }
-                            if (data.localidade) {
-                                $('#city').val(data.localidade);
-                            } else {
-                                $('#city').val('').removeAttr('readonly');   
-                            }
-                            if (data.complemento) {
-                                $('#complement').val(data.complemento);
-                            } else {
-                                $('#complement').val('').removeAttr('readonly');   
-                            }
-                            if (data.uf) {
-                                $('#state').val(data.uf);
-                            } else {
-                                $('#state').val('').removeAttr('readonly');   
-                            }
-                        }
-                    },
-                    error: function() {
-                        alert("Ocorreu um erro!");
-                    }
-                });
-            } else {
-                $('#address :input').removeAttr('readonly');
+        $(document).ready(function() {
+            if (typeof jQuery != 'undefined') {
+                alert('jQuery.fn.jquery');
             }
+            $('#myCarousel').carousel({
+                interval: 4000
+            });
+
+            $('.cep').mask('99999-999');
+            $("#btn-cep").click(function() {
+                $('#address').css('visibility', 'visible');
+                $('#address').css('opacity', '1');
+                $('#address').css('transition-delay', '0s');
+                if ($('#cep').val()) {
+                    $.ajax({
+                        type: "GET",
+                        url: "http://viacep.com.br/ws/"+$('#cep').val()+"/json/",
+                        // data: $('form.contact').serialize(),
+                        success: function(data) {
+                            if (data) {
+                                if (data.logradouro) {
+                                    $('#street').val(data.logradouro);
+                                } else {
+                                    $('#street').val('').removeAttr('readonly');
+                                }
+                                if (data.bairro) {
+                                    $('#neighborhood').val(data.bairro);
+                                } else {
+                                    $('#neighborhood').val('').removeAttr('readonly');
+                                }
+                                if (data.localidade) {
+                                    $('#city').val(data.localidade);
+                                } else {
+                                    $('#city').val('').removeAttr('readonly');   
+                                }
+                                if (data.complemento) {
+                                    $('#complement').val(data.complemento);
+                                } else {
+                                    $('#complement').val('').removeAttr('readonly');   
+                                }
+                                if (data.uf) {
+                                    $('#state').val(data.uf);
+                                } else {
+                                    $('#state').val('').removeAttr('readonly');   
+                                }
+                            }
+                        },
+                        error: function() {
+                            alert("Ocorreu um erro!");
+                        }
+                    });
+                } else {
+                    $('#address :input').removeAttr('readonly');
+                }
+            });
         });
     </script>
 

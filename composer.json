@@ -58,7 +58,7 @@
         "post-create-project-cmd": [
             "php artisan key:generate"
         ],
-        "postinstall": "bower install && gulp --production"
+        "postinstall": "bower install && gulp"
     },
     "config": {
         "preferred-install": "dist"
