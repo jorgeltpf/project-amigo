@@ -1,3 +1,9 @@
+<?php
+    $env = $app->detectEnvironment(function() {
+        return getenv('APP_ENV') ?: 'production';
+    });
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br" class="no-js">
 <head>
@@ -14,7 +20,11 @@
         <meta name="description" content="Comércio de alimentos e delivery."/>
     @show
         <!-- {!! HTML::style('css/site.css') !!} -->
-		<link href="{!! secure_asset('css/site.css') !!}" rel="stylesheet">
+        @if ($env === 'local')
+            <link href="{!! elixir('css/site.css') !!}" rel="stylesheet">
+        @else
+            <link href="{!! secure_asset('css/site.css') !!}" rel="stylesheet">
+        @endif
 
     {{-- TODO: Incorporate into elixer workflow. --}}
     {{--<link rel="stylesheet"--}}
@@ -56,7 +66,11 @@
 
 <!-- Scripts -->
 <!-- {!! HTML::script('js/site.js') !!} -->
-<script src="{!! secure_asset('js/site.js') !!}"></script>
+@if ($env === 'local')
+    <script src="{!! elixir('js/site.js') !!}"></script>
+@else
+    <script src="{!! secure_asset('js/site.js') !!}"></script>
+@endif
 
 {{-- TODO: Incorporate into elixir workflow. --}}
 {{--<script src="{{asset('assets/site/js/jquery.justifiedGallery.min.js')}}"></script>--}}
