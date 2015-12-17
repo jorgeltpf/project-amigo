@@ -38,6 +38,7 @@ Route::resource('clients', 'ClientsController');
 
 Route::get('loginFacebook', 'FacebookController@login');
 Route::get('facebook', 'FacebookController@pageFacebook');
+Route::get('authFacebookLogin/{user}', 'Auth\AuthController@authenticateUserFacebook');
 
 Route::get('loginGitHub', 'GitHubController@login');
 Route::get('github', 'GitHubController@pageGitHub');
