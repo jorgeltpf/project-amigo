@@ -21,23 +21,25 @@ class FacebookController extends Controller {
  
     public function pageFacebook() {
 
-       	$user = \Socialize::with('facebook')->user();
+       	$data = \Socialize::with('facebook')->user();
         //dd($user['id']);
-        $db_user = User::where('email','=',$user['email'])->get();
-        if (empty($db_user[0]['email'])) {
+        $db_user = User::where('email','=',$data['email'])->count();
+        
+        if ($db_user == 0) {
             //registrar
-            dd($user);
-            $user_name = explode('@',  $user['email']);
-            $data = ['name' => $user['name'], 
-                    'username' => $username[0], 
-                    'email' => $user['email'], 
-                    'password' => bcrypt($user['id']), 
-                    'avatar' => $user['avatar_original'],
-                    'confirmation_code' => str_random(32),];
-            dd($data);
+            $user_name = explode('@',  $data['email']);
+
+            $user = new User();
+            $user['name'] = $data['name']; 
+            $user['username'] = $user_name[0]; 
+            $user['email'] = $data['email'];
+            $user['password'] = bcrypt($data['id']);
+            $user['avatar'] = 'https://graph.facebook.com/v2.5/'.$data['id'].'/picture?width=1920';
+            $user['confirmation_code'] = str_random(32);
+            $user->save();
          } 
 
-        if (Auth::attempt(['email' => $db_user[0]['email'], 'password' => $user['id']])) {
+        if (Auth::attempt(['email' => $data['email'], 'password' => $data['id']])) {//autenticação
             return redirect('home');
         }else{
             return 'Este e-mail não foi registrado pelo facebook!';
