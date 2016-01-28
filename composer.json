@@ -15,7 +15,7 @@
         "zizaco/entrust": "dev-laravel-5",
         "caouecs/laravel4-lang": "~2.0",
         "proengsoft/laravel-jsvalidation": "~1.1",
-        "laravel/socialite": "~2.0",
+        "laravel/socialite": "2.0",
         "guzzlehttp/guzzle": "~4.0",
         "way/generators": "~3.0",
         "phpspec/phpspec": "~2.1"
