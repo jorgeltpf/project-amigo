@@ -53,14 +53,33 @@ class ClientsController extends Controller {
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update do cliente.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $client = User::find($id);
+        $client->name = $request->name;
+
+        $password = $request->password;
+        $passwordConfirmation = $request->password_confirmation;
+        if (!empty($password)) {
+            if ($password === $passwordConfirmation) {
+                $client->password = bcrypt($password);
+            }
+        }
+
+        $client->save();
+
+        flash()->success('Cadastro salvo com sucesso!');
+
+        return redirect('clients');
+    }
+
+    public function store(Request $request) {
+
     }
 
     /**
@@ -71,5 +90,9 @@ class ClientsController extends Controller {
      */
     public function destroy($id) {
         //
+    }
+
+    public function requests($id) {
+
     }
 }

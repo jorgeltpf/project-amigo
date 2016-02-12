@@ -3,7 +3,7 @@
     <p class="lead">{{$menu_name}}</p>
     <div class="list-group">
         @foreach ($categoryItems as $items)
-            <a href="#" class="list-group-item">{{$items}}</a>
+            <a href="{{url('requests')}}" class="list-group-item">{{$items}}</a>
         @endforeach
     </div>
 </div>

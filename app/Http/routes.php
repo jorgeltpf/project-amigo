@@ -31,8 +31,15 @@ Route::get('weekdays', 'WeekDaysController@list_week'
     // }
 );
 
-Route::resource('clients', 'ClientsController');
-// Route::get('clients', 'ClientsController@index');
+// Clients - Edição de Clientes
+// Route::resource('clients', 'ClientsController');
+Route::get('clients/', 'ClientsController@index');
+Route::get('requests/{id}', 'ClientsController@requests');
+// Route::get('clients/{id}/edit', 'LanguageController@getEdit');
+Route::post('clients/{id}/', 'ClientsController@update');
+
+// Orders
+Route::get('orders/', 'OrdersController@index');
 
 //Socialite
 
