@@ -224,4 +224,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('producttypes/{id}/delete', 'ProductTypesController@postDelete');
 
 
+    Route::get('people/', 'PeoplesController@index');
 });

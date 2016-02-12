@@ -16,6 +16,12 @@
             <span class="hidden-sm text"> Dashboard</span>
         </a>
     </li>
+    <li class="{{set_active('admin/people*')}}">
+        <a href="{{url('admin/people')}}">
+            <i class="glyphicon glyphicon-user"></i>
+            <span class="hidden-sm text"> Meus Dados</span>
+        </a>
+    </li>
     <li class="{{set_active('admin/users*')}}">
         <a href="{{url('admin/users')}}">
             <i class="glyphicon glyphicon-user"></i>
