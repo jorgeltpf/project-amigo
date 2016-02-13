@@ -81,6 +81,12 @@ elixir(function (mix) {
         'assets/build/shop.css'
     ], 'public/css/shop.css', 'resources/');
 
+    // Estabelecimentos
+    mix.sass('establishments.scss', 'resources/assets/build/establishments.css');
+    mix.styles([
+        'assets/build/establishments.css'
+    ], 'public/css/establishments.css', 'resources/');
+
     // Compile SASS and output to default resource directory
     mix.sass('site.scss', 'resources/assets/build/site.css', {
         includePaths: [
@@ -141,6 +147,7 @@ elixir(function (mix) {
         'css/site.css',
         'css/admin.css',
         'css/shop.css',
+        'css/establishments.css',
         'js/site.js',
         'js/admin.js'
     ]);

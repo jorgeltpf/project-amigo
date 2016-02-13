@@ -21,9 +21,13 @@ class OrdersController extends Controller {
 			$stab[$key]['name'] = $value['name'];
 			$stab[$key]['phone'] = $value['phone'];
 			$stab[$key]['street'] = $value['street'];
+			$stab[$key]['street_number'] = $value['street_number'];
+			$stab[$key]['cep'] = $value['cep'];
+			$stab[$key]['neighborhood'] = $value['neighborhood'];
+			$stab[$key]['complement'] = $value['complement'];
 			$stab[$key]['image'] = $value['id'].'/'.$value['image'];
 		}
-		print_r($stab);
+		// print_r($stab);
 		$title = "Pedidos";
 		$menu_name = '1';
 		return view('orders.index',

@@ -6,5 +6,6 @@
             <h2>Sobre</h2>
         </div>
     </div> -->
-    @include('layouts.place')
+    @include('layouts.establishment')
+    <!-- @include('layouts.place') -->
 @endsection
