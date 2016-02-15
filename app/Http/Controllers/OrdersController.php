@@ -8,13 +8,12 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\Models\Establishment;
-use App\Article;
 
 class OrdersController extends Controller {
 
 	public function index() {
 		$establishments = Establishment::all();
-		$categoryItems = array();
+		$categoryItems = [1, 2, 3, 4];
 		$carouselItems = [1, 2, 3, 4];
 		$stab = array();
 		foreach ($establishments as $key => $value) {
@@ -28,8 +27,8 @@ class OrdersController extends Controller {
 			$stab[$key]['image'] = $value['id'].'/'.$value['image'];
 		}
 		// print_r($stab);
-		$title = "Pedidos";
-		$menu_name = '1';
+		$title = "Selecione um local";
+		$menu_name = 'Tipos';
 		return view('orders.index',
 			compact('title', 'menu_name', 'categoryItems', 'carouselItems', 'stab'));
 	}

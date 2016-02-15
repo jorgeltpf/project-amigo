@@ -1,4 +1,4 @@
-@extends('app', ['title' => 'about'])
+@extends('app')
 @section('title') Sobre :: @parent @stop
 @section('content')
  <!--    <div class="row">

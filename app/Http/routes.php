@@ -40,6 +40,7 @@ Route::post('clients/{id}/', 'ClientsController@update');
 
 // Orders
 Route::get('orders/', 'OrdersController@index');
+Route::get('orders/view_establishments/{id}', 'EstablishmentsController@show');
 
 //Socialite
 
