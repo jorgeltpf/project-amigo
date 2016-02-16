@@ -45,7 +45,7 @@
                             <p>{{$s['street']}}, {{$s['street_number']}}</p>
                             <p>{{$s['neighborhood']}}</p>
                             <p>{{$s['complement']}}</p>
-                            <a class="btn btn-primary" href="/orders/view_establishments/1">Acessar <span class="glyphicon glyphicon-chevron-right"></span></a>
+                            <a class="btn btn-primary pull-left" href="/orders/view_establishments/{{$s['id']}}">Acessar <span class="glyphicon glyphicon-chevron-right"></span></a>
                         </div>
                     </div>
                     <!-- /.row -->
@@ -103,14 +103,13 @@
                 <hr>
 
                 <!-- Footer -->
-                <footer>
+                <!-- <footer>
                     <div class="row">
                         <div class="col-lg-12">
                             <p>Copyright &copy; Amigo Entregador 2016</p>
                         </div>
                     </div>
-                    <!-- /.row -->
-                </footer>
+                </footer>-->
             </div>
         </div>
     </div>

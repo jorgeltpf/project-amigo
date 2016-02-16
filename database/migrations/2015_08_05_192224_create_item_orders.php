@@ -19,6 +19,8 @@ class CreateItemOrders extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->decimal('amount', 8, 2);
             $table->decimal('total_amount', 8, 2);
             $table->integer('quantity');

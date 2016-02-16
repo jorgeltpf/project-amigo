@@ -31,6 +31,8 @@
                     <li class="{{ (Request::is('auth/register') ? 'active' : '') }}"><a
                                 href="{!! URL::to('auth/register') !!}">Registrar</a></li>
                 @else
+                    <li><a href="{!! URL::to('auth/itemorders/index') !!}"><i
+                        class="glyphicon glyphicon-shopping-cart"></i> Pedidos</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false"><i class="fa fa-user"></i> {{ Auth::user()->name }} <i

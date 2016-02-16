@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\Models\Establishment;
+use App\Models\Product;
 
 class EstablishmentsController extends Controller {
 
@@ -17,6 +18,7 @@ class EstablishmentsController extends Controller {
 
 	public function show($id) {
 		$stab = $establishments = Establishment::find($id);
+		$products = Product::all();
 		$stab['image'] = $stab['id'].'/'.$stab['image'];
 		$menu_name = $title = $establishments['name'];
 		$categoryItems = [
@@ -26,7 +28,7 @@ class EstablishmentsController extends Controller {
 			"Contatos"
 		];
 		return view('orders.view_establishments',
-			compact('establishments', 'stab', 'title', 'menu_name', 'categoryItems', 'carouselItems'));
+			compact('establishments', 'stab', 'products', 'title', 'menu_name', 'categoryItems', 'carouselItems'));
 	}
 
 

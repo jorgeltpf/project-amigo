@@ -39,8 +39,14 @@ Route::get('requests/{id}', 'ClientsController@requests');
 Route::post('clients/{id}/', 'ClientsController@update');
 
 // Orders
+
 Route::get('orders/', 'OrdersController@index');
 Route::get('orders/view_establishments/{id}', 'EstablishmentsController@show');
+
+// Item Orders
+
+Route::get('item_orders/', 'ItemOrdersController@index');
+Route::get('item_orders/{id}/data', 'ItemOrdersController@data');
 
 //Socialite
 
@@ -225,5 +231,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('producttypes/{id}/delete', 'ProductTypesController@postDelete');
 
 
-    Route::get('people/', 'PeoplesController@index');
+    Route::get('people/', 'PeopleController@index');
 });

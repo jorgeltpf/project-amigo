@@ -38,19 +38,17 @@
 
             <div class="row">
 
-            @foreach ($stab as $s)
+            @foreach ($products as $product)
                 <div class="col-sm-4 col-lg-4 col-md-4">
                     <div class="thumbnail">
                         {!! HTML::image('/images/establishments/'.$stab['image']) !!}
-                        <!-- <img src="http://placehold.it/320x150" alt="{{$s['name']}}"> -->
                         <div class="caption">
-                            <h4 class="pull-right">{{$s['street']}}</h4>
-                            <h4><a href="#">{{$s['name']}}</a>
-                            </h4>
-                            <p>Descrição comida <a target="_blank" href="http://www.bootsnipp.com">site</a>.</p>
+                            <h4 class="pull-right">{{$product['name']}}</h4>
+                            <h4><a href="#">R${{$product['price']}}</a></h4>
+                            <p>{{$product['description']}} <a target="_blank" href="http://www.bootsnipp.com">site</a>.</p>
                         </div>
                         <div class="ratings">
-                            <p class="pull-right">{{$s['phone']}}</p>
+                            <p class="pull-right">R${{$product['price']}}</p>
                             <p>
                                 <span class="glyphicon glyphicon-star"></span>
                                 <span class="glyphicon glyphicon-star"></span>
@@ -59,6 +57,10 @@
                                 <span class="glyphicon glyphicon-star"></span>
                             </p>
                         </div>
+                        <div class="clearfix">
+                            <a href="/admin/item_orders/1/index" role="button" class="btn btn-success btn-large pull-right">Comprar</a>
+                            <!-- <button type="button" class="btn btn-primary pull-right">Comprar</button> -->
+                        </div>
                     </div>
                 </div>
             @endforeach    
@@ -66,6 +68,37 @@
 
         </div>
 
+    </div>
+
+    <hr>
+
+    <!-- Pagination -->
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <ul class="pagination">
+                <li>
+                    <a href="#">&laquo;</a>
+                </li>
+                <li class="active">
+                    <a href="#">1</a>
+                </li>
+                <li>
+                    <a href="#">2</a>
+                </li>
+                <li>
+                    <a href="#">3</a>
+                </li>
+                <li>
+                    <a href="#">4</a>
+                </li>
+                <li>
+                    <a href="#">5</a>
+                </li>
+                <li>
+                    <a href="#">&raquo;</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
 </div>

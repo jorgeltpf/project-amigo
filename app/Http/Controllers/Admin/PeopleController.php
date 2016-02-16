@@ -12,10 +12,10 @@ use App\Http\Controllers\AdminController;
 use Datatables;
 use JsValidator;
 
-class PeoplesController extends AdminController {
+class PeopleController extends AdminController {
 
 	public function index() {
 	        //
-	        return view('admin.peoples.index');
+	        return view('admin.people.index');
 	}
 }
