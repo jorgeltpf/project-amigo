@@ -58,7 +58,7 @@
                             </p>
                         </div>
                         <div class="clearfix">
-                            <a href="/admin/item_orders/1/index" role="button" class="btn btn-success btn-large pull-right">Comprar</a>
+                            <a href="/item_orders/" role="button" class="btn btn-success btn-large pull-right">Comprar</a>
                             <!-- <button type="button" class="btn btn-primary pull-right">Comprar</button> -->
                         </div>
                     </div>
