@@ -80,4 +80,8 @@ class Establishment extends Model {
         return $this->hasMany('App\Models\Establishment', 'establishment_id');
         // return $this->belongsTo('App\Models\Promotion', 'establishment_id');
     }
+
+    public function orders() {
+        return $this->hasMany('App\Models\Order');
+    }
 }

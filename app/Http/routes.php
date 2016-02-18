@@ -46,7 +46,6 @@ Route::get('orders/view_establishments/{id}', 'EstablishmentsController@show');
 // Item Orders
 
 Route::get('item_orders/', 'ItemOrdersController@index');
-Route::get('item_orders/{id}/data', 'ItemOrdersController@data');
 
 //Socialite
 

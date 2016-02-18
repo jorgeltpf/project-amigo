@@ -139,8 +139,6 @@ class ProductsController extends AdminController {
     }
 
     public function data() {
-
-
         $product = Product::whereNull('products.deleted_at')
             ->orderBy('products.id', 'DESC')
             ->join('product_classes', 'products.product_class_id', '=', 'product_classes.id')

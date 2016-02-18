@@ -29,6 +29,10 @@ class Product extends Model {
     	return $this->hasMany('App\Models\Promotion');
   	}
 
+  	public function item_orders() {
+  		return $this->hasMany('App\Models\ItemOrder');
+  	}
+
 	//public function getProductTypesListAttribute() {
 		//return $this->product_types->lists('id');
 	//}

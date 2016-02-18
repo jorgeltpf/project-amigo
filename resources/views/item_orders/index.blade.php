@@ -17,6 +17,28 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
+	                	@foreach($item_orders[0]['orders'][0]['item_orders'] as $items)
+	                		<tr>
+	                			<td class="col-sm-8 col-md-6">
+		                        <div class="media">
+		                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+		                            <div class="media-body">
+		                                <h4 class="media-heading"><a href="#">{{$items['Product']['name']}}</a></h4>
+		                                <h5 class="media-heading"> Por <a href="#">{{$item_orders[0]['name']}}</a></h5>
+		                                <span>Descrição: </span><span class="text-success"><strong>{{$items['Product']['description']}}</strong></span>
+		                            </div>
+		                        </div></td>
+		                        <td class="col-sm-1 col-md-1" style="text-align: center">
+		                        <input type="email" class="form-control" id="qtd" value="{{$items['quantity']}}">
+		                        </td>
+		                        <td class="col-sm-1 col-md-1 text-center"><strong>R${{$items['amount']}}</strong></td>
+		                        <td class="col-sm-1 col-md-1 text-center"><strong>R${{$items['total_amount']}}</strong></td>
+								<td class="actions" data-th="">
+									<button title="Atualizar" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+									<button title="Excluir" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>								
+								</td>
+	                		</tr>
+	                	@endforeach
 	                    <tr>
 	                        <td class="col-sm-8 col-md-6">
 	                        <div class="media">
@@ -40,7 +62,7 @@
 		                        <button type="button" class="btn btn-danger">
 		                            <span class="glyphicon glyphicon-remove"></span> Remove
 		                        </button>
-                        	 --></td>
+                        	 </td>-->
 	                    </tr>
 	                    <tr>
 	                        <td class="col-md-6">
