@@ -7,8 +7,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Models\Order;
 use App\Models\Establishment;
 use App\Models\Product;
+use App\Models\PaymentType;
 
 class OrdersController extends Controller {
 
@@ -33,6 +35,36 @@ class OrdersController extends Controller {
 		$menu_name = 'Tipos';
 		return view('orders.index',
 			compact('title', 'menu_name', 'categoryItems', 'carouselItems', 'stab'));
+	}
+
+	/**
+	 *	Visão dos pagamentos dos pedidos
+	 *	@param int $id id do pedido
+	 */
+	public function payments_index($id) {
+		$orders = Order::find($id)->with('item_orders')->get();
+		$result = [];
+		foreach($orders as $items) {
+			if (empty($result['total'])) {
+				$result['total'] = 0;
+			}
+			if (empty($result['qtd'])) {
+				$result['qtd'] = 0;
+			}
+			$result['total'] += $items['total_amount'];
+			$result['qtd'] += $items['quantity'];
+		}
+		$payment_types = PaymentType::all();
+		return view('orders.payments_index', compact('result','orders', 'payment_types'));
+	}
+
+	/**
+	 *	Visão dos pagamentos dos pedidos
+	 *	@param int $id id do pedido
+	 */
+	public function order_payments($id) {
+		$orders = Order::find($id);
+
 	}
 
 	/**

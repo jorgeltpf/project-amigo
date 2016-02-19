@@ -42,6 +42,7 @@ Route::post('clients/{id}/', 'ClientsController@update');
 
 Route::get('orders/', 'OrdersController@index');
 Route::get('orders/view_establishments/{id}', 'EstablishmentsController@show');
+Route::get('orders/{id}/payments_index', 'OrdersController@payments_index');
 
 // Item Orders
 

@@ -3,6 +3,14 @@
 @section('title') @parent :: Carrinho @stop
 
 @section('content')
+	<div class="row">
+		<div ckass="page-header">
+			<h2>Carrinho</h2>
+		</div>
+	</div>
+
+	<hr>
+
 	<div class="container">
 	    <div class="row">
 	        <div class="col-sm-12 col-md-12">
@@ -110,13 +118,18 @@
 	                        <td>   </td>
 	                        <td>   </td>
 	                        <td>
-	                        <button type="button" class="btn btn-default">
-	                            <span class="glyphicon glyphicon-shopping-cart"></span> Continuar Comprando
-	                        </button></td>
+		                        <button type="button" class="btn btn-default">
+		                            <span class="glyphicon glyphicon-shopping-cart"></span> Continuar Comprando
+		                        </button>
+	                        </td>
 	                        <td>
-	                        <button type="button" class="btn btn-success">
-	                            Comprar <span class="glyphicon glyphicon-play"></span>
-	                        </button></td>
+	                        	<a class="btn btn-success" href="/orders/4/payments_index/">
+	                        		Comprar <span class="glyphicon glyphicon-play"></span>
+                        		</a>
+		                        <!-- <button type="button" class="btn btn-success">
+		                            Comprar <span class="glyphicon glyphicon-play"></span>
+		                        </button> -->
+	                        </td>
 	                    </tr>
 	                </tbody>
 	            </table>
