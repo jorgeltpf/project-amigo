@@ -42,7 +42,7 @@ class OrdersController extends Controller {
 	 *	@param int $id id do pedido
 	 */
 	public function payments_index($id) {
-		$orders = Order::find($id)->with('item_orders')->get();
+		$orders = Order::findOrFail($id)->with('item_orders')->get();
 		$result = [];
 		foreach($orders as $items) {
 			if (empty($result['total'])) {

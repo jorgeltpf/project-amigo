@@ -1,5 +1,14 @@
 @extends('app')
 
+@section('styles')
+<!-- {!! HTML::style('css/shop.css') !!}  -->
+    <style type="text/css">
+    	div.media-body h4, h5, span {
+    		margin-left: 10px;
+    	}
+    </style>
+@stop
+
 @section('title') @parent :: Carrinho @stop
 
 @section('content')
@@ -123,7 +132,7 @@
 		                        </button>
 	                        </td>
 	                        <td>
-	                        	<a class="btn btn-success" href="/orders/4/payments_index/">
+	                        	<a class="btn btn-success" href="/orders/1/payments_index/">
 	                        		Comprar <span class="glyphicon glyphicon-play"></span>
                         		</a>
 		                        <!-- <button type="button" class="btn btn-success">
