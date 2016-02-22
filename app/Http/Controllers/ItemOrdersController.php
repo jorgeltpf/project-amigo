@@ -32,4 +32,12 @@ class ItemOrdersController extends Controller {
 		$products = Product::all();
 		return view('orders.shopping_cart_view', compact('products'));
 	}
+
+	public function getCreate() {
+
+	}
+
+	public function postCreate() {
+		
+	}
 }

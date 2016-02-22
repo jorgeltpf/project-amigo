@@ -57,9 +57,11 @@
                                 <span class="glyphicon glyphicon-star"></span>
                             </p>
                         </div>
-                        <div class="clearfix">
-                            <a href="/item_orders/" role="button" class="btn btn-success btn-large pull-right">Comprar</a>
-                            <!-- <button type="button" class="btn btn-primary pull-right">Comprar</button> -->
+                        <div class="text-right control-group">
+                            <a href="/item_orders/" class="btn btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho</a>
+                            <a href="/item_orders/" class="btn btn-success">Comprar <span class="glyphicon glyphicon-play"></span></a>
+                            <!-- <button type="button" class="btn btn-default"></button> -->
+                            <!-- <button type="button" class=""></button> -->
                         </div>
                     </div>
                 </div>

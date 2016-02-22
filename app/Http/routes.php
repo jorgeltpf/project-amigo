@@ -42,11 +42,21 @@ Route::post('clients/{id}/', 'ClientsController@update');
 
 Route::get('orders/', 'OrdersController@index');
 Route::get('orders/view_establishments/{id}', 'EstablishmentsController@show');
-Route::get('orders/{id}/payments_index', 'OrdersController@payments_index');
+Route::group(['middleware' => 'auth'], function() {
+    Route::pattern('id', '[0-9]+');
+    Route::get('orders/create', 'OrdersController@getCreate');
+    Route::post('orders/create', 'OrdersController@postCreate');
+    Route::get('orders/{id}/payments_index', 'OrdersController@payments_index');
+});
 
 // Item Orders
 
-Route::get('item_orders/', 'ItemOrdersController@index');
+Route::group(['middleware' => 'auth'], function() {
+    Route::pattern('id', '[0-9]+');
+    Route::get('item_orders/', 'ItemOrdersController@index');
+    // Route::get('item_orders/create', 'ItemOrdersController@getCreate');
+    // Route::post('item_orders/create', 'ItemOrdersController@postCreate');
+});
 
 //Socialite
 

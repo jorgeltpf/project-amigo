@@ -84,18 +84,7 @@
 				</table>
 			</div>
 			<div class="col-md-4 panel payment-form">
-					<h2>Formas de Pagamento</h2>
-<!-- 				<div class="row" style="text-align:center;">
-			  		<label class="radio-inline">
-		          		<input name="radioGroup" id="radio1" value="option1" type="radio"> 1
-			        </label>
-			        <label class="radio-inline">
-			          	<input name="radioGroup" id="radio2" value="option2" checked="" type="radio"> 2
-			        </label>
-			        <label class="radio-inline">
-			          	<input name="radioGroup" id="radio3" value="option3" type="radio"> 3
-			        </label>
-			  	</div> -->
+				<h2>Formas de Pagamento</h2>
 				<form class="form-horizontal">
 					<div class="panel-body panel-list">
 						<ul class="list-inline col-sm-12">
@@ -114,13 +103,6 @@
 								<p>Dinheiro</p>
 								<input type="radio" name="types[]" id="type_3" value="3">
 							</li>
-							@foreach($payment_types as $types)
-								<li class="col-md-1 col-sm-2 col-xs-6 grid-icon" style="text-align:center">
-									<span class="glyphicon glyphicon-credit-card"></span>
-									<p>{{$types['description']}}</p>
-									<input type="radio" name="types" id="type_{{$types['id']}}" value="{{$types['id']}}">
-								</li>
-							@endforeach
 						</ul>
 							<div class="col-md-12 form-group">
 								<label class="control-label col-md-6">

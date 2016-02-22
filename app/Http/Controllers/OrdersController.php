@@ -75,4 +75,45 @@ class OrdersController extends Controller {
 		$products = Product::all();
 		return view('orders.shopping_cart_view', compact('products'));
 	}
+
+	public function getCreate() {
+
+	}
+
+	public function postCreate(Request $request) {
+		$order = new Order();
+		$item_orders = [];
+
+		$order['person_id'] = $request['person_id'];
+		$order['establishment_id'] = $request['establishment_id'];
+		$order['total_amount'] = $request['total_amount'];
+		$order['street'] = $request['street'];
+		$order['street_number'] = $request['street_number'];
+		$order['complement'] = $request['complement'];
+		$order['state'] = 'RS';
+		$order['country'] = 'Brasil';
+
+		$order->save();
+
+		$order = Order::create([
+			'person_id' => $request['person_id'];
+			'establishment_id' => $request['establishment_id'];
+			'total_amount' => $request['total_amount'];
+			'street' => $request['street'];
+			'street_number' => $request['street_number'];
+			'complement' => $request['complement'];
+			'state' => 'RS';
+			'country' => 'Brasil';
+		]);
+
+		$item_orders['amount'] = $item_orders['total_amount'] = $request['total_amount'];
+		$item_orders['quantity'] = 1;
+		$item_orders['product_id'] = $request['product_id'];
+
+		$order->item_orders()->attach($item_orders);
+
+		flash()->success('Cadastro salvo com sucesso!');
+
+        // return redirect('admin/establishments');
+	}
 }
