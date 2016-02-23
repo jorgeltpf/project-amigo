@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-use App\Models\People;
+use App\Models\Person;
 use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;

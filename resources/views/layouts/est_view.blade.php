@@ -31,6 +31,7 @@
                     <p>{{$stab['street']}}, {{$stab['street_number']}}</p>
                     <p>{{$stab['neighborhood']}}</p>
                     <p>{{$stab['complement']}}</p>
+                    <p>{{$stab['cep']}}</p>
                 </div>
             </div>
 

@@ -7,11 +7,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use Helpers;
 
-class People extends Model {
+class Person extends Model {
 	use SoftDeletes;
+
+	// Identificar a tabela people
+	protected $table = 'people';
+
+	protected $hidden = [
+		'user_id'
+	];
 
     protected $fillable = array(
 		'name',
+		'user_id',
 		'email',
 		'phone',
 		'cell_phone',
@@ -25,4 +33,12 @@ class People extends Model {
 		'cpf',
 		'people_type'
 	);
+
+    public function user() {
+    	return $this->hasOne('App\Models\User');
+    }
+
+	public function setUserIdAttribute($value){
+		$this->attributes['user_id'] = $value == "null" ? null : $value;
+	}
 }

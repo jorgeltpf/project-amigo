@@ -96,14 +96,15 @@ class OrdersController extends Controller {
 		$order->save();
 
 		$order = Order::create([
-			'person_id' => $request['person_id'];
-			'establishment_id' => $request['establishment_id'];
-			'total_amount' => $request['total_amount'];
-			'street' => $request['street'];
-			'street_number' => $request['street_number'];
-			'complement' => $request['complement'];
-			'state' => 'RS';
-			'country' => 'Brasil';
+			'person_id' => $request['person_id'],
+			'establishment_id' => $request['establishment_id'],
+			'total_amount' => $request['total_amount'],
+			'street' => $request['street'],
+			'street_number' => $request['street_number'],
+			'complement' => $request['complement'],
+			'cep' => $request['cep'],
+			'state' => 'RS',
+			'country' => 'Brasil'
 		]);
 
 		$item_orders['amount'] = $item_orders['total_amount'] = $request['total_amount'];

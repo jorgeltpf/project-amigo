@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\User;
 use App\Models\Role;
+use App\Models\Person;
 use App\Http\Requests\Admin\UserRequest;
 use App\Http\Requests\Admin\UserEditRequest;
 use App\Http\Requests\Admin\DeleteRequest;
@@ -13,7 +14,7 @@ use JsValidator;
 class UserController extends AdminController {
     protected $validationRules = [
         'name' => 'required|max:255',
-        'username' => 'required|unique:users',
+        // 'username' => 'required|unique:users',
         'email' => 'required|email|unique',
         'password' => 'required',
         'password_confirmation' => 'required'
@@ -58,29 +59,42 @@ class UserController extends AdminController {
      */
 
     public function postCreate(UserRequest $request) {
-  //       $user = new User();
-  //       $user->name = $request->name;
-		// $user->username = $request->username;
-  //       $user->email = $request->email;
-  //       $user->password = bcrypt($request->password);
-  //       $user->confirmation_code = str_random(32);
-  //       $user->confirmed = $request->confirmed;
-
         $user = new User ($request->except('password','confirmation_code'));
         $user->password = bcrypt($request->password);
         $user->confirmation_code = str_random(32);
         $user->confirmed = $request->confirmed;
 
-        $user->save();
-        if (!empty($request->role_list)) {
-            $role = array($request->role_list);
+        if ($user->save()) {
+            if (!empty($request->role_list)) {
+                $role = array($request->role_list);
+            } else {
+                // Papel de Op do Est
+                $role = [3];
+            }
+
+            $this->syncRoles($user, $role);
+
+            $person = Person::create([
+                'user_id' => $user->id,
+                'name' => $request->name,
+                'email' => 'teste@teste.com.br',
+                'people_type' => 1,
+                'cpf' => 0027191128,
+                'phone' => 99999,
+                'cell_phone' => 99999,
+                'street' => 'Teste',
+                'street_number' => 9,
+                'cep' => 99999,
+                'complement' => 'Teste',
+                'city' => 'Teste',
+                'state' => 'RS',
+                'country' => 'Brasil'
+            ]);
+
+            flash()->success('Cadastro salvo com sucesso!');
         } else {
-            $role = [3];
+            flash()->error('Ocorreu um erro ao salvar o cadastro!');
         }
-
-        $this->syncRoles($user, $role);
-
-        flash()->success('Cadastro salvo com sucesso!');
 
         return redirect('admin/users');
     }
@@ -126,16 +140,21 @@ class UserController extends AdminController {
             }
         }
 
-        $user->save();
-        $this->syncRoles($user, $roles);
+        if ($user->save()) {
+            $this->syncRoles($user, $roles);
 
-        flash()->success('Cadastro salvo com sucesso!');
+            flash()->success('Cadastro salvo com sucesso!');
+        } else {
+            flash()->error('Ocorreu um erro!');
+        }
+
+
 
         return redirect('admin/users');
     }
 
     private function syncRoles(User $user, array $roles) {
-        $user->roles()->sync($roles);
+        return $user->roles()->sync($roles);
     }
 
     /**
