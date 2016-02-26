@@ -23,6 +23,7 @@ class CreatePeopleTable extends Migration
             $table->string('cell_phone');
             $table->string('cep');
             $table->string('street', 255);
+            $table->string('neighborhood', 255);
             $table->integer('street_number');
             $table->string('complement', 255);
             $table->string('city', 255);

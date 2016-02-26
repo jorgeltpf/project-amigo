@@ -36,7 +36,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'email',
         'password',
         'avatar',
-        'confirmation_code'
+        'confirmation_code',
+        // Person
+        'user_id',
+        'email',
+        'phone',
+        'cell_phone',
+        'street',
+        'street_number',
+        'complement',
+        'city',
+        'state',
+        'country',
+        'cep',
+        'cpf',
+        'people_type'
     ];
 
     /**
@@ -45,6 +59,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * Função para deletar em cascata a pessoa
+     * associada com o usuário deletado
+     */
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($user) {
+            $user->person()->delete();
+        });
+    }
 
 	public function articles()
 	{
@@ -57,7 +83,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function person() {
-        return $this->belongsTo('App\Models\Person');
+        return $this->hasOne('App\Models\Person');
     }
 
     /**

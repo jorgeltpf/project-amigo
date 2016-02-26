@@ -64,21 +64,39 @@
 					<select class="form-control" name="confirmed" id="confirmed">
 						<option value="1" {{{ ((isset($user) && $user->confirmed == 1)? '
 							selected="selected"' : '') }}}>{{{ trans('admin/users.yes')
-							}}}</option>
+							}}}
+						</option>
 						<option value="0" {{{ ((isset($user) && $user->confirmed == 0) ?
 							' selected="selected"' : '') }}}>{{{ trans('admin/users.no')
-							}}}</option>
+							}}}
+						</option>
 					</select>
 				</div>
 			</div>
 	    </fielset>
+	    <hr>
+	    <fieldset>
+	    	<legend class="text-center">Informações Pessoais</legend>
+			<div class="form-group">
+				<label class="col-xs-2 control-label" for="people_type">
+					Tipo:
+				</label>
+				<div class="col-xs-2">
+					<select class="form-control" name="people_type" id="people_type">
+						<option value="1">Física</option>
+						<option value="2">Jurídica</option>
+					</select>
+				</div>
+			</div>
+		    @include('partials.person_form')
+	    </fieldset>
 	    <div class="form-group">
 	        <div class="col-xs-offset-2 col-xs-10">
-	            <button type="submit" class="btn btn-success save-user" id="save-user">Salvar</button>
 	            <button type="button" class="btn btn-primary">
 	            	<a href="{{{ URL::to('admin/users/') }}}"></a>
                     <span class="glyphicon glyphicon-backward"></span> Voltar
             	</button>
+	            <button type="submit" class="btn btn-success save-user" id="save-user">Salvar</button>
 	        </div>
 	    </div>
 

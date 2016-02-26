@@ -17,7 +17,16 @@ class UserController extends AdminController {
         // 'username' => 'required|unique:users',
         'email' => 'required|email|unique',
         'password' => 'required',
-        'password_confirmation' => 'required'
+        'password_confirmation' => 'required',
+        'cpf' => 'required',
+        'phone' => 'required',
+        'cell_phone' => 'required',
+        'cep' => 'required',
+        'street' => 'required',
+        'neighborhood' => 'required',
+        'street_number' => 'required',
+        'complement' => 'required',
+        'city' => 'required'
     ];
 
     protected $messages = array(
@@ -27,6 +36,15 @@ class UserController extends AdminController {
         'email.required' => 'É preciso preencher o e-mail',
         'password.required' => 'É preciso preencher o campo de senha',
         'password_confirmation.required' => 'É preciso preencher o campo de confirmação de senha',
+        'cpf.required' => 'É preciso preencher o cpf',
+        'phone.required' => 'É preciso preencher o seu telefone',
+        'cell_phone.required' => 'É preciso preencher o seu celular',
+        'cep.required' => 'É preciso preencher o seu cep',
+        'neighborhood.required' => 'É preciso preencher o bairro',
+        'street.required' => 'É preciso preencher a sua rua',
+        'street_number.required' => 'É preciso preencher o número',
+        'complement.required' => 'É preciso preencher o complemento',
+        'city.required' => 'É preciso preencher a sua cidade'
     );
 
     /*
@@ -59,7 +77,14 @@ class UserController extends AdminController {
      */
 
     public function postCreate(UserRequest $request) {
-        $user = new User ($request->except('password','confirmation_code'));
+        $user = new User (
+            $request->except(
+                'password','confirmation_code',
+                'cpf', 'phone', 'cell_phone', 'neighborhood',
+                'street', 'street_number', 'cep', 'complement',
+                'city', 'country', 'people_type'
+            )
+        );
         $user->password = bcrypt($request->password);
         $user->confirmation_code = str_random(32);
         $user->confirmed = $request->confirmed;
@@ -68,25 +93,33 @@ class UserController extends AdminController {
             if (!empty($request->role_list)) {
                 $role = array($request->role_list);
             } else {
-                // Papel de Op do Est
-                $role = [3];
+                // Papel de Op do Est [3] ou Cliente [4]?????
+                $role = [4];
             }
 
             $this->syncRoles($user, $role);
 
+            // $person = new Person();
+            // $person->fill($request->all());
+            // $person->user_id = $user->id;
+            // $person->state = 'RS';
+            // $person->country = 'Brasil';
+            // dd($person);
+            // $user->person->create($person);
             $person = Person::create([
                 'user_id' => $user->id,
                 'name' => $request->name,
-                'email' => 'teste@teste.com.br',
-                'people_type' => 1,
-                'cpf' => 0027191128,
-                'phone' => 99999,
-                'cell_phone' => 99999,
-                'street' => 'Teste',
-                'street_number' => 9,
-                'cep' => 99999,
-                'complement' => 'Teste',
-                'city' => 'Teste',
+                'email' => $request->email,
+                'people_type' => $request->people_type,
+                'cpf' => $request->cpf,
+                'phone' => $request->phone,
+                'cell_phone' => $request->cell_phone,
+                'street' => $request->street,
+                'street_number' => $request->street_number,
+                'cep' => $request->cep,
+                'neighborhood' => $request->neighborhood,
+                'complement' => $request->complement,
+                'city' => $request->city,
                 'state' => 'RS',
                 'country' => 'Brasil'
             ]);
@@ -100,14 +133,14 @@ class UserController extends AdminController {
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the user.
      *
      * @param $user
      * @return Response
      */
 
     public function getEdit($id) {
-        $user = User::find($id);
+        $user = User::with('Person')->findOrFail($id);
         $roles = Role::lists('display_name', 'id');
         $validator = JsValidator::make($this->validationRules, $this->messages);
         return view('admin.users.create_edit', compact('user', 'roles', 'validator'));
@@ -131,7 +164,8 @@ class UserController extends AdminController {
         if (!empty($request->role_list)) {
             $roles = array($request->role_list);
         } else {
-            $roles = [3];
+            $clientRole = 4;
+            $roles = [$clientRole];
         }
 
         if (!empty($password)) {
@@ -142,6 +176,9 @@ class UserController extends AdminController {
 
         if ($user->save()) {
             $this->syncRoles($user, $roles);
+
+            // Update People
+            $person = $user->person->update($request->all());
 
             flash()->success('Cadastro salvo com sucesso!');
         } else {
@@ -154,7 +191,7 @@ class UserController extends AdminController {
     }
 
     private function syncRoles(User $user, array $roles) {
-        return $user->roles()->sync($roles);
+        $user->roles()->sync($roles);
     }
 
     /**
@@ -177,7 +214,7 @@ class UserController extends AdminController {
      * @return Response
      */
     public function postDelete(DeleteRequest $request,$id) {
-        $user= User::find($id);
+        $user= User::findOrFail($id);
         $user->delete();
     }
 
