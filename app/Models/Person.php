@@ -5,31 +5,54 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use Helpers;
 
-class Establishment extends Model {
+class Person extends Model {
 	use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
+	// Identificar a tabela people
+	protected $table = 'people';
+
+	protected $dates = ['deleted_at'];
+
+	protected $guarded = [
+		'id',
+		'created_at',
+		'update_at'
+	];
+
+	protected $hidden = [
+		'user_id'
+	];
 
     protected $fillable = array(
 		'name',
-		'cnpj',
+		'user_id',
+		'email',
 		'phone',
 		'cell_phone',
-		'email',
 		'street',
 		'street_number',
 		'complement',
 		'city',
 		'state',
 		'country',
-		'delivery_max_time',
-		'cep'
+		'cep',
+		'cpf',
+		'people_type'
 	);
 
     private $rules = array(
-		'cnpj=>required|min:14'
+		'cpf=>required|min:11'
 	);
+
+    public function user() {
+    	return $this->belongsTo('App\User');
+    }
+
+	public function setUserIdAttribute($value){
+		$this->attributes['user_id'] = $value == "null" ? null : $value;
+	}
 
     // Envia o tel sem máscara
     public function setPhoneAttribute($value) {
@@ -69,21 +92,7 @@ class Establishment extends Model {
     }
 
     // Envia o cnpj sem máscara
-    public function setCnpjAttribute($value) {
-        $this->attributes['cnpj'] = trim(preg_replace('~[\\\\/:*?"<>.|()-]~', '', $value));
-    }
-
-    public function weekdays() {
-        return $this->belongsToMany('App\Models\WeekDay')->withPivot('time_on', 'time_off', 'shift');
-    }
-
-    public function promotions() {
-        // return $this->hasOne('App\Models\Promotion');
-        return $this->hasMany('App\Models\Establishment', 'establishment_id');
-        // return $this->belongsTo('App\Models\Promotion', 'establishment_id');
-    }
-
-    public function orders() {
-        return $this->hasMany('App\Models\Order');
+    public function setCpfAttribute($value) {
+        $this->attributes['cpf'] = trim(preg_replace('~[\\\\/:*?"<>.|()-]~', '', $value));
     }
 }

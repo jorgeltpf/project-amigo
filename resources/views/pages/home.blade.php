@@ -99,7 +99,7 @@
             });
 
             $('.cep').mask('99999-999');
-            $("#btn-cep").click(function() {
+            $('#btn-cep').click(function() {
                 $('#address').css('visibility', 'visible');
                 $('#address').css('opacity', '1');
                 $('#address').css('transition-delay', '0s');
@@ -144,6 +144,10 @@
                 } else {
                     $('#address :input').removeAttr('readonly');
                 }
+            });
+
+            $('#btn-confirm').on('click', function() {
+                window.location.href = '/orders/';
             });
         });
     </script>

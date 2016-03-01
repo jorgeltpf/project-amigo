@@ -1,11 +1,18 @@
 
 <div class="col-md-3 side-menu">
     <p class="lead">{{$menu_name}}</p>
-    <div class="list-group">
+<!--     <div class="list-group">
         @foreach ($categoryItems as $items)
             <a href="{{url('requests')}}" class="list-group-item">{{$items}}</a>
         @endforeach
-    </div>
+    </div> -->
+    @foreach ($categoryItems as $items)
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> {{$items}}
+            </label>
+        </div>
+    @endforeach
 </div>
 
 @section('scripts')

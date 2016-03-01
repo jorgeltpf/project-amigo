@@ -31,8 +31,32 @@ Route::get('weekdays', 'WeekDaysController@list_week'
     // }
 );
 
-Route::resource('clients', 'ClientsController');
-// Route::get('clients', 'ClientsController@index');
+// Clients - Edição de Clientes
+// Route::resource('clients', 'ClientsController');
+Route::get('clients/', 'ClientsController@index');
+Route::get('requests/{id}', 'ClientsController@requests');
+// Route::get('clients/{id}/edit', 'LanguageController@getEdit');
+Route::post('clients/{id}/', 'ClientsController@update');
+
+// Orders
+
+Route::get('orders/', 'OrdersController@index');
+Route::get('orders/view_establishments/{id}', 'EstablishmentsController@show');
+Route::group(['middleware' => 'auth'], function() {
+    Route::pattern('id', '[0-9]+');
+    Route::get('orders/create', 'OrdersController@getCreate');
+    Route::post('orders/create', 'OrdersController@postCreate');
+    Route::get('orders/{id}/payments_index', 'OrdersController@payments_index');
+});
+
+// Item Orders
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::pattern('id', '[0-9]+');
+    Route::get('item_orders/', 'ItemOrdersController@index');
+    // Route::get('item_orders/create', 'ItemOrdersController@getCreate');
+    // Route::post('item_orders/create', 'ItemOrdersController@postCreate');
+});
 
 //Socialite
 
@@ -217,5 +241,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('producttypes/{id}/delete', 'ProductTypesController@postDelete');
 
 
-    Route::get('people/', 'PeoplesController@index');
+    Route::get('people/', 'PeopleController@index');
 });

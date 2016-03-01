@@ -35,7 +35,7 @@
 		[
 			'method' => 'POST',
 			'action' => ['Admin\UserController@postEdit', $user->id],
-			'class' => 'form-horizontal',
+			'class'  => 'form-horizontal',
 			'id'	 => 'user'
 		]
 	)

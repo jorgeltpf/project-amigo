@@ -7,7 +7,11 @@ class CreateOrders extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * Status:
+     * 1 - Solicitado
+     * 2 - Em Processamento
+     * 3 - Pago
+     * 4 - Finalizado
      * @return void
      */
     public function up()
@@ -16,8 +20,9 @@ class CreateOrders extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->integer('person_id')->unsigned();
-            $table->foreign('person_id')->references('id')->on('people');
+            $table->string('number', 10)->unique();
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('establishment_id')->unsigned();
             $table->foreign('establishment_id')->references('id')->on('establishments');
             $table->integer('status');
@@ -26,7 +31,7 @@ class CreateOrders extends Migration
             $table->integer('street_number');
             $table->string('complement');
             $table->string('cep');
-            $table->string('state');
+            $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->timestamps();
             $table->softDeletes();

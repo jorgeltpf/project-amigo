@@ -12,6 +12,7 @@ composer.phar
 /public/fonts
 /public/img
 /public/js
+/public/images/establishments
 /resources/assets/build
 
 /www/images

@@ -16,9 +16,11 @@ class CreateEstablishmentsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('name');
+            $table->string('cnpj', 14)->unique();
             $table->string('email')->unique();
             $table->string('phone');
             $table->string('cell_phone');
+            $table->string('cep');
             $table->string('neighborhood', 255);
             $table->string('street', 255);
             $table->integer('street_number');
@@ -26,11 +28,9 @@ class CreateEstablishmentsTable extends Migration
             $table->string('city', 255);
             $table->string('state', 50);
             $table->string('country', 50);
-            $table->string('cep');
-            $table->string('cnpj', 14);
             $table->string('image', 255)->nullable();
             $table->integer('delivery_max_time')->nullable();
-            $table->boolean('status');
+            $table->boolean('status')->comment('0 - Inativo | 1 - Ativo');
             $table->timestamps();
             $table->softDeletes();
         });
