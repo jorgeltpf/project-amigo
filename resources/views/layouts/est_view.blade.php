@@ -38,12 +38,22 @@
             <hr>
 
             <div class="row">
-
             @foreach ($products as $product)
+                {!!
+                    Form::open([
+                        'action' => 'OrdersController@postCreate',
+                        'class' => 'form',
+                        'enctype' => "multipart/form-data"
+                    ])
+                !!}
                 <div class="col-sm-4 col-lg-4 col-md-4">
                     <div class="thumbnail">
+                        <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                         {!! HTML::image('/images/establishments/'.$stab['image']) !!}
                         <div class="caption">
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="price" value="{{ $product->price }}">
+                            <input type="hidden" name="establishment_id" value="{{ $stab->id }}">
                             <h4 class="pull-right">{{$product['name']}}</h4>
                             <h4><a href="#">R${{$product['price']}}</a></h4>
                             <p>{{$product['description']}} <a target="_blank" href="http://www.bootsnipp.com">site</a>.</p>
@@ -60,15 +70,17 @@
                         </div>
                         <div class="text-right control-group">
                             <a href="/item_orders/" class="btn btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho</a>
-                            <a href="/item_orders/" class="btn btn-success">Comprar <span class="glyphicon glyphicon-play"></span></a>
+                            {!! Form::button("Comprar <span class='glyphicon glyphicon-play'></span>", array('class' => 'btn btn-success', 'type'=>'submit')) !!}
+                            <!-- <a class="btn btn-success buy_product">Comprar <span class="glyphicon glyphicon-play"></span></a> -->
+                            <!-- <a href="/item_orders/" class="btn btn-success" id="buy_product">Comprar <span class="glyphicon glyphicon-play"></span></a> -->
                             <!-- <button type="button" class="btn btn-default"></button> -->
                             <!-- <button type="button" class=""></button> -->
                         </div>
                     </div>
                 </div>
-            @endforeach    
+                {!! Form::close() !!}
+            @endforeach
             </div>
-
         </div>
 
     </div>
@@ -106,3 +118,16 @@
 
 </div>
 @endsection
+
+@section('scripts')
+    @parent
+<script type="text/javascript">
+$(document).ready(function() {
+console.log('$(this)');
+    $('.buy_product').on('click', function() {
+        console.log($(this));
+        // $('#orders').submit();
+    });
+});
+</script>
+@stop

@@ -45,7 +45,7 @@
                             <p>{{$s['street']}}, {{$s['street_number']}}</p>
                             <p>{{$s['neighborhood']}}</p>
                             <p>{{$s['complement']}}</p>
-                            <a class="btn btn-primary pull-left" href="/orders/view_establishments/{{$s['id']}}">Acessar <span class="glyphicon glyphicon-chevron-right"></span></a>
+                            <a class="btn btn-primary pull-left" href="/orders/{{$s['id']}}/view_establishments/">Acessar <span class="glyphicon glyphicon-chevron-right"></span></a>
                         </div>
                     </div>
                     <!-- /.row -->
@@ -53,7 +53,7 @@
                     <hr>
                 @endforeach
                 <!-- Project Two -->
-                <div class="row">
+<!--                 <div class="row">
                     <div class="col-md-7">
                         <a href="#">
                             <img class="img-responsive" src="http://placehold.it/700x300" alt="">
@@ -65,7 +65,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, odit velit cumque vero doloremque repellendus distinctio maiores rem expedita a nam vitae modi quidem similique ducimus! Velit, esse totam tempore.</p>
                         <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
                     </div>
-                </div>
+                </div> -->
                     <!-- /.row -->
 
                 <hr>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\Models\Order;
+use App\Models\ItemOrder;
 use App\Models\Establishment;
 use App\Models\Product;
 use App\Models\PaymentType;
@@ -30,7 +31,6 @@ class OrdersController extends Controller {
 			$stab[$key]['complement'] = $value['complement'];
 			$stab[$key]['image'] = $value['id'].'/'.$value['image'];
 		}
-		// print_r($stab);
 		$title = "Selecione um local";
 		$menu_name = 'Tipos';
 		return view('orders.index',
@@ -81,40 +81,61 @@ class OrdersController extends Controller {
 	}
 
 	public function postCreate(Request $request) {
+		// dd($request->all());
 		$order = new Order();
 		$item_orders = [];
 
-		$order['person_id'] = $request['person_id'];
-		$order['establishment_id'] = $request['establishment_id'];
-		$order['total_amount'] = $request['total_amount'];
-		$order['street'] = $request['street'];
-		$order['street_number'] = $request['street_number'];
-		$order['complement'] = $request['complement'];
-		$order['state'] = 'RS';
-		$order['country'] = 'Brasil';
+		// Available alpha caracters
+		$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-		$order->save();
+		// generate a pin based on 2 * 7 digits + a random character
+		$pin = mt_rand(1000000, 9999999)
+    	. mt_rand(1000000, 9999999)
+    	. $characters[rand(0, strlen($characters) - 1)];
+		if (\Auth::check()) {
+			$person = \Auth::user()->person;
+			// dd($person);
+			$order['user_id'] = $person->user_id;
+			$order['number'] = 1023456782;
+			$order['establishment_id'] = $request['establishment_id'];
+			$order['total_amount'] = $request['price'];
+			$order['street'] = $person->street;
+			$order['street_number'] = $person->street_number;
+			$order['complement'] = $person->complement;
+			$order['cep'] = $person->cep;
+			$order['state'] = 'RS';
+			$order['country'] = 'Brasil';
+			$order['status'] = 1;
+			$order->save();
 
-		$order = Order::create([
-			'person_id' => $request['person_id'],
-			'establishment_id' => $request['establishment_id'],
-			'total_amount' => $request['total_amount'],
-			'street' => $request['street'],
-			'street_number' => $request['street_number'],
-			'complement' => $request['complement'],
-			'cep' => $request['cep'],
-			'state' => 'RS',
-			'country' => 'Brasil'
-		]);
+			// $order = Order::create([
+			// 	'user_id' => $person->user_id,
+			// 	'number' => 1023456789,
+			// 	'establishment_id' => $request['establishment_id'],
+			// 	'total_amount' => $request['price'],
+			// 	'street' => $person->street,
+			// 	'street_number' => $person->street_number,
+			// 	'complement' => $person->complement,
+			// 	'cep' => $person->cep,
+			// 	'state' => 'RS',
+			// 	'country' => 'Brasil',
+			//	'status' => 1
+			// ]);
+			$item_orders = new ItemOrder();
+			$item_orders['amount'] = $request['price'];
+			$item_orders['total_amount'] = $request['price'];
+			$item_orders['quantity'] = 1;
+			$item_orders['product_id'] = $request['product_id'];
+			$item_orders['order_id'] = $order['id'];
 
-		$item_orders['amount'] = $item_orders['total_amount'] = $request['total_amount'];
-		$item_orders['quantity'] = 1;
-		$item_orders['product_id'] = $request['product_id'];
+			$order->item_orders()->save($item_orders);
 
-		$order->item_orders()->attach($item_orders);
+			flash()->success('Cadastro salvo com sucesso!');
+        	return redirect('item_orders/');
+		} else {
+			flash()->error('Usuário não autorizado!');
+			return redirect('orders/'.$request['id'].'/view_establishments/');
+		}
 
-		flash()->success('Cadastro salvo com sucesso!');
-
-        // return redirect('admin/establishments');
 	}
 }

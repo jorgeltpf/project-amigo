@@ -26,6 +26,7 @@ class CreateOrders extends Migration
             $table->integer('establishment_id')->unsigned();
             $table->foreign('establishment_id')->references('id')->on('establishments');
             $table->integer('status');
+            $table->date('order_date');
             $table->decimal('total_amount', 8, 2);
             $table->string('street');
             $table->integer('street_number');
