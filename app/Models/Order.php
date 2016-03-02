@@ -32,4 +32,12 @@ class Order extends Model {
     public function establishment() {
         return $this->belongsTo('App\Models\Establishment');
     }
+
+	public function getTotalAmountAttribute($amount) {
+		return convertCurrency($amount);
+	}
+
+	public function setTotalAmountAttribute($amount) {
+	 	$this->attributes['total_amount'] = convertCurrencyDB($amount);
+	}
 }

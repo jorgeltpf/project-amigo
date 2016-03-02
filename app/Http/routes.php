@@ -41,7 +41,7 @@ Route::post('clients/{id}/', 'ClientsController@update');
 // Orders
 
 Route::get('orders/', 'OrdersController@index');
-Route::get('orders/view_establishments/{id}', 'EstablishmentsController@show');
+Route::get('orders/{id}/view_establishments/', 'EstablishmentsController@show');
 Route::group(['middleware' => 'auth'], function() {
     Route::pattern('id', '[0-9]+');
     Route::get('orders/create', 'OrdersController@getCreate');
