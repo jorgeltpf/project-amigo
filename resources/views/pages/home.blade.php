@@ -147,7 +147,7 @@
             });
 
             $('#btn-confirm').on('click', function() {
-                window.location.href = '/orders/';
+                window.location.href = '/establishments/';
             });
         });
     </script>

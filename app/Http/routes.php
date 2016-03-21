@@ -58,6 +58,11 @@ Route::group(['middleware' => 'auth'], function() {
     // Route::post('item_orders/create', 'ItemOrdersController@postCreate');
 });
 
+// Establishments
+
+Route::get('establishments/', 'EstablishmentsController@index');
+Route::get('establishments/{id}/view_establishment/', 'EstablishmentsController@view_establishment');
+
 //Socialite
 
 Route::get('loginFacebook', 'FacebookController@login');
