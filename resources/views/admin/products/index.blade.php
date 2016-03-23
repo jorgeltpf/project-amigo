@@ -22,7 +22,6 @@
         <thead>
         <tr>
             <th>Nome</th>
-            <th>Classe</th>
             <th>Tipo</th>
             <th>Preço</th>
             <th>{{ trans("admin/admin.action") }}</th>

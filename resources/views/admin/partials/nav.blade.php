@@ -36,31 +36,11 @@
         </a>
     </li>
     @endif
-     <li class="{{set_active('admin/products*')}}">
-        <a href="#">
+     <li class="{{set_active('admin/products')}}">
+        <a href="{{url('admin/products')}}">
             <i class="glyphicon glyphicon-menu-hamburger"></i> Produtos
-            <span class="fa arrow"> </span>
+            <span class="hidden-sm text"> </span>
         </a>
-        <ul class="nav collapse">
-            <li class="{{set_active('admin/products')}}">
-                <a href="{{url('admin/products')}}">
-                    <i class="glyphicon glyphicon-glass"></i>
-                    <span class="hidden-sm text"> Produtos</span>
-                </a>
-            </li>
-            <li class="{{set_active('admin/producttypes')}}">
-                <a href="{{url('admin/producttypes')}}">
-                    <i class="glyphicon glyphicon-filter"></i>
-                    <span class="hidden-sm text"> Tipo de Produtos</span>
-                </a>
-            </li>
-            <li class="{{set_active('admin/productclasses')}}">
-                <a href="{{url('admin/productclasses')}}">
-                    <i class="glyphicon glyphicon-paperclip"></i>
-                    <span class="hidden-sm text"> Classe de Produtos</span>
-                </a>
-            </li>
-        </ul>
     </li>
     <li class="{{set_active('admin/promotions*')}}">
         <a href="{{url('admin/promotions')}}">

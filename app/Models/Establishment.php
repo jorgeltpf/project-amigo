@@ -86,4 +86,8 @@ class Establishment extends Model {
     public function orders() {
         return $this->hasMany('App\Models\Order');
     }
+    
+    public function products() {
+        return $this->hasMany('App\Models\Product');
+    }
 }

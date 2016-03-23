@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Input;
 use App\Models\ProductType;
-use App\Models\ProductClass;
+use App\Models\Establishment;
 
 use App\Http\Requests;
 use App\Http\Controllers\AdminController;
@@ -37,13 +37,13 @@ class ProductsController extends AdminController {
      */
     public function create() {
         $validator = JsValidator::make($this->validationRules);
-        $product_types_list = ProductType::join('product_species', 'product_types.product_specie_id','=','product_species.id')
-                                            ->selectRaw("CONCAT(product_types.description,' - ', product_species.description) as description, product_types.id")
+        $product_types_list = ProductType::selectRaw("product_types.description, product_types.id")
                                             ->lists('description', 'id');
         $product_types_list = $product_types_list->sort();
-        $product_classes_list = ProductClass::lists('description', 'id');
-        $product_classes_list = $product_classes_list->sort();
-        return view('admin.products.create', compact('product_types_list', 'validator', 'product_classes_list'));
+        $establishments_list = Establishment::selectRaw("CONCAT(establishments.name,' - ', establishments.city) as name, establishments.id")
+                                            ->lists('name', 'id');
+        $establishments_list = $establishments_list->sort();
+        return view('admin.products.create', compact('product_types_list', 'validator', 'establishments_list'));
     }
 
     /**
@@ -55,11 +55,11 @@ class ProductsController extends AdminController {
     public function store(Request $request){
         $product = new Product();
 
-        $product['name']             = $request->name;
-        $product['price']            = $request->price;
-        $product['description']      = $request->description;
-        $product['product_type_id']  = $request->product_type_id;
-        $product['product_class_id']  = $request->product_class_id;
+        $product['name']              = $request->name;
+        $product['price']             = $request->price;
+        $product['ingredients']       = $request->ingredients;
+        $product['product_type_id']   = $request->product_type_id;
+        $product['establishment_id']  = $request->establishment_id;
 
         $product->save();
         flash()->success('Cadastro salvo com sucesso!');
@@ -87,13 +87,13 @@ class ProductsController extends AdminController {
     public function edit($id) {
         $validator = JsValidator::make($this->validationRules);
         $products = Product::find($id);
-        $product_types_list = ProductType::join('product_species', 'product_types.product_specie_id','=','product_species.id')
-                                            ->selectRaw("CONCAT(product_types.description,' - ', product_species.description) as description, product_types.id")
+        $product_types_list = ProductType::selectRaw("product_types.description, product_types.id")
                                             ->lists('description', 'id');
         $product_types_list = $product_types_list->sort();
-        $product_classes_list = ProductClass::lists('description', 'id');
-        $product_classes_list = $product_classes_list->sort();
-        return view('admin.products.edit', compact('products', 'validator', 'product_types_list', 'product_classes_list'));
+        $establishments_list = Establishment::selectRaw("CONCAT(establishments.name,' - ', establishments.city) as name, establishments.id")
+                                            ->lists('name', 'id');
+        $establishments_list = $establishments_list->sort();
+        return view('admin.products.edit', compact('products', 'validator', 'product_types_list', 'establishments_list'));
     }
 
     /**
@@ -105,11 +105,11 @@ class ProductsController extends AdminController {
      */
     public function update(Request $request, $id) {
         $product = Product::find($id);
-        $product['name']             = $request->name;
-        $product['price']            = $request->price;
-        $product['description']      = $request->description;
-        $product['product_type_id']  = $request->product_type_id;
-        $product['product_class_id']  = $request->product_class_id;
+        $product['name']              = $request->name;
+        $product['price']             = $request->price;
+        $product['ingredients']       = $request->ingredients;
+        $product['product_type_id']   = $request->product_type_id;
+        $product['establishment_id']  = $request->establishment_id;
 
         $product->update();
         flash()->success('Cadastro salvo com sucesso!');
@@ -141,9 +141,8 @@ class ProductsController extends AdminController {
     public function data() {
         $product = Product::whereNull('products.deleted_at')
             ->orderBy('products.id', 'DESC')
-            ->join('product_classes', 'products.product_class_id', '=', 'product_classes.id')
             ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
-            ->select(array('products.id', 'products.name','product_classes.description as class', 'product_types.description','products.price'));
+            ->select(array('products.id', 'products.name', 'product_types.description','products.price'));
 
         return Datatables::of($product)
             ->add_column('actions',

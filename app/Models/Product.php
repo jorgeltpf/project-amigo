@@ -12,12 +12,14 @@ class Product extends Model {
 
     protected $fillable = array(
 		'product_type_id',
+		'establishment_id',
 		'name',
-		'description',
-		'price'
+		'ingredients',
+		'price',
+		'image'
 	);
-
-    /*public function product_types() {
+/*
+    public function product_types() {
     	return $this->belongsTo('App\Models\ProductType');
     }
 
