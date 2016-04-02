@@ -204,6 +204,7 @@ text-center {
     }
     > a:hover {
       background-color: $default-blue-color;
+      border-color: $default-blue-color;
       color: $white-color;
       cursor: pointer;
     }

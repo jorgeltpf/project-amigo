@@ -43,7 +43,8 @@ class EstablishmentsController extends Controller {
 		$stab = Establishment::find($id);
 		$products = Product::paginate(10);
 		$stab['image'] = $stab['id'].'/'.$stab['image'];
-		$menu_name = $title = $stab['name'];
+		$title = $stab['name'];
+		$menu_name = "";
 		$categoryItems = [
 			"Cardápio",
 			"Especialidades",

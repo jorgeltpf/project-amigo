@@ -89,34 +89,44 @@ class UserController extends AdminController {
         $user->confirmation_code = str_random(32);
         $user->confirmed = $request->confirmed;
 
-        if ($user->save()) {
-            if (!empty($request->role_list)) {
-                $role = array($request->role_list);
-            } else {
-                // Papel de Op do Est [3] ou Cliente [4]?????
-                $role = [4];
+        if (!empty($request->role_list)) {
+            $role = array($request->role_list);
+        } else {
+            // Papel de Op do Est [3] ou Cliente [4]?????
+            $role = [4];
+        }
+
+        // Transação para o salvamento simultâneo do usuário, pessoa e papel
+        \DB::beginTransaction();
+        try {
+            if ($user->save()) {
+                $this->syncRoles($user, $role);
+
+                $person = Person::create([
+                    'user_id' => $user->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'people_type' => $request->people_type,
+                    'cpf' => $request->cpf,
+                    'phone' => $request->phone,
+                    'cell_phone' => $request->cell_phone,
+                    'street' => $request->street,
+                    'street_number' => $request->street_number,
+                    'cep' => $request->cep,
+                    'neighborhood' => $request->neighborhood,
+                    'complement' => $request->complement,
+                    'city' => $request->city,
+                    'state' => 'RS',
+                    'country' => 'Brasil'
+                ]);
             }
-
-            $this->syncRoles($user, $role);
-
-            $person = Person::create([
-                'user_id' => $user->id,
-                'name' => $request->name,
-                'email' => $request->email,
-                'people_type' => $request->people_type,
-                'cpf' => $request->cpf,
-                'phone' => $request->phone,
-                'cell_phone' => $request->cell_phone,
-                'street' => $request->street,
-                'street_number' => $request->street_number,
-                'cep' => $request->cep,
-                'neighborhood' => $request->neighborhood,
-                'complement' => $request->complement,
-                'city' => $request->city,
-                'state' => 'RS',
-                'country' => 'Brasil'
-            ]);
-
+            \DB::commit();
+            $success = true;
+        } catch (\Exception $e) {
+            \DB::rollback();
+            $success = false;
+        }
+        if ($success) {
             flash()->success('Cadastro salvo com sucesso!');
         } else {
             flash()->error('Ocorreu um erro ao salvar o cadastro!');
@@ -167,18 +177,26 @@ class UserController extends AdminController {
             }
         }
 
-        if ($user->save()) {
-            $this->syncRoles($user, $roles);
+        // Transação para o salvamento simultâneo do usuário, pessoa e papel
+        \DB::beginTransaction();
+        try {
+            if ($user->save()) {
+                $this->syncRoles($user, $roles);
+                // Update People
+                $person = $user->person->update($request->all());
+            }
+            \DB::commit();
+            $success = true;
+        } catch (\Exception $e) {
+            \DB::rollback();
+            $success = false;
+        }
 
-            // Update People
-            $person = $user->person->update($request->all());
-
+        if ($success) {
             flash()->success('Cadastro salvo com sucesso!');
         } else {
             flash()->error('Ocorreu um erro!');
         }
-
-
 
         return redirect('admin/users');
     }

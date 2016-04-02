@@ -17,6 +17,8 @@ use App\Http\Controllers\Controller;
 use Datatables;
 use JsValidator;
 
+use App\User;
+
 class EstablishmentsController extends AdminController {
     protected $validationRules = [
         'name' => 'required|max:255',
@@ -41,7 +43,6 @@ class EstablishmentsController extends AdminController {
      */
     public function index() {
         $establishments = Establishment::all();
-
         return view('admin.establishments.index', compact('establishments'));
     }
 
@@ -52,7 +53,14 @@ class EstablishmentsController extends AdminController {
      */
     public function create() {
         $validator = JsValidator::make($this->validationRules);
-        return view('admin.establishments.create', compact('validator'));
+        $owner = "";
+        if (\Auth::check()) {
+            $users = User::orderBy('id')->get();
+            foreach ($users as $user) {
+                $owner[$user['id']] = $user['name'];
+            }
+        }
+        return view('admin.establishments.create', compact('validator', 'owner'));
     }
 
     /**
@@ -184,7 +192,13 @@ class EstablishmentsController extends AdminController {
     public function edit($id) {
         $validator = JsValidator::make($this->validationRules);
         $establishments = Establishment::find($id);
-
+        $owner = "";
+        if (\Auth::check()) {
+            $users = User::orderBy('id')->get();
+            foreach ($users as $user) {
+                $owner[$user['id']] = $user['name'];
+            }
+        }
         $weekdays = $establishments->weekdays->toArray();
 
         // $weekdays = WeekDay::whereHas('establishments', function($q) use ($id) {
@@ -203,7 +217,7 @@ class EstablishmentsController extends AdminController {
             $adjustWeeks[$value['pivot']['week_day_id']]['days'][$value['pivot']['shift']]['time_on'] = $value['pivot']['time_on'];
             $adjustWeeks[$value['pivot']['week_day_id']]['days'][$value['pivot']['shift']]['time_off'] = $value['pivot']['time_off'];
         }
-        return view('admin.establishments.edit', compact('establishments', 'adjustWeeks', 'validator'));
+        return view('admin.establishments.edit', compact('establishments', 'adjustWeeks', 'validator', 'owner'));
     }
 
     /**

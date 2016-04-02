@@ -48,15 +48,5 @@
             <span class="hidden-sm text"> Promoções</span>
         </a>
     </li>
-
-    @if (Entrust::hasRole('admin'))
-        <li class="{{set_active('admin/language*')}}">
-            <a href="{{url('admin/language')}}">
-                <i class="fa fa-language"></i>
-                <span class="hidden-sm text"> Language</span>
-            </a>
-        </li>
-    @endif
-   
 </ul>
 </div>

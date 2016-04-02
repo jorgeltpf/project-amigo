@@ -1,165 +1,176 @@
 		
-		<style type="text/css">
-			.input-xs {
-				width: 62px;
-			}
-		</style>
-		<fieldset>
-    		<legend class="text-center">Informações Básicas</legend>
-    		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-		    <div class="form-group">
-		    	{!! Form::label('name', 'Nome:', ['class' => 'control-label col-xs-2', 'for' => 'est_name']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'name', null, ['class' => 'form-control', 'id' => 'est_name', 'placeholder' => 'Nome']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('cnpj', 'CNPJ:', ['class' => 'control-label col-xs-2', 'for' => 'est_cnpj']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'cnpj', null, ['class' => 'form-control cnpj', 'id' => 'est_cnpj', 'placeholder' => 'CNPJ']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('email', 'E-mail:', ['class' => 'control-label col-xs-2', 'for' => 'est_email']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'email', null, ['class' => 'form-control', 'id' => 'est_email', 'placeholder' => 'E-mail']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('phone', 'Telefone:', ['class' => 'control-label col-xs-2', 'for' => 'est_phone']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'phone', null, ['class' => 'form-control phone_with_ddd', 'id' => 'est_phone', 'placeholder' => 'Telefone']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('cell_phone', 'Celular:', ['class' => 'control-label col-xs-2 ', 'for' => 'est_cell_phone']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'cell_phone', null, ['class' => 'form-control phone_with_ddd', 'id' => 'est_cell_phone', 'placeholder' => 'Celular']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('delivery_max_time', 'Tempo Máx de Entrega:', ['class' => 'control-label col-xs-2', 'for' => 'est_delivery_max_time']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'delivery_max_time', null, ['class' => 'form-control st_number', 'id' => 'est_cell_phone', 'placeholder' => 'Tempo Máx de Entrega em Minutos']) !!}
-		        </div>
-		    </div>
-			<div class="form-group">
-				{!! Form::label('image', 'Imagem:', ['class' => 'control-label col-xs-2', 'for' => 'image']) !!}
-				<div class="col-xs-10">
-					<!-- <input name="est_photo" type="file" class="uploader" id="est_photo" value="Upload" /> -->
-					{!! Form::file('image', null) !!}
-					@if(!empty($establishments))
-						{!! HTML::image('/images/establishments/'.$establishments->id.'/'.$establishments->image) !!}
-					@endif
-				</div>
-			</div>
-	    </fielset>
-	    <fieldset>
-			<legend class="text-center">Localização</legend>
-		    <div class="form-group">
-		    	{!! Form::label('cep', 'CEP:', ['class' => 'control-label col-xs-2', 'for' => 'cep']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'cep', null, ['class' => 'form-control cep', 'id' => 'cep', 'placeholder' => 'CEP']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('street', 'Rua:', ['class' => 'control-label col-xs-2', 'for' => 'street']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'street', null, ['class' => 'form-control', 'id' => 'street', 'placeholder' => 'Rua']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('neighborhood', 'Bairro:', ['class' => 'control-label col-xs-2', 'for' => 'neighborhood']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'neighborhood', null, ['class' => 'form-control', 'id' => 'neighborhood', 'placeholder' => 'Bairro']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('street_number', 'Número:', ['class' => 'control-label col-xs-2', 'for' => 'number']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'street_number', null, ['class' => 'form-control st_number', 'id' => 'number', 'placeholder' => 'Número']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('complement', 'Complemento:', ['class' => 'control-label col-xs-2', 'for' => 'complement']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'complement', null, ['class' => 'form-control', 'id' => 'complement', 'placeholder' => 'Complemento']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('city', 'Cidade:', ['class' => 'control-label col-xs-2', 'for' => 'city']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'city', null, ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'Cidade']) !!}
-		        </div>
-		    </div>
-		    <div class="form-group">
-		    	@include ('states')
-		    </div>
-		    <div class="form-group">
-		    	{!! Form::label('country', 'País:', ['class' => 'control-label col-xs-2', 'for' => 'country']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::input('text', 'country', 'Brasil', ['class' => 'form-control', 'id' => 'country', 'placeholder' => 'País']) !!}
-		        </div>
-		    </div>
-	    </fieldset>
-	    <fieldset>
-	    	<legend class="text-center">Dias Aberto</legend>
-		    <div class="form-group" id="week-input">
-		        <div class="col-xs-offset-2 col-xs-10">
-		            <button type="button" class="btn btn-primary" id="add-field">Adicionar</button>
-		            <button type="button" class="btn btn-success">Manhã</button>
-        			<button type="button" class="btn btn-success">Tarde</button>
-        			<button type="button" class="btn btn-success">Noite</button>
-		        </div>
-		    </div>
+<style type="text/css">
+	.input-xs {
+		width: 62px;
+	}
+</style>
+@if (Entrust::hasRole('admin'))
+<!-- <fieldset>
+	<legend class="text-center">Gestor</legend>
+	<div class="form-group">
+		{!! Form::label('owner_name', 'Gestor:', ['class' => 'control-label col-xs-2', 'for' => 'owner_name']) !!}
+		<div class="col-xs-10">
+			{!! Form::select('owner_name', $owner, null, ['id' => 'owner_name', 'class' => 'form-control']) !!}
+		</div>
+    </div>
+</fieldset> -->
+@endif
+<fieldset>
+	<legend class="text-center">Informações Básicas</legend>
+	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+    <div class="form-group">
+    	{!! Form::label('name', 'Nome:', ['class' => 'control-label col-xs-2', 'for' => 'est_name']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'name', null, ['class' => 'form-control', 'id' => 'est_name', 'placeholder' => 'Nome']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('cnpj', 'CNPJ:', ['class' => 'control-label col-xs-2', 'for' => 'est_cnpj']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'cnpj', null, ['class' => 'form-control cnpj', 'id' => 'est_cnpj', 'placeholder' => 'CNPJ']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('email', 'E-mail:', ['class' => 'control-label col-xs-2', 'for' => 'est_email']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'email', null, ['class' => 'form-control', 'id' => 'est_email', 'placeholder' => 'E-mail']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('phone', 'Telefone:', ['class' => 'control-label col-xs-2', 'for' => 'est_phone']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'phone', null, ['class' => 'form-control phone_with_ddd', 'id' => 'est_phone', 'placeholder' => 'Telefone']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('cell_phone', 'Celular:', ['class' => 'control-label col-xs-2 ', 'for' => 'est_cell_phone']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'cell_phone', null, ['class' => 'form-control phone_with_ddd', 'id' => 'est_cell_phone', 'placeholder' => 'Celular']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('delivery_max_time', 'Tempo Máx de Entrega:', ['class' => 'control-label col-xs-2', 'for' => 'est_delivery_max_time']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'delivery_max_time', null, ['class' => 'form-control st_number', 'id' => 'est_cell_phone', 'placeholder' => 'Tempo Máx de Entrega em Minutos']) !!}
+        </div>
+    </div>
+	<div class="form-group">
+		{!! Form::label('image', 'Imagem:', ['class' => 'control-label col-xs-2', 'for' => 'image']) !!}
+		<div class="col-xs-10">
+			<!-- <input name="est_photo" type="file" class="uploader" id="est_photo" value="Upload" /> -->
+			{!! Form::file('image', null) !!}
+			@if(!empty($establishments))
+				{!! HTML::image('/images/establishments/'.$establishments->id.'/'.$establishments->image) !!}
+			@endif
+		</div>
+	</div>
+</fielset>
+<fieldset>
+	<legend class="text-center">Localização</legend>
+    <div class="form-group">
+    	{!! Form::label('cep', 'CEP:', ['class' => 'control-label col-xs-2', 'for' => 'cep']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'cep', null, ['class' => 'form-control cep', 'id' => 'cep', 'placeholder' => 'CEP']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('street', 'Rua:', ['class' => 'control-label col-xs-2', 'for' => 'street']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'street', null, ['class' => 'form-control', 'id' => 'street', 'placeholder' => 'Rua']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('neighborhood', 'Bairro:', ['class' => 'control-label col-xs-2', 'for' => 'neighborhood']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'neighborhood', null, ['class' => 'form-control', 'id' => 'neighborhood', 'placeholder' => 'Bairro']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('street_number', 'Número:', ['class' => 'control-label col-xs-2', 'for' => 'number']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'street_number', null, ['class' => 'form-control st_number', 'id' => 'number', 'placeholder' => 'Número']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('complement', 'Complemento:', ['class' => 'control-label col-xs-2', 'for' => 'complement']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'complement', null, ['class' => 'form-control', 'id' => 'complement', 'placeholder' => 'Complemento']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	{!! Form::label('city', 'Cidade:', ['class' => 'control-label col-xs-2', 'for' => 'city']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'city', null, ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'Cidade']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+    	@include ('states')
+    </div>
+    <div class="form-group">
+    	{!! Form::label('country', 'País:', ['class' => 'control-label col-xs-2', 'for' => 'country']) !!}
+        <div class="col-xs-10">
+        	{!! Form::input('text', 'country', 'Brasil', ['class' => 'form-control', 'id' => 'country', 'placeholder' => 'País']) !!}
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+	<legend class="text-center">Dias Aberto</legend>
+    <div class="form-group" id="week-input">
+        <div class="col-xs-offset-2 col-xs-10">
+            <button type="button" class="btn btn-primary" id="add-field">Adicionar</button>
+            <button type="button" class="btn btn-success">Manhã</button>
+			<button type="button" class="btn btn-success">Tarde</button>
+			<button type="button" class="btn btn-success">Noite</button>
+        </div>
+    </div>
 
-		    @if(isset($adjustWeeks))
-		    	@foreach($adjustWeeks as $keys => $weeks)
-			    <div class="form-group week-input">
-		        	<label class="control-label col-xs-2">Dias</label>
-		        	<div class="col-sm-2">
-		        		<select id="sel-{!! $weeks['week_day_id'] !!}" name="weekday[{!! $weeks['week_day_id'] !!}][day]" class="sel-week form-control">
-		        			<option value={!! $weeks['week_day_id'] !!}>{!! $weeks['name'] !!}</option>
-		        		</select>
-		        	</div>
-		        	@for($i=1; $i<4; $i++)
-		        		@if(!empty($weeks['days'][$i]['time_on']))
-							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time hour form-control input-xs hour-open" placeholder="00:00" value="{!! $weeks['days'][$i]['time_on'] !!}">
-								<div class="help">Aberto</div>
-							</div>
-						@else
-							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time hour form-control input-xs hour-open" placeholder="00:00" value="">
-								<div class="help">Aberto</div>
-							</div>
-						@endif
-						@if(!empty($weeks['days'][$i]['time_off']))
-							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="final-{!! $i !!}" type="text" class="time hour form-control input-xs hour-closed" placeholder="00:00" value="{!! $weeks['days'][$i]['time_off'] !!}">
-								<div class="help">Fechado</div>
-							</div>
-						@else
-							<div class="col-sm-1 col-md-1">
-								<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="final-{!! $i !!}" type="text" class="time hour form-control input-xs hour-closed" placeholder="00:00" value="">
-								<div class="help">Fechado</div>
-							</div>
-						@endif
-		        	@endfor
-	        		<div class="col-sm-1"><button type="button" class="btn btn-danger remove-div"><span class="glyphicon glyphicon-remove"></span></button></div>
-			    </div>
-			    @endforeach
-		    @endif
-	    </fieldset>
-	    <div class="form-group">
-	        <div class="col-xs-offset-2 col-xs-10">
-	            <button type="button" class="btn btn-success save-est" id="save-est">Salvar</button>
-	            <button type="button" class="btn btn-primary">
-	            	<a href="{{{ URL::to('admin/establishments/') }}}"></a>
-                    <span class="glyphicon glyphicon-backward"></span> Voltar
-            	</button>
-	        </div>
+    @if(isset($adjustWeeks))
+    	@foreach($adjustWeeks as $keys => $weeks)
+	    <div class="form-group week-input">
+        	<label class="control-label col-xs-2">Dias</label>
+        	<div class="col-sm-2">
+        		<select id="sel-{!! $weeks['week_day_id'] !!}" name="weekday[{!! $weeks['week_day_id'] !!}][day]" class="sel-week form-control">
+        			<option value={!! $weeks['week_day_id'] !!}>{!! $weeks['name'] !!}</option>
+        		</select>
+        	</div>
+        	@for($i=1; $i<4; $i++)
+        		@if(!empty($weeks['days'][$i]['time_on']))
+					<div class="col-sm-1 col-md-1">
+						<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time hour form-control input-xs hour-open" placeholder="00:00" value="{!! $weeks['days'][$i]['time_on'] !!}">
+						<div class="help">Aberto</div>
+					</div>
+				@else
+					<div class="col-sm-1 col-md-1">
+						<input name="weekday[{!! $keys !!}][time_on_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="initial-{!! $i !!}" type="text" class="time hour form-control input-xs hour-open" placeholder="00:00" value="">
+						<div class="help">Aberto</div>
+					</div>
+				@endif
+				@if(!empty($weeks['days'][$i]['time_off']))
+					<div class="col-sm-1 col-md-1">
+						<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="final-{!! $i !!}" type="text" class="time hour form-control input-xs hour-closed" placeholder="00:00" value="{!! $weeks['days'][$i]['time_off'] !!}">
+						<div class="help">Fechado</div>
+					</div>
+				@else
+					<div class="col-sm-1 col-md-1">
+						<input name="weekday[{!! $keys !!}][time_off_{!! $i !!}_{!! $i !!}{!! $keys !!}]" id="final-{!! $i !!}" type="text" class="time hour form-control input-xs hour-closed" placeholder="00:00" value="">
+						<div class="help">Fechado</div>
+					</div>
+				@endif
+        	@endfor
+    		<div class="col-sm-1"><button type="button" class="btn btn-danger remove-div"><span class="glyphicon glyphicon-remove"></span></button></div>
 	    </div>
+	    @endforeach
+    @endif
+</fieldset>
+<div class="form-group">
+    <div class="col-xs-offset-2 col-xs-10">
+        <button type="button" class="btn btn-success save-est" id="save-est">Salvar</button>
+        <button type="button" class="btn btn-primary">
+        	<a href="{{{ URL::to('admin/establishments/') }}}"></a>
+            <span class="glyphicon glyphicon-backward"></span> Voltar
+    	</button>
+    </div>
+</div>
 
 @section('scripts')
  
@@ -257,11 +268,6 @@
 					break;
 			}
 
-			// $(this).parent().after(
-			// 	'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_on_'+idSel+'_'+buttonId+']" id="initial-'+buttonId+'" type="text" class="morning hour2 form-control input-xs hour-open" placeholder="00:00"><div class="help">Aberto</div></div>'+
-			// 	'<div class="col-sm-1 col-md-1"><input name="weekday['+idSel+'][time_off_'+idSel+'_'+buttonId+']" id="final-'+buttonId+'" type="text" class="hour form-control input-xs hour-closed" placeholder="00:00"><div class="help">Fechado</div></div>'
-			// );
-
 			var nightMask = function(val) {
 				var first = val.substring(0,1).toString(),
 					sec = val.substring(1,2).toString(),
@@ -343,10 +349,6 @@
 		  		// return phone.match('/0?[0-9]|1[0-9]|2[0-3]:^[0-5][0-9]$/');
 			};
 
-			// var SPMaskBehavior = function (val) {
-			//   return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-			// },
-
 			var maskNightOptions = {
 			  onKeyPress: function(val, e, field, options) {
 			      field.mask(nightMask.apply({}, arguments), options);
@@ -361,15 +363,6 @@
 
 			$('.hour').mask('00:00');
 			$('.morning').mask(morningMask, maskMorningOptions);
-			// $('.morning').mask('AB:YS',
-			// 	{'translation': {
-   //                  A: {pattern: /[0]?[0-1]/},
-   //                  B: {pattern: /[0]?[5-9]/},
-   //                  Y: {pattern: /[0-5]/},
-   //                  S: {pattern: /[0-9]*/}
-   //            	}
-   //          });
-
 			$('.afternoon').mask('1A:YS',
 				{'translation': {
                     A: {pattern: /[1]?[0-8]/},
@@ -399,36 +392,32 @@
 				'open': [], 'close': []
 			};
 			$('.hour-open').each(function(key, val) {	
-				// if ($(this).val()) {			
-					var item = {};
-					if ($(this).hasClass('night')
-						&& $(this).attr('id').split('-')[0] == 'initial'
-						&& ($(this).val() > 0 && $(this).val() < "04:59")
-						) {
-						var initialhour = (parseInt($(val).val())+24+":00").toString();
-						item['open'] = initialhour;
-					} else {
-						item['open'] = $(val).val();
-					}
-					hourOpen.push(item);
-					testHour.open.push(item);
-				// }
+				var item = {};
+				if ($(this).hasClass('night')
+					&& $(this).attr('id').split('-')[0] == 'initial'
+					&& ($(this).val() > 0 && $(this).val() < "04:59")
+					) {
+					var initialhour = (parseInt($(val).val())+24+":00").toString();
+					item['open'] = initialhour;
+				} else {
+					item['open'] = $(val).val();
+				}
+				hourOpen.push(item);
+				testHour.open.push(item);
 			});			
 
 			$('.hour-closed').each(function(key, val) {
-				// if ($(this).val()) {
-					var item = {};
-					if ($(this).hasClass('night')
-						&& $(this).attr('id').split('-')[0] == 'final'
-						) {
-						var finalhour = (parseInt($(val).val())+24+":00").toString();
-						item['close'] = finalhour;
-					} else {
-						item['close'] = $(val).val();
-					}
-					hourClosed.push(item);
-					testHour.close.push(item);
-				// }
+				var item = {};
+				if ($(this).hasClass('night')
+					&& $(this).attr('id').split('-')[0] == 'final'
+					) {
+					var finalhour = (parseInt($(val).val())+24+":00").toString();
+					item['close'] = finalhour;
+				} else {
+					item['close'] = $(val).val();
+				}
+				hourClosed.push(item);
+				testHour.close.push(item);
 			});
 
 			var test = {

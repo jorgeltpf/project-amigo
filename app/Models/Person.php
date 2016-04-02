@@ -33,6 +33,7 @@ class Person extends Model {
 		'cell_phone',
 		'street',
 		'street_number',
+        'neighborhood',
 		'complement',
 		'city',
 		'state',
