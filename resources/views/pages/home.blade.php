@@ -15,7 +15,7 @@
                 <div class="form-group row">
                     <div class="col-md-12" style="padding-top:10px;">
                         <div class="input-group col-md-8 col-md-offset-2">
-                            <input type="text" class="form-control cep" id="cep" name="cep" value="" required>
+                            <input type="text" class="form-control cep" id="cep" name="cep" value="" required title="">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-info" id="btn-cep"><i class="glyphicon glyphicon-search"></i> Buscar</button>
                             </span>
@@ -99,55 +99,95 @@
             });
 
             $('.cep').mask('99999-999');
-            $('#btn-cep').click(function() {
-                $('#address').css('visibility', 'visible');
-                $('#address').css('opacity', '1');
-                $('#address').css('transition-delay', '0s');
-                if ($('#cep').val()) {
-                    $.ajax({
-                        type: "GET",
-                        url: "http://viacep.com.br/ws/"+$('#cep').val()+"/json/",
-                        // data: $('form.contact').serialize(),
-                        success: function(data) {
-                            if (data) {
-                                if (data.logradouro) {
-                                    $('#street').val(data.logradouro);
-                                } else {
-                                    $('#street').val('').removeAttr('readonly');
+            $('#btn-cep').on('click', function() {
+                $cep = $('#cep');
+                if ($cep.val() !== "") {
+                    // Desabilita o qTip quando o cep está preenchido
+                    $cep.qtip('disable');
+                    $('#btn-confirm').qtip('disable');
+                    // Efeito para apresentar o formulário com endereço
+                    $('#address').css('visibility', 'visible');
+                    $('#address').css('opacity', '1');
+                    $('#address').css('transition-delay', '0s');
+                    // Busca o endereço no webservice com base no cep digitado
+                    if ($cep.val()) {
+                        $.ajax({
+                            type: "GET",
+                            url: "http://viacep.com.br/ws/"+$('#cep').val()+"/json/",
+                            // data: $('form.contact').serialize(),
+                            success: function(data) {
+                                if (data) {
+                                    if (data.logradouro) {
+                                        $('#street').val(data.logradouro);
+                                    } else {
+                                        $('#street').val('').removeAttr('readonly');
+                                    }
+                                    if (data.bairro) {
+                                        $('#neighborhood').val(data.bairro);
+                                    } else {
+                                        $('#neighborhood').val('').removeAttr('readonly');
+                                    }
+                                    if (data.localidade) {
+                                        $('#city').val(data.localidade);
+                                    } else {
+                                        $('#city').val('').removeAttr('readonly');   
+                                    }
+                                    if (data.complemento) {
+                                        $('#complement').val(data.complemento);
+                                    } else {
+                                        $('#complement').val('').removeAttr('readonly');   
+                                    }
+                                    if (data.uf) {
+                                        $('#state').val(data.uf);
+                                    } else {
+                                        $('#state').val('').removeAttr('readonly');   
+                                    }
+                                    $('#btn-confirm').data('field', true);
                                 }
-                                if (data.bairro) {
-                                    $('#neighborhood').val(data.bairro);
-                                } else {
-                                    $('#neighborhood').val('').removeAttr('readonly');
-                                }
-                                if (data.localidade) {
-                                    $('#city').val(data.localidade);
-                                } else {
-                                    $('#city').val('').removeAttr('readonly');   
-                                }
-                                if (data.complemento) {
-                                    $('#complement').val(data.complemento);
-                                } else {
-                                    $('#complement').val('').removeAttr('readonly');   
-                                }
-                                if (data.uf) {
-                                    $('#state').val(data.uf);
-                                } else {
-                                    $('#state').val('').removeAttr('readonly');   
-                                }
+                            },
+                            error: function() {
+                                alert("Ocorreu um erro!");
                             }
-                        },
-                        error: function() {
-                            alert("Ocorreu um erro!");
+                        });
+                    } else {
+                        $('#address :input').removeAttr('readonly');
+                    }
+                } else {
+                    // Informa ao usuário a respeito da obrigatoriedade de preencher o campo
+                    $cep.qtip({
+                        content: {
+                            text: 'Por favor preencha o seu cep',
+                            show: {
+                                event: 'mouseover'
+                            },
+                            hide: {
+                                event: 'unfocus click'
+                            },
                         }
                     });
-                } else {
-                    $('#address :input').removeAttr('readonly');
+                    $('#address :input').val('');
+                    $('#btn-confirm').data('field', false);
                 }
             });
 
             $('#btn-confirm').on('click', function() {
-                window.location.href = '/establishments/';
+                // Habilita o botão de confirmar para o click do mouse apenas quando o cep está preenchido
+                if ($(this).data('field') === true) {
+                    $(this).qtip('disable');
+                    window.location.href = '/establishments/';
+                } else {
+                    $(this).qtip({
+                        content: {
+                            text: 'Por favor preencha o seu cep',
+                            show: {
+                                event: 'mouseover'
+                            },
+                            hide: {
+                                event: 'unfocus click'
+                            },
+                        }
+                    });
+                }
             });
         });
     </script>

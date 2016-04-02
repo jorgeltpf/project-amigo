@@ -40,7 +40,7 @@ var paths = {
     'select2': 'vendor/select2/',
     'datepicker': '/vendor/bootstrap3-datepicker-gulp/',
     'modernizr' : 'vendor/js',
-    'qtip2': 'vendor/qTip2/2.2.1'
+    'qtip2': 'vendor/qTip2/2.2.1',
     // 'datepicker': '/vendor/bootstrap-datepicker/dist/'
     // 'mask': 'vendor/igorescobar-jQuery-Mask-Plugin-535b4e4'
 };
@@ -73,7 +73,7 @@ elixir(function (mix) {
 
     mix.copy('./public/' + paths.select2, 'resources/' + paths.select2 + '/');
 
-    mix.copy('resources/' + paths.qtip2 + '/', 'public/vendor/qtip2/');
+    mix.copy('public/vendor/qtip2/', 'resources/' + paths.qtip2 + '/');
 
     // TESTE COM O GULP
     mix.sass('shop.scss', 'resources/assets/build/shop.css');

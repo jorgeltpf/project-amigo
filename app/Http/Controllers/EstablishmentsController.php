@@ -17,7 +17,7 @@ class EstablishmentsController extends Controller {
 	}
 
 	public function index() {
-		$establishments = Establishment::paginate(1);
+		$establishments = Establishment::paginate(10);
 		$categoryItems = [1, 2, 3, 4];
 		$carouselItems = [1, 2, 3, 4];
 		$stab = array();
@@ -40,7 +40,7 @@ class EstablishmentsController extends Controller {
 
 	public function view_establishment($id) {
 		$stab = Establishment::find($id);
-		$products = Product::paginate(1);
+		$products = Product::paginate(10);
 		$stab['image'] = $stab['id'].'/'.$stab['image'];
 		$menu_name = $title = $stab['name'];
 		$categoryItems = [

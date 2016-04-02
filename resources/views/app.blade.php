@@ -15,7 +15,7 @@
     @section('meta_keywords')
         <meta name="keywords" content="amigo, entregador, delivery, comida"/>
     @show @section('meta_author')
-        <meta name="author" content="Jorge Titoneli"/>
+        <meta name="author" content="Jorge Titoneli e Guilherme Dambros"/>
     @show @section('meta_description')
         <meta name="description" content="Comércio de alimentos e delivery."/>
     @show
