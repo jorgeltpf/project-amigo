@@ -1,4 +1,5 @@
 <?php
+// Estabelecimentos na visão do ADMIN
 
 namespace App\Http\Controllers\Admin;
 
@@ -50,18 +51,6 @@ class EstablishmentsController extends AdminController {
      * @return Response
      */
     public function create() {
-        // $states = \State->states();
-        // $weekdays = array(
-        //     '0' => 'Domingo',
-        //     '1' => 'Segunda',
-        //     '2' => 'Terça',
-        //     '3' => 'Quarta',
-        //     '4' => 'Quinta',
-        //     '5' => 'Sexta',
-        //     '6' => 'Sábado'
-        // );
-        // $weekdays = \DB::table('week_days')->select('id', 'name')->get();
-        // $weekdays = WeekDay::all();
         $validator = JsValidator::make($this->validationRules);
         return view('admin.establishments.create', compact('validator'));
     }
@@ -112,8 +101,6 @@ class EstablishmentsController extends AdminController {
         }
 
         $weekdays = $request->weekday;
-        // $weekdays['establishment_id'] = $establishments->id;
-
         $this->syncWeekDays($establishments, $weekdays);
 
         flash()->success('Cadastro salvo com sucesso!');
@@ -127,14 +114,9 @@ class EstablishmentsController extends AdminController {
             $timeOff = "";
             $saveWeek = array();
             $aux = 0;
-            // $teste = [];            
-            // dd($weekdays);
             foreach ($weekdays as $key => $numbers) {
                 $timeKeys = array_keys(array_filter($numbers));
                 foreach ($timeKeys as $day_key => $days) {
-                    // $teste[$aux][] = explode('_',$day_key);
-                    // $saveWeek[$aux][]['week_day_id'] = $numbers['day'];
-                    // $saveWeek[$aux][]['establishment_id'] = $establishments['id'];
                     if (!empty($days)) {
                         if (strpos($days,'time_on') !== false) {
                             $saveWeek[$aux][$this->setShift(substr($days, -2, 1))]['shift'] = $this->setShift(substr($days, -2, 1));
@@ -155,9 +137,6 @@ class EstablishmentsController extends AdminController {
                 $aux += 1;
             }
         }
-// dd($teste);
-        // $establishments->weekdays()->sync($saveWeek);
-        // $establishments->weekdays()->saveMany($saveWeek);
     }
 
     /**
@@ -214,7 +193,7 @@ class EstablishmentsController extends AdminController {
         $adjustWeeks = [];
         // Migué
         $weekdays = array_reverse($weekdays);
-// dd($weekdays);
+
         foreach ($weekdays as $key => $value) {
             $adjustWeeks[$value['pivot']['week_day_id']]['id'] = $value['id'];
             $adjustWeeks[$value['pivot']['week_day_id']]['name'] = $value['name'];
@@ -224,8 +203,6 @@ class EstablishmentsController extends AdminController {
             $adjustWeeks[$value['pivot']['week_day_id']]['days'][$value['pivot']['shift']]['time_on'] = $value['pivot']['time_on'];
             $adjustWeeks[$value['pivot']['week_day_id']]['days'][$value['pivot']['shift']]['time_off'] = $value['pivot']['time_off'];
         }
-        // $adjustWeeks = sort($adjustWeeks);
-        // dd($adjustWeeks);
         return view('admin.establishments.edit', compact('establishments', 'adjustWeeks', 'validator'));
     }
 
@@ -243,7 +220,6 @@ class EstablishmentsController extends AdminController {
         $input = array_except(Input::all(), $except);
 
         if (!empty($request['weekday'])) {
-            //dd($request['weekday']);
             $weekdays = $establishments->weekdays()->detach();
             $this->syncWeekDays($establishments, $request['weekday']);
         }
@@ -256,13 +232,7 @@ class EstablishmentsController extends AdminController {
             $image = sha1($filename . time()) . '.' . $extension;
         }
         $input['image'] = $image;
-
-        // if (Input::hasFile('image')) {
-        //     $destinationPath = public_path() . '/images/establishments/'.$establishments->id.'/';
-        //     Input::file('image')->move($destinationPath, $image);
-        // }
         $establishments->update($input);
-//dd($input);
 
         flash()->success('Cadastro editado com sucesso!');
 
@@ -312,6 +282,5 @@ class EstablishmentsController extends AdminController {
             )
             ->remove_column('id')
             ->make();
-            // href="{{{ URL::to(\'admin/establishments/\' . $id . \'/delete\' ) }}}" 
     }
 }

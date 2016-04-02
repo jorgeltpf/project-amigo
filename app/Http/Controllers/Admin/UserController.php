@@ -99,13 +99,6 @@ class UserController extends AdminController {
 
             $this->syncRoles($user, $role);
 
-            // $person = new Person();
-            // $person->fill($request->all());
-            // $person->user_id = $user->id;
-            // $person->state = 'RS';
-            // $person->country = 'Brasil';
-            // dd($person);
-            // $user->person->create($person);
             $person = Person::create([
                 'user_id' => $user->id,
                 'name' => $request->name,

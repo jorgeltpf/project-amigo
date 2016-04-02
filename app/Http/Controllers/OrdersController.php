@@ -94,7 +94,7 @@ class OrdersController extends Controller {
     	. $characters[rand(0, strlen($characters) - 1)];
 		if (\Auth::check()) {
 			$person = \Auth::user()->person;
-			// dd($person);
+
 			$order['user_id'] = $person->user_id;
 			$order['number'] = 1023456782;
 			$order['establishment_id'] = $request['establishment_id'];
@@ -108,19 +108,6 @@ class OrdersController extends Controller {
 			$order['status'] = 1;
 			$order->save();
 
-			// $order = Order::create([
-			// 	'user_id' => $person->user_id,
-			// 	'number' => 1023456789,
-			// 	'establishment_id' => $request['establishment_id'],
-			// 	'total_amount' => $request['price'],
-			// 	'street' => $person->street,
-			// 	'street_number' => $person->street_number,
-			// 	'complement' => $person->complement,
-			// 	'cep' => $person->cep,
-			// 	'state' => 'RS',
-			// 	'country' => 'Brasil',
-			//	'status' => 1
-			// ]);
 			$item_orders = new ItemOrder();
 			$item_orders['amount'] = $request['price'];
 			$item_orders['total_amount'] = $request['price'];

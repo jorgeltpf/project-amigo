@@ -1,7 +1,7 @@
 <div id="footer">
     <div class="container">
         <p class="text-muted credit">
-	        <span style="text-align: left; float: left">&copy; 2015
+	        <span style="text-align: left; float: left">&copy; {{date('Y')}}
 	        	<a href="#">Amigo Entregador</a>
 	        </span>
 	        <span class="hidden-phone" style="text-align: right; float: right">Powered by: 

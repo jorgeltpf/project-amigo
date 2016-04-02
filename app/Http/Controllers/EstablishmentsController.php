@@ -1,4 +1,5 @@
 <?php
+// Estabelecimentos na visão do CLIENTE
 
 namespace App\Http\Controllers;
 
@@ -32,7 +33,7 @@ class EstablishmentsController extends Controller {
 			$stab[$key]['complement'] = $value['complement'];
 			$stab[$key]['image'] = $value['id'].'/'.$value['image'];
 		}
-		$title = "Selecione um local";
+		$title = "Selecione um restaurante";
 		$menu_name = 'Tipos';
 		return view('establishments.index',
 			compact('establishments', 'title', 'menu_name', 'categoryItems', 'carouselItems', 'stab'));

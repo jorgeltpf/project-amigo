@@ -185,11 +185,8 @@ text-center {
 }
 
 .page-header {
-  .h2-black h2 {
-    @include h2-font-color('black')
-  }
   h2 {
-    @include h2-font-color('white')
+    @include h2-font-color('black')
   }
 }
 
