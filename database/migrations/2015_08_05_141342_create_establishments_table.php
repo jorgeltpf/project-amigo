@@ -40,7 +40,6 @@ class CreateEstablishmentsTable extends Migration
             $table->engine = 'InnoDB';
             $table->integer('establishment_id')->unsigned();
             $table->integer('person_id')->unsigned();
-            $table->string('type', 50);
 
             $table->foreign('establishment_id')->references('id')->on('establishments')
                 ->onUpdate('cascade')->onDelete('cascade');

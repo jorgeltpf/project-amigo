@@ -78,9 +78,7 @@ class Establishment extends Model {
     }
 
     public function promotions() {
-        // return $this->hasOne('App\Models\Promotion');
         return $this->hasMany('App\Models\Establishment', 'establishment_id');
-        // return $this->belongsTo('App\Models\Promotion', 'establishment_id');
     }
 
     public function orders() {
@@ -90,4 +88,9 @@ class Establishment extends Model {
     public function products() {
         return $this->hasMany('App\Models\Product');
     }
+
+    public function people() {
+        return $this->hasMany('App\Models\Person');
+    }
+
 }

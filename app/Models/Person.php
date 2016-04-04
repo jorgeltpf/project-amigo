@@ -51,6 +51,10 @@ class Person extends Model {
     	return $this->belongsTo('App\User');
     }
 
+    public function establishments() {
+        return $this->belongsToMany('App\Models\Establishment');
+    }
+
 	public function setUserIdAttribute($value){
 		$this->attributes['user_id'] = $value == "null" ? null : $value;
 	}
