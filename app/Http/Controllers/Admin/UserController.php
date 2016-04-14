@@ -11,7 +11,6 @@ use App\Http\Requests\Admin\DeleteRequest;
 use Datatables;
 use JsValidator;
 
-
 class UserController extends AdminController {
     protected $validationRules = [
         'name' => 'required|max:255',
@@ -132,6 +131,7 @@ class UserController extends AdminController {
             $success = true;
         } catch (\Exception $e) {
             \DB::rollback();
+            dd($e);
             $success = false;
         }
         if ($success) {
