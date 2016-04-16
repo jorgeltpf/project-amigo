@@ -5,15 +5,15 @@
 	}
 </style>
 @if (Entrust::hasRole('admin'))
-<!-- <fieldset>
-	<legend class="text-center">Gestor</legend>
-	<div class="form-group">
-		{!! Form::label('owner_name', 'Gestor:', ['class' => 'control-label col-xs-2', 'for' => 'owner_name']) !!}
-		<div class="col-xs-10">
-			{!! Form::select('owner_name', $owner, null, ['id' => 'owner_name', 'class' => 'form-control']) !!}
-		</div>
-    </div>
-</fieldset> -->
+	<fieldset>
+		<legend class="text-center">Gestor</legend>
+		<div class="form-group">
+			{!! Form::label('owner_name', 'Gestor:', ['class' => 'control-label col-xs-2', 'for' => 'owner_name']) !!}
+			<div class="col-xs-10">
+				{!! Form::select('owner_name', $owner, null, ['id' => 'owner_name', 'class' => 'form-control']) !!}
+			</div>
+	    </div>
+	</fieldset>
 @endif
 <fieldset>
 	<legend class="text-center">Informações Básicas</legend>
@@ -114,7 +114,7 @@
     </div>
 </fieldset>
 <fieldset>
-	<legend class="text-center">Dias Aberto</legend>
+	<legend class="text-center">Dias de Funcionamento</legend>
     <div class="form-group" id="week-input">
         <div class="col-xs-offset-2 col-xs-10">
             <button type="button" class="btn btn-primary" id="add-field">Adicionar</button>
