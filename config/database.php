@@ -6,10 +6,11 @@
 $env = $app->detectEnvironment(function() {
     return getenv('APP_ENV') ?: 'production';
 });
-// var_dump(getenv('APP_ENV'));
 
-// dd($env);
-
+// Necessário criar um ambiente de teste
+if ($env === 'testing') {
+    $env = 'local';
+}
 
 return [
 

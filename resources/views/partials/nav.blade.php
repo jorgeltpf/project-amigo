@@ -44,7 +44,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             @if(Auth::check())
-                                @if(Auth::user()->admin==1)
+                                @if(Entrust::hasRole(['admin', 'establishment', 'establishment_operator']))
                                     <li>
                                         <a href="{!! URL::to('admin/dashboard') !!}"><i class="fa fa-tachometer"></i> Dashboard</a>
                                     </li>

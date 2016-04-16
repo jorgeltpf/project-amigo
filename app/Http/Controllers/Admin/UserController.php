@@ -4,12 +4,12 @@ use App\Http\Controllers\AdminController;
 use App\User;
 use App\Models\Role;
 use App\Models\Person;
+use App\Models\Establishment;
 use App\Http\Requests\Admin\UserRequest;
 use App\Http\Requests\Admin\UserEditRequest;
 use App\Http\Requests\Admin\DeleteRequest;
 use Datatables;
 use JsValidator;
-
 
 class UserController extends AdminController {
     protected $validationRules = [
@@ -47,14 +47,13 @@ class UserController extends AdminController {
         'city.required' => 'É preciso preencher a sua cidade'
     );
 
-    /*
-    * Display a listing of the resource.
-    *
-    * @return Response
-    */
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
 
     public function index() {
-        // Show the page
         return view('admin.users.index');
     }
 
@@ -66,8 +65,9 @@ class UserController extends AdminController {
 
     public function getCreate() {
         $roles = Role::lists('display_name', 'id');
+        $establishments = Establishment::lists('name', 'id');
         $validator = JsValidator::make($this->validationRules, $this->messages);
-        return view('admin.users.create_edit', compact('roles', 'validator'));
+        return view('admin.users.create_edit', compact('roles', 'validator', 'establishments'));
     }
 
     /**
@@ -119,11 +119,19 @@ class UserController extends AdminController {
                     'state' => 'RS',
                     'country' => 'Brasil'
                 ]);
+
+                // Update Person:Establishment
+                if (!empty($request->establishment_list)) {
+                    $ests = array($request->establishment_list);
+                    // $person = Person::findOrFail($user->person->id);
+                    $person->establishments()->sync($ests);
+                }
             }
             \DB::commit();
             $success = true;
         } catch (\Exception $e) {
             \DB::rollback();
+            dd($e);
             $success = false;
         }
         if ($success) {
@@ -145,8 +153,9 @@ class UserController extends AdminController {
     public function getEdit($id) {
         $user = User::with('Person')->findOrFail($id);
         $roles = Role::lists('display_name', 'id');
+        $establishments = Establishment::lists('name', 'id');
         $validator = JsValidator::make($this->validationRules, $this->messages);
-        return view('admin.users.create_edit', compact('user', 'roles', 'validator'));
+        return view('admin.users.create_edit', compact('user', 'roles', 'validator', 'establishments'));
     }
 
     /**
@@ -157,7 +166,7 @@ class UserController extends AdminController {
      */
 
     public function postEdit(UserEditRequest $request, $id) {
-        $user = User::find($id);
+        $user = User::with('Person')->findOrFail($id);
         $user->name = $request->name;
         $user->confirmed = $request->confirmed;
 
@@ -183,7 +192,13 @@ class UserController extends AdminController {
             if ($user->save()) {
                 $this->syncRoles($user, $roles);
                 // Update People
-                $person = $user->person->update($request->all());
+                $user->person->update($request->all());
+                // Update Person:Establishment
+                if (!empty($request->establishment_list)) {
+                    $ests = array($request->establishment_list);
+                    $person = Person::findOrFail($user->person->id);
+                    $person->establishments()->sync($ests);
+                }
             }
             \DB::commit();
             $success = true;
@@ -200,6 +215,10 @@ class UserController extends AdminController {
 
         return redirect('admin/users');
     }
+
+    /**
+     * Função utilizada para salvar a relação User N:N Roles
+     */
 
     private function syncRoles(User $user, array $roles) {
         $user->roles()->sync($roles);

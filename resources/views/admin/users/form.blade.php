@@ -28,8 +28,9 @@
 	@endif
 	<div class="form-group {{{ $errors->has('password') ? 'has-error' : '' }}}">
 		<label class="col-xs-2 control-label" for="password">{{
-			trans('admin/users.password') }}:</label>
-		<div class="col-xs-10">
+			trans('admin/users.password') }}:
+		</label>
+		<div class="col-xs-6">
 			<input class="form-control" tabindex="5"
 				placeholder="{{ trans('admin/users.password') }}"
 				type="password" name="password" id="password" value="" />
@@ -38,9 +39,9 @@
 		</div>
 	</div>
 	<div class="form-group {{{ $errors->has('password_confirmation') ? 'has-error' : '' }}}">
-		<label class="col-md-2 control-label" for="password_confirmation">{{
+		<label class="col-xs-2 control-label" for="password_confirmation">{{
 			trans('admin/users.password_confirmation') }}:</label>
-		<div class="col-md-10">
+		<div class="col-xs-6">
 			<input class="form-control" type="password" tabindex="6"
 				placeholder="{{ trans('admin/users.password_confirmation') }}"
 				name="password_confirmation" id="password_confirmation" value="" />
@@ -53,6 +54,12 @@
 			{!! Form::label('role_list', 'Perfis:', ['class' => 'col-xs-2 control-label']) !!}
 			<div class="col-xs-4">
 				{!! Form::select('role_list', $roles, null, ['id' => 'role_list', 'class' => 'form-control']) !!}
+			</div>
+		</div>
+		<div class="form-group">
+			{!! Form::label('establishment_list', 'Estabelecimentos:', ['class' => 'col-xs-2 control-label']) !!}
+			<div class="col-xs-4">
+				{!! Form::select('establishment_list', $establishments, null, ['id' => 'establishment_list', 'class' => 'form-control']) !!}
 			</div>
 		</div>
 	@endif
@@ -88,17 +95,6 @@
 		</div>
 	</div>
     @include('partials.person_form')
-</fieldset>
-<fieldset>
-	<legend class="text-center">Estabelecimentos</legend>
-	@if (Entrust::hasRole('admin'))
-		<div class="form-group">
-			{!! Form::label('role_list', 'Perfis:', ['class' => 'col-xs-2 control-label']) !!}
-			<div class="col-xs-4">
-				{!! Form::select('role_list', $roles, null, ['id' => 'role_list', 'class' => 'form-control']) !!}
-			</div>
-		</div>
-	@endif
 </fieldset>
 <div class="form-group">
     <div class="col-xs-offset-2 col-xs-10">

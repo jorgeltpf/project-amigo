@@ -16,14 +16,10 @@ class DatabaseSeeder extends Seeder
 
         // Add calls to Seeders here
         $this->call('UsersTableSeeder');
-		$this->call('LanguagesTableSeeder');
-		$this->call('ArticleCategoriesTableSeeder');
-		$this->call('ArticlesTableSeeder');
         $this->call('RoleTableSeeder');
         $this->call('PermissionTableSeeder');
         $this->call('WeekDaysTableSeeder');
-        //$this->call('ProductTypesTableSeeder');
-        //$this->call('ProductSpeciesTableSeeder');
+        // $this->call('ProductTypesTableSeeder');
 
         Model::reguard();
     }

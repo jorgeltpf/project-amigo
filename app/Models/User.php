@@ -11,8 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Carbon\Carbon;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
-{
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
     use Authenticatable, CanResetPassword, EntrustUserTrait, SoftDeletes; // add this trait to your user model
 
@@ -44,6 +43,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'cell_phone',
         'street',
         'street_number',
+        'neighborhood',
         'complement',
         'city',
         'state',
@@ -72,13 +72,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         });
     }
 
-	public function articles()
-	{
-		return $this->hasMany('App\Article');
-	}
-
-    public function roles()
-    {
+    public function roles() {
         return $this->belongsToMany('App\Models\Role');
     }
 
@@ -91,9 +85,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     *   @return array
     */
 
-    public function getRoleListAttribute()
-    {
+    public function getRoleListAttribute() {
         return $this->roles->lists('id')->toArray();
+    }
+
+    public function getEstablishmentListAttribute() {
+        return $this->person->establishments->lists('id')->toArray();
     }
 
     public function setCreatedAtAttribute($date) {

@@ -116,6 +116,10 @@ class EstablishmentsController extends AdminController {
         return redirect('admin/establishments');
     }
 
+    /**
+     * Função para salvar os dias da semana com o estabelecimento
+     */
+
     public function syncWeekDays(Establishment $establishments, array $weekdays) {
         if (!empty($weekdays)) {
             $timeOn = "";

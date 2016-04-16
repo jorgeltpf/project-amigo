@@ -28,13 +28,13 @@
             <span class="hidden-sm text"> {{ trans("admin/admin.users") }}</span>
         </a>
     </li>
-    @if (Entrust::hasRole('admin'))
-    <li class="{{set_active('admin/establishments*')}}">
-        <a href="{{url('admin/establishments')}}">
-            <i class="glyphicon glyphicon-home"></i>
-            <span class="hidden-sm text"> Estabelecimento</span>
-        </a>
-    </li>
+    @if (Entrust::hasRole(['admin', 'establishment']))
+        <li class="{{set_active('admin/establishments*')}}">
+            <a href="{{url('admin/establishments')}}">
+                <i class="glyphicon glyphicon-home"></i>
+                <span class="hidden-sm text"> Estabelecimento</span>
+            </a>
+        </li>
     @endif
      <li class="{{set_active('admin/products')}}">
         <a href="{{url('admin/products')}}">

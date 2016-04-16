@@ -18,18 +18,7 @@ Route::get('about', 'PagesController@about');
 Route::get('contact', 'PagesController@contact');
 Route::get('people', 'PagesController@people');
 
-Route::pattern('id', '[0-9]+');
-Route::get('news/{id}', 'ArticlesController@show');
-Route::get('video/{id}', 'VideoController@show');
-Route::get('photo/{id}', 'PhotoController@show');
-
-Route::get('weekdays', 'WeekDaysController@list_week'
-    // function() {
-    // if (Request::ajax()) {
-    //     return "teste";
-    // };
-    // }
-);
+Route::get('weekdays', 'WeekDaysController@list_week');
 
 // Clients - Edição de Clientes
 // Route::resource('clients', 'ClientsController');
@@ -82,40 +71,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::pattern('id', '[0-9]+');
     Route::pattern('id2', '[0-9]+');    
 
-    Route::filter('admin', function()
-    {
-        if (!Entrust::hasRole('admin'))
-        {
-            return Redirect::to('/');
-        }
-    });
-
-    Route::when('admin/language*', 'admin');
-    Route::when('admin/newscategory*', 'admin');
-    Route::when('admin/news*', 'admin');
-    Route::when('admin/photoalbum*', 'admin');
-    Route::when('admin/photo*', 'admin');
-    Route::when('admin/videoalbum*', 'admin');
-    Route::when('admin/video*', 'admin');
     Route::when('admin/establishments*', 'admin');
 
-    # Admin Dashboard
+    // Admin Dashboard
+
     Route::get('dashboard', 'DashboardController@index');
+    Route::get('/', 'DashboardController@index');
 
-    # Video
-    Route::get('video', 'VideoController@index');
-    Route::get('video/create', 'VideoController@getCreate');
-    Route::post('video/create', 'VideoController@postCreate');
-    Route::get('video/{id}/edit', 'VideoController@getEdit');
-    Route::post('video/{id}/edit', 'VideoController@postEdit');
-    Route::get('video/{id}/delete', 'VideoController@getDelete');
-    Route::post('video/{id}/delete', 'VideoController@postDelete');
-    Route::get('video/{id}/itemsforalbum', 'VideoController@itemsForAlbum');
-    Route::get('video/{id}/{id2}/albumcover', 'VideoController@getAlbumCover');
-    Route::get('video/data/{id}', 'VideoController@data');
-    Route::get('video/reorder', 'VideoController@getReorder');
+    // Users
 
-    # Users
     Route::get('users/', 'UserController@index');
     Route::get('users/create', 'UserController@getCreate');
     Route::post('users/create', 'UserController@postCreate');
@@ -125,7 +89,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('users/{id}/delete', 'UserController@postDelete');
     Route::get('users/data', 'UserController@data');
 
-    // Route::resource('establishments', 'EstablishmentsController');
+    // Establishments
+
     Route::get('establishments/', 'EstablishmentsController@index');
     Route::get('establishments/create', 'EstablishmentsController@create');
     Route::post('establishments/create', 'EstablishmentsController@store');
@@ -133,7 +98,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('establishments/{id}/edit', 'EstablishmentsController@update');
     Route::get('establishments/{id}/delete', 'EstablishmentsController@getDelete');
     Route::post('establishments/{id}/delete', 'EstablishmentsController@postDelete');
-    // Route::delete('establishments/{id}/delete', 'EstablishmentsController@destroy');
     Route::get('establishments/data', 'EstablishmentsController@data');
 
     //Promotions
@@ -155,16 +119,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('products/{id}/edit', 'ProductsController@update');
     Route::get('products/{id}/delete', 'ProductsController@getDelete');
     Route::post('products/{id}/delete', 'ProductsController@postDelete');
-
-    //ProductClasses
-    Route::get('productclasses/', 'ProductClassesController@index');
-    Route::get('productclasses/create', 'ProductClassesController@create');
-    Route::post('productclasses/create', 'ProductClassesController@store');
-    Route::get('productclasses/data', 'ProductClassesController@data');
-    Route::get('productclasses/{id}/edit', 'ProductClassesController@edit');
-    Route::post('productclasses/{id}/edit', 'ProductClassesController@update');
-    Route::get('productclasses/{id}/delete', 'ProductClassesController@getDelete');
-    Route::post('productclasses/{id}/delete', 'ProductClassesController@postDelete');
 
     //ProductTypes
     Route::get('producttypes/', 'ProductTypesController@index');
