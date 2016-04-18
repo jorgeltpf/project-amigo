@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\AdminController;
 use App\Models\Establishment;
+use App\Models\Person;
 use Illuminate\Support\Facades\Input;
 use App\Models\WeekDay;
 use App\Http\Requests;
@@ -184,7 +185,22 @@ class EstablishmentsController extends AdminController {
      * @return Response
      */
     public function show($id) {
-        //
+        $est = $this->findEstablishmentIds($id);
+        return view('admin.establishments.show', compact('est'));
+    }
+
+    /**
+     * Retorno o id dos estabelecimentos vinculados
+     * com o usuário logado
+     *
+     * @param mixed $id 
+     * @return array
+     */
+    public function findEstablishmentIds($id) {
+        $establishmentIds = Establishment::whereHas('people', function ($q) use ($id) {
+            $q->where('user_id', '=', $id);
+        })->select(['establishments.id'])->get();
+        return $establishmentIds;
     }
 
     /**
@@ -287,10 +303,22 @@ class EstablishmentsController extends AdminController {
      * Recuperação dos dados para enviar para o datatable da listagem da index
      */
     public function data() {
-        $establishment = Establishment::whereNull('establishments.deleted_at')
-            ->orderBy('establishments.id', 'DESC')
-            ->select(array('establishments.id', 'establishments.name', 'establishments.phone',
-            'establishments.email', 'establishments.cep'));
+        if (\Auth::user()->hasRole('establishment')) {
+            $establishmentIds = Establishment::whereHas('people', function ($q) {
+                $q->where('user_id', '=', \Auth::user()->id);
+            })->select(['establishments.id'])->get();
+
+            $establishment = Establishment::whereNull('establishments.deleted_at')
+                ->whereIn('id', [$establishmentIds[0]['id']])
+                ->orderBy('establishments.id', 'DESC')
+                ->select(array('establishments.id', 'establishments.name', 'establishments.phone',
+                'establishments.email', 'establishments.cep'));
+        } elseif (\Auth::user()->hasRole('admin')) {
+            $establishment = Establishment::whereNull('establishments.deleted_at')
+                ->orderBy('establishments.id', 'DESC')
+                ->select(array('establishments.id', 'establishments.name', 'establishments.phone',
+                'establishments.email', 'establishments.cep'));
+        }
 
         return Datatables::of($establishment)
             ->add_column('actions',

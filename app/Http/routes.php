@@ -71,8 +71,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::pattern('id', '[0-9]+');
     Route::pattern('id2', '[0-9]+');    
 
-    Route::when('admin/establishments*', 'admin');
-
     // Admin Dashboard
 
     Route::get('dashboard', 'DashboardController@index');
@@ -91,14 +89,23 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
 
     // Establishments
 
-    Route::get('establishments/', 'EstablishmentsController@index');
-    Route::get('establishments/create', 'EstablishmentsController@create');
-    Route::post('establishments/create', 'EstablishmentsController@store');
-    Route::get('establishments/{id}/edit', 'EstablishmentsController@edit');
-    Route::post('establishments/{id}/edit', 'EstablishmentsController@update');
-    Route::get('establishments/{id}/delete', 'EstablishmentsController@getDelete');
-    Route::post('establishments/{id}/delete', 'EstablishmentsController@postDelete');
-    Route::get('establishments/data', 'EstablishmentsController@data');
+    // Route::get('establishments/', ['uses' => 'EstablishmentsController@index']);
+    Route::get('establishments/', function() {
+        if (\Auth::user()->hasRole('admin'))
+            return redirect()->action('Admin\EstablishmentsController@index');
+        else
+            return redirect()->action('Admin\EstablishmentsController@show', [intval(\Auth::user()->id)]);
+    });
+    Route::group(['middleware' => ['role:admin']], function() {
+        Route::get('establishments/create', ['uses' => 'EstablishmentsController@create']);
+        Route::post('establishments/create', ['uses' => 'EstablishmentsController@store']);
+        Route::get('establishments/{id}/delete', ['uses' => 'EstablishmentsController@getDelete']);
+        Route::post('establishments/{id}/delete', ['uses' => 'EstablishmentsController@postDelete']);
+        Route::get('establishments/data', ['uses' => 'EstablishmentsController@data']);
+    });
+    Route::get('establishments/{id}/edit', ['uses' => 'EstablishmentsController@edit', 'middleware' => 'role:admin|establishment']);
+    Route::post('establishments/{id}/edit', ['uses' => 'EstablishmentsController@update', 'middleware' => 'role:admin|establishment']);
+    Route::get('establishments/{id}/show', 'EstablishmentsController@show');
 
     //Promotions
     Route::get('promotions/', 'PromotionsController@index');

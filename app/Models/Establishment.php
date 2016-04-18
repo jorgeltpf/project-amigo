@@ -90,7 +90,6 @@ class Establishment extends Model {
     }
 
     public function people() {
-        return $this->hasMany('App\Models\Person');
+        return $this->belongsToMany('App\Models\Person');
     }
-
 }
