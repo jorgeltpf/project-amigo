@@ -225,7 +225,7 @@ class EstablishmentsController extends AdminController {
         //     $q->where('establishment_id', '=', $id);
         // })->get();
         $adjustWeeks = [];
-        // Migué
+        // Inverter array para acertar a ordenação dos dias
         $weekdays = array_reverse($weekdays);
 
         foreach ($weekdays as $key => $value) {

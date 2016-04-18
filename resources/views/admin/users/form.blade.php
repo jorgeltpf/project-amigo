@@ -28,7 +28,8 @@
 	@endif
 	<div class="form-group {{{ $errors->has('password') ? 'has-error' : '' }}}">
 		<label class="col-xs-2 control-label" for="password">{{
-			trans('admin/users.password') }}:</label>
+			trans('admin/users.password') }}:
+		</label>
 		<div class="col-xs-6">
 			<input class="form-control" tabindex="5"
 				placeholder="{{ trans('admin/users.password') }}"
