@@ -89,13 +89,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
 
     // Establishments
 
-    // Route::get('establishments/', ['uses' => 'EstablishmentsController@index']);
-    Route::get('establishments/', function() {
-        if (\Auth::user()->hasRole('admin'))
-            return redirect()->action('Admin\EstablishmentsController@index');
-        else
-            return redirect()->action('Admin\EstablishmentsController@show', [intval(\Auth::user()->id)]);
-    });
+    Route::get('establishments/', ['uses' => 'EstablishmentsController@index', 'middleware' => 'role:admin|establishment']);
     Route::group(['middleware' => ['role:admin']], function() {
         Route::get('establishments/create', ['uses' => 'EstablishmentsController@create']);
         Route::post('establishments/create', ['uses' => 'EstablishmentsController@store']);

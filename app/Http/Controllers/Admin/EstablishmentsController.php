@@ -43,8 +43,12 @@ class EstablishmentsController extends AdminController {
      * @return Response
      */
     public function index() {
-        $establishments = Establishment::all();
-        return view('admin.establishments.index', compact('establishments'));
+        if (\Auth::user()->hasRole('admin')) {
+            $establishments = Establishment::all();
+            return view('admin.establishments.index', compact('establishments'));
+        } else {
+            return view('admin.establishments.show', compact(1));
+        }
     }
 
     /**
@@ -303,18 +307,17 @@ class EstablishmentsController extends AdminController {
      * Recuperação dos dados para enviar para o datatable da listagem da index
      */
     public function data() {
-        if (\Auth::user()->hasRole('establishment')) {
-            $establishmentIds = Establishment::whereHas('people', function ($q) {
-                $q->where('user_id', '=', \Auth::user()->id);
-            })->select(['establishments.id'])->get();
-
+        $establishment = array();
+        if (\Auth::user()->hasRole('admin')) {
             $establishment = Establishment::whereNull('establishments.deleted_at')
-                ->whereIn('id', [$establishmentIds[0]['id']])
                 ->orderBy('establishments.id', 'DESC')
                 ->select(array('establishments.id', 'establishments.name', 'establishments.phone',
                 'establishments.email', 'establishments.cep'));
-        } elseif (\Auth::user()->hasRole('admin')) {
+        } elseif (\Auth::user()->hasRole('establishment')) {
+            $establishmentIds = $this->findEstablishmentIds(\Auth::user()->id);
+
             $establishment = Establishment::whereNull('establishments.deleted_at')
+                ->whereIn('id', [$establishmentIds[0]['id']])
                 ->orderBy('establishments.id', 'DESC')
                 ->select(array('establishments.id', 'establishments.name', 'establishments.phone',
                 'establishments.email', 'establishments.cep'));

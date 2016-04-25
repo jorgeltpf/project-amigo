@@ -50,9 +50,9 @@
 </head>
 <!-- Definição de id para o body para selecionar a imagem de fundo -->
 @if (!empty($title))
-<body id="{!! $title !!}">
+    <body id="{!! $title !!}">
 @else
-<body>
+    <body>
 @endif
 @include('partials.nav')
 

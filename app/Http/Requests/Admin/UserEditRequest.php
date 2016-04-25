@@ -9,8 +9,7 @@ class UserEditRequest extends FormRequest {
 	 *
 	 * @return array
 	 */
-	public function rules()
-	{
+	public function rules() {
 		return [
             'name' => 'required|min:3',
 		];
@@ -21,8 +20,7 @@ class UserEditRequest extends FormRequest {
 	 *
 	 * @return bool
 	 */
-	public function authorize()
-	{
+	public function authorize() {
 		return true;
 	}
 

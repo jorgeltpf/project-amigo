@@ -45,7 +45,14 @@ class Admin implements Middleware {
 	 */
 	public function handle($request, Closure $next) {
         if ($this->auth->check()) {
-            if (!$this->auth->user()->hasRole(['admin', 'establishment', 'establishment_operator'])) {
+            if ($this->auth->user()->hasRole(['establishment', 'establishment_operator'])) {
+                $request->session()->put('establishment', $this->auth->user()->getUserEstablishmentId($this->auth->user()->id));
+                $request->session()->put('person', $this->auth->user()->getUserPersonId($this->auth->user()->id));
+            }
+
+            if (!$this->auth->user()->hasRole(['admin', 'establishment', 'establishment_operator'])
+                // || !$this->auth->user()->isAuthorized($request->route()->parameter('id'), $this->auth->user()->id)
+            ) {
                 return $this->response->redirectTo('/');
             }
             return $next($request);

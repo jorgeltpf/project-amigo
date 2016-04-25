@@ -5,8 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class Authenticate
-{
+class Authenticate {
     /**
      * The Guard implementation.
      *
@@ -20,8 +19,7 @@ class Authenticate
      * @param  Guard  $auth
      * @return void
      */
-    public function __construct(Guard $auth)
-    {
+    public function __construct(Guard $auth) {
         $this->auth = $auth;
     }
 
@@ -32,9 +30,10 @@ class Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
-        if ($this->auth->guest()) {                
+    public function handle($request, Closure $next) {
+        if ($this->auth->guest()) {
+            // Remover id dos estabelecimentos da sessão
+            \Session::forget('establishment');
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {

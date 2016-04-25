@@ -103,4 +103,55 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         else
             return Carbon::parse($date)->format('d/m/Y H:i:s');
     }
+
+    public function isAuthorized($param, $authId) {
+        $establishmentIds = Models\Establishment::whereHas('people', function ($q) use ($param) {
+            $q->where('user_id', '=', intval($param));
+        })->select(['establishments.id'])->get();
+
+        $establishmentAuthIds = Models\Establishment::whereHas('people', function ($q) use ($authId) {
+            $q->where('user_id', '=', intval($authId));
+        })->select(['establishments.id'])->get();
+
+        $authorizedUsers = false;
+        if (!empty($establishmentIds[0]) && !empty($establishmentAuthIds[0])) {
+            if ($establishmentIds[0]['id'] === $establishmentAuthIds[0]['id']) {
+                $authorizedUsers = true;
+            }
+        }
+
+        return $authorizedUsers;
+    }
+
+    /**
+     *  Através do id do usuário logado
+     *  retorna o estabelecimento associado ao usuário
+     *  @param int id
+     *  @return int id
+     */
+    public function getUserEstablishmentId($userId) {
+        $establishmentIds = Models\Establishment::whereHas('people', function ($q) use ($userId) {
+            $q->where('user_id', '=', intval($userId));
+        })->select(['establishments.id'])->get();
+        $est = [];
+        if (!empty($establishmentIds[0])) {
+            $est = $establishmentIds[0]['id'];
+        }
+        return $est;
+    }
+
+    /**
+     *  Através do id do usuário logado
+     *  retorna o estabelecimento associado ao usuário
+     *  @param int id
+     *  @return int id
+     */
+    public function getUserPersonId($userId) {
+        $personId = $this->person()->find(1);
+        dd($personId);
+        if (!empty($establishmentIds[0])) {
+            $est = $establishmentIds[0]['id'];
+        }
+        return $est;
+    }
 }

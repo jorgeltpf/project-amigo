@@ -7,11 +7,14 @@ use App\Models\Person;
 use App\Models\Establishment;
 use App\Http\Requests\Admin\UserRequest;
 use App\Http\Requests\Admin\UserEditRequest;
+use App\Http\Requests\Admin\UserGetEditRequest;
 use App\Http\Requests\Admin\DeleteRequest;
 use Datatables;
 use JsValidator;
 
 class UserController extends AdminController {
+    use EstablishmentsUserIdTrait;
+
     protected $validationRules = [
         'name' => 'required|max:255',
         // 'username' => 'required|unique:users',
@@ -150,7 +153,7 @@ class UserController extends AdminController {
      * @return Response
      */
 
-    public function getEdit($id) {
+    public function getEdit($id, UserGetEditRequest $request) {
         $user = User::with('Person')->findOrFail($id);
         $roles = Role::lists('display_name', 'id');
         $establishments = Establishment::lists('name', 'id');
@@ -254,15 +257,34 @@ class UserController extends AdminController {
      * @return Datatables JSON
      */
     public function data() {
-        $users = User::select(
-            array(
-                'users.id',
-                'users.name',
-                'users.email',
-                'users.confirmed',
-                'users.created_at'
-            )
-        );
+        $users = array();
+        if (\Auth::user()->hasRole('admin')) {
+            $users = User::whereNull('users.deleted_at')
+                ->select(
+                    array(
+                        'users.id',
+                        'users.name',
+                        'users.email',
+                        'users.confirmed',
+                        'users.created_at'
+                    )
+            );
+        }  elseif (\Auth::user()->hasRole('establishment')) {
+            $usersIds = $this->findEstablishmentIds(\Auth::user()->id);
+            $users = User::join('people', 'people.user_id', '=', 'users.id')
+                ->join('establishment_person', 'establishment_person.person_id', '=', 'people.id')            
+                ->whereNull('users.deleted_at')
+                ->whereIn('establishment_person.establishment_id', [session('establishment')])
+                ->select(
+                    array(
+                        'users.id',
+                        'users.name',
+                        'users.email',
+                        'users.confirmed',
+                        'users.created_at'
+                    )
+            );
+        }
 
         return Datatables::of($users)
             ->edit_column('confirmed', '@if ($confirmed=="1") <span class="glyphicon glyphicon-ok"></span> @else <span class=\'glyphicon glyphicon-remove\'></span> @endif')
