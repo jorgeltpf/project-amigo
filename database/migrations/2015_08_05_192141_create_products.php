@@ -3,24 +3,19 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProducts extends Migration
-{
+class CreateProducts extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        
-
+    public function up() {
         Schema::create('product_types', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('description');
             $table->timestamps();
             $table->softDeletes();
-
         });
 
         Schema::create('products', function (Blueprint $table) {
@@ -44,8 +39,7 @@ class CreateProducts extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::drop('products');
         Schema::drop('product_types');
     }

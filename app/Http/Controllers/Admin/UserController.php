@@ -102,31 +102,31 @@ class UserController extends AdminController {
         // Transação para o salvamento simultâneo do usuário, pessoa e papel
         \DB::beginTransaction();
         try {
+            $person = Person::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'people_type' => $request->people_type,
+                'cpf' => $request->cpf,
+                'phone' => $request->phone,
+                'cell_phone' => $request->cell_phone,
+                'street' => $request->street,
+                'street_number' => $request->street_number,
+                'cep' => $request->cep,
+                'neighborhood' => $request->neighborhood,
+                'complement' => $request->complement,
+                'city' => $request->city,
+                'state' => 'RS',
+                'country' => 'Brasil'
+            ]);
+            $user->person_id = $person->id;
             if ($user->save()) {
                 $this->syncRoles($user, $role);
 
-                $person = Person::create([
-                    'user_id' => $user->id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'people_type' => $request->people_type,
-                    'cpf' => $request->cpf,
-                    'phone' => $request->phone,
-                    'cell_phone' => $request->cell_phone,
-                    'street' => $request->street,
-                    'street_number' => $request->street_number,
-                    'cep' => $request->cep,
-                    'neighborhood' => $request->neighborhood,
-                    'complement' => $request->complement,
-                    'city' => $request->city,
-                    'state' => 'RS',
-                    'country' => 'Brasil'
-                ]);
-
                 // Update Person:Establishment
-                if (!empty($request->establishment_list)) {
+                if (\Auth::user()->hasRole('establishment')) {
+                    $person->establishments()->sync([session('establishment')]);
+                } elseif (!empty($request->establishment_list)) {
                     $ests = array($request->establishment_list);
-                    // $person = Person::findOrFail($user->person->id);
                     $person->establishments()->sync($ests);
                 }
             }
@@ -192,14 +192,15 @@ class UserController extends AdminController {
         // Transação para o salvamento simultâneo do usuário, pessoa e papel
         \DB::beginTransaction();
         try {
-            if ($user->save()) {
+            $person = Person::findOrFail($user->person_id);
+            if (!empty($person)) {
+                $user->save();
                 $this->syncRoles($user, $roles);
                 // Update People
-                $user->person->update($request->all());
+                $person->update($request->all());
                 // Update Person:Establishment
                 if (!empty($request->establishment_list)) {
                     $ests = array($request->establishment_list);
-                    $person = Person::findOrFail($user->person->id);
                     $person->establishments()->sync($ests);
                 }
             }
@@ -270,9 +271,7 @@ class UserController extends AdminController {
                     )
             );
         }  elseif (\Auth::user()->hasRole('establishment')) {
-            $usersIds = $this->findEstablishmentIds(\Auth::user()->id);
-            $users = User::join('people', 'people.user_id', '=', 'users.id')
-                ->join('establishment_person', 'establishment_person.person_id', '=', 'people.id')            
+            $users = User::join('establishment_person', 'establishment_person.person_id', '=', 'users.person_id')
                 ->whereNull('users.deleted_at')
                 ->whereIn('establishment_person.establishment_id', [session('establishment')])
                 ->select(

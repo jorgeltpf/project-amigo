@@ -37,20 +37,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'avatar',
         'confirmation_code',
         // Person
-        'user_id',
-        'email',
-        'phone',
-        'cell_phone',
-        'street',
-        'street_number',
-        'neighborhood',
-        'complement',
-        'city',
-        'state',
-        'country',
-        'cep',
-        'cpf',
-        'people_type'
+        'person_id'
     ];
 
     /**
@@ -77,7 +64,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function person() {
-        return $this->hasOne('App\Models\Person');
+        return $this->belongsTo('App\Models\Person');
     }
 
     /**
@@ -131,7 +118,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getUserEstablishmentId($userId) {
         $establishmentIds = Models\Establishment::whereHas('people', function ($q) use ($userId) {
-            $q->where('user_id', '=', intval($userId));
+            $q->where('id', '=', intval($userId));
         })->select(['establishments.id'])->get();
         $est = [];
         if (!empty($establishmentIds[0])) {

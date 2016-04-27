@@ -52,8 +52,25 @@ class AuthController extends Controller {
      * @return User
      */
     protected function create(array $data) {
+        $person = \App\Person::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'people_type' => '1',
+            // 'cpf' => '999999999',
+            // 'phone' => '99999',
+            // 'cell_phone' => '999999',
+            // 'street' => 'Teste Admin',
+            // 'street_number' => '1',
+            // 'cep' => '97010340',
+            // 'neighborhood' => 'Teste',
+            // 'complement' => 'Teste',
+            // 'city' => 'Teste',
+            // 'state' => 'RS',
+            // 'country' => 'Brasil'
+        ]);
 
         $user = User::create([
+            'person_id' => $person->id,
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],

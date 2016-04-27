@@ -21,13 +21,8 @@ class Person extends Model {
 		'update_at'
 	];
 
-	protected $hidden = [
-		'user_id'
-	];
-
     protected $fillable = array(
 		'name',
-		'user_id',
 		'email',
 		'phone',
 		'cell_phone',
@@ -48,16 +43,12 @@ class Person extends Model {
 	);
 
     public function user() {
-    	return $this->belongsTo('App\User');
+    	return $this->hasOne('App\User');
     }
 
     public function establishments() {
         return $this->belongsToMany('App\Models\Establishment');
     }
-
-	public function setUserIdAttribute($value){
-		$this->attributes['user_id'] = $value == "null" ? null : $value;
-	}
 
     // Envia o tel sem máscara
     public function setPhoneAttribute($value) {

@@ -16,7 +16,7 @@ trait EstablishmentsUserIdTrait {
 
     public function findEstablishmentIds($id) {
         $establishmentIds = Establishment::whereHas('people', function ($q) use ($id) {
-            $q->where('user_id', '=', $id);
+            $q->where('id', '=', $id);
         })->select(['establishments.id'])->get();
         return $establishmentIds;
     }
