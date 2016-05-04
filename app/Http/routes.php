@@ -78,19 +78,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
 
     // Users
 
-    Route::get('users/', 'UserController@index');
-    Route::get('users/create', 'UserController@getCreate');
-    Route::post('users/create', 'UserController@postCreate');
-    Route::get('users/{id}/edit', 'UserController@getEdit');
-    Route::post('users/{id}/edit', 'UserController@postEdit');
-    Route::get('users/{id}/delete', 'UserController@getDelete');
-    Route::post('users/{id}/delete', 'UserController@postDelete');
-    Route::get('users/data', 'UserController@data');
+    Route::group(['middleware' => ['role:admin|establishment']], function() {
+        Route::get('users/', ['uses' => 'UserController@index']);
+        Route::get('users/create', 'UserController@getCreate');
+        Route::post('users/create', 'UserController@postCreate');
+        Route::get('users/{id}/edit', 'UserController@getEdit');
+        Route::post('users/{id}/edit', 'UserController@postEdit');
+        Route::get('users/{id}/delete', 'UserController@getDelete');
+        Route::post('users/{id}/delete', 'UserController@postDelete');
+        Route::get('users/data', 'UserController@data');
+    });
 
     // Establishments
 
     Route::get('establishments/', ['uses' => 'EstablishmentsController@index', 'middleware' => 'role:admin|establishment']);
-    Route::group(['middleware' => ['role:admin']], function() {
+    Route::group(['middleware' => ['role:admin|establishment']], function() {
         Route::get('establishments/create', ['uses' => 'EstablishmentsController@create']);
         Route::post('establishments/create', ['uses' => 'EstablishmentsController@store']);
         Route::get('establishments/{id}/delete', ['uses' => 'EstablishmentsController@getDelete']);

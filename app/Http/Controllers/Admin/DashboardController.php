@@ -14,11 +14,17 @@ class DashboardController extends AdminController {
 
 	public function index() {
         $title = "Dashboard";
-
-        $establishments = Establishment::count();
+        $establishments = [];
+        $users = [];
+        if (\Entrust::hasRole('admin')) {
+            $establishments = Establishment::count();
+            $users = User::count();
+        } elseif (\Entrust::hasRole('establishment')) {
+            $establishments = Establishment::where('establishments.id', '=', session('establishment'))->count();
+            $users = User::userEstablishments(session('establishment'))->count();
+        }
         $products = Product::count();
         $promotions = Promotion::count();
-        $users = User::count();
 		return view('admin.dashboard.index',  compact('title',
             'users', 'establishments', 'products', 'promotions'));
 	}

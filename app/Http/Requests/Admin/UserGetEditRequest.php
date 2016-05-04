@@ -24,8 +24,7 @@ class UserGetEditRequest extends FormRequest {
 			return true;
 
 		$paramPersonId = User::where('id', '=', $this->route()->parameters('id'))->select('person_id')->firstOrFail();
-		$userEstablishmentId = User::join('establishment_person', 'establishment_person.person_id', '=', 'users.person_id')
-			->where('establishment_person.person_id', '=', $paramPersonId['person_id'])
+		$userEstablishmentId = User::userEstablishments($paramPersonId['person_id'])
 			->select('establishment_person.establishment_id')
 			->get();
 

@@ -91,23 +91,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return Carbon::parse($date)->format('d/m/Y H:i:s');
     }
 
-    public function isAuthorized($param, $authId) {
-        $establishmentIds = Models\Establishment::whereHas('people', function ($q) use ($param) {
-            $q->where('user_id', '=', intval($param));
-        })->select(['establishments.id'])->get();
-
-        $establishmentAuthIds = Models\Establishment::whereHas('people', function ($q) use ($authId) {
-            $q->where('user_id', '=', intval($authId));
-        })->select(['establishments.id'])->get();
-
-        $authorizedUsers = false;
-        if (!empty($establishmentIds[0]) && !empty($establishmentAuthIds[0])) {
-            if ($establishmentIds[0]['id'] === $establishmentAuthIds[0]['id']) {
-                $authorizedUsers = true;
-            }
-        }
-
-        return $authorizedUsers;
+    /**
+     *  Escopo de pesquisa relacionado a associação do 
+     *  usuário com o estabelecimento
+     *  @param string $query
+     *  @return multitype $query 
+     */
+    public function scopeUserEstablishments($query, $param) {
+        return $query->join('establishment_person', 'establishment_person.person_id', '=', 'users.person_id')
+                ->whereNull('users.deleted_at')
+                ->whereIn('establishment_person.establishment_id', [$param]);
     }
 
     /**

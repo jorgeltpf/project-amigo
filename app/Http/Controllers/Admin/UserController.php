@@ -271,9 +271,7 @@ class UserController extends AdminController {
                     )
             );
         }  elseif (\Auth::user()->hasRole('establishment')) {
-            $users = User::join('establishment_person', 'establishment_person.person_id', '=', 'users.person_id')
-                ->whereNull('users.deleted_at')
-                ->whereIn('establishment_person.establishment_id', [session('establishment')])
+            $users = User::userEstablishments(session('establishment'))
                 ->select(
                     array(
                         'users.id',

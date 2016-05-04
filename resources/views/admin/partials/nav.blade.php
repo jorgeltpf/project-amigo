@@ -22,13 +22,13 @@
             <span class="hidden-sm text"> Meus Dados</span>
         </a>
     </li>
-    <li class="{{set_active('admin/users*')}}">
-        <a href="{{url('admin/users')}}">
-            <i class="glyphicon glyphicon-user"></i>
-            <span class="hidden-sm text"> {{ trans("admin/admin.users") }}</span>
-        </a>
-    </li>
     @if (Entrust::hasRole(['admin', 'establishment']))
+        <li class="{{set_active('admin/users*')}}">
+            <a href="{{url('admin/users')}}">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm text"> {{ trans("admin/admin.users") }}</span>
+            </a>
+        </li>
         <li class="{{set_active('admin/establishments*')}}">
             <a href="{{url('admin/establishments')}}">
                 <i class="glyphicon glyphicon-home"></i>
