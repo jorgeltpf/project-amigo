@@ -53,50 +53,51 @@
 </div>
 
 @section('scripts')
-<script type="text/javascript">
-    $('#cep').on('focusout blur change', function() {
-        if ($('#cep').val()) {
-            $.ajax({
-                type: "GET",
-                url: "http://viacep.com.br/ws/"+$('#cep').val()+"/json/",
-                // data: $('form.contact').serialize(),
-                success: function(data) {
-                    console.log(data);
-                    if (data) {
-                        if (data.logradouro) {
-                            $('#street').val(data.logradouro);
-                        } else {
-                            $('#street').val('').removeAttr('readonly');
+    @parent
+    <script type="text/javascript">
+        $('#cep').on('focusout blur change', function() {
+            if ($('#cep').val()) {
+                $.ajax({
+                    type: "GET",
+                    url: "http://viacep.com.br/ws/"+$('#cep').val()+"/json/",
+                    // data: $('form.contact').serialize(),
+                    success: function(data) {
+                        console.log(data);
+                        if (data) {
+                            if (data.logradouro) {
+                                $('#street').val(data.logradouro);
+                            } else {
+                                $('#street').val('').removeAttr('readonly');
+                            }
+                            if (data.bairro) {
+                                $('#neighborhood').val(data.bairro);
+                            } else {
+                                $('#neighborhood').val('').removeAttr('readonly');
+                            }
+                            if (data.localidade) {
+                                $('#city').val(data.localidade);
+                            } else {
+                                $('#city').val('').removeAttr('readonly');   
+                            }
+                            if (data.complemento) {
+                                $('#complement').val(data.complemento);
+                            } else {
+                                $('#complement').val('').removeAttr('readonly');   
+                            }
+                            if (data.uf) {
+                                $('#state').val(data.uf);
+                            } else {
+                                $('#state').val('').removeAttr('readonly');   
+                            }
                         }
-                        if (data.bairro) {
-                            $('#neighborhood').val(data.bairro);
-                        } else {
-                            $('#neighborhood').val('').removeAttr('readonly');
-                        }
-                        if (data.localidade) {
-                            $('#city').val(data.localidade);
-                        } else {
-                            $('#city').val('').removeAttr('readonly');   
-                        }
-                        if (data.complemento) {
-                            $('#complement').val(data.complemento);
-                        } else {
-                            $('#complement').val('').removeAttr('readonly');   
-                        }
-                        if (data.uf) {
-                            $('#state').val(data.uf);
-                        } else {
-                            $('#state').val('').removeAttr('readonly');   
-                        }
+                    },
+                    error: function() {
+                        alert("Ocorreu um erro!");
                     }
-                },
-                error: function() {
-                    alert("Ocorreu um erro!");
-                }
-            });
-        } else {
-            $('#address :input').removeAttr('readonly');
-        }
-    });
-</script>
+                });
+            } else {
+                $('#address :input').removeAttr('readonly');
+            }
+        });
+    </script>
 @stop

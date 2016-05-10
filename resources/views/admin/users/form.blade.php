@@ -50,13 +50,13 @@
 		</div>
 	</div>
 	@if (Entrust::hasRole('admin'))
-		<div class="form-group">
+		<div class="form-group div-role-list">
 			{!! Form::label('role_list', 'Perfis:', ['class' => 'col-xs-2 control-label']) !!}
 			<div class="col-xs-4">
 				{!! Form::select('role_list', $roles, null, ['id' => 'role_list', 'class' => 'form-control']) !!}
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group div-est-list">
 			{!! Form::label('establishment_list', 'Estabelecimentos:', ['class' => 'col-xs-2 control-label']) !!}
 			<div class="col-xs-4">
 				{!! Form::select('establishment_list', $establishments, null, ['id' => 'establishment_list', 'class' => 'form-control']) !!}
@@ -112,7 +112,22 @@
 
 <script type="text/javascript">
 	$(function() {
-		$("#roles").select2();
+		// $("#role_list").select2();
+		// $("#establishment_list").select2();
+
+		if ($("#role_list").val() == "4") {
+			$("#establishment_list").val("");
+			$(".div-est-list").hide();
+		}
+
+		$(document).on('change', '#role_list', function() {
+			if ($(this).val() == "4") {
+				$("#establishment_list").val("");
+				$(".div-est-list").hide();
+			} else {
+				$(".div-est-list").show();
+			}
+		});
 	});
 </script>
 @stop

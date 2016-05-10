@@ -29,7 +29,8 @@ class UserController extends AdminController {
         'neighborhood' => 'required',
         'street_number' => 'required',
         'complement' => 'required',
-        'city' => 'required'
+        'city' => 'required',
+        'establishment_list' => 'required'
     ];
 
     protected $messages = array(
@@ -47,7 +48,8 @@ class UserController extends AdminController {
         'street.required' => 'É preciso preencher a sua rua',
         'street_number.required' => 'É preciso preencher o número',
         'complement.required' => 'É preciso preencher o complemento',
-        'city.required' => 'É preciso preencher a sua cidade'
+        'city.required' => 'É preciso preencher a sua cidade',
+        'establishment_list.required' => 'É preciso preencher ao campo estabelecimento',
     );
 
     /**
