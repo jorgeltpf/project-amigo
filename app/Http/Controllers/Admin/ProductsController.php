@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Input;
 use App\Models\ProductType;
 use App\Models\Establishment;
+use App\Http\Requests\Admin\ProductEditRequest;
 
 use App\Http\Requests;
 use App\Http\Controllers\AdminController;
@@ -59,7 +60,11 @@ class ProductsController extends AdminController {
         $product['price']             = $request->price;
         $product['ingredients']       = $request->ingredients;
         $product['product_type_id']   = $request->product_type_id;
-        $product['establishment_id']  = $request->establishment_id;
+        if (\Entrust::hasRole('admin')) {
+            $product['establishment_id']  = $request->establishment_id;
+        } elseif (\Entrust::hasRole('establishment', 'establishment_operator')) {
+            $product['establishment_id'] = session('establishment');
+        }
 
         $product->save();
         flash()->success('Cadastro salvo com sucesso!');
@@ -73,8 +78,7 @@ class ProductsController extends AdminController {
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -84,7 +88,7 @@ class ProductsController extends AdminController {
      * @param  int  $id
      * @return Response
      */
-    public function edit($id) {
+    public function edit($id, ProductEditRequest $request) {
         $validator = JsValidator::make($this->validationRules);
         $products = Product::find($id);
         $product_types_list = ProductType::selectRaw("product_types.description, product_types.id")
@@ -109,12 +113,21 @@ class ProductsController extends AdminController {
         $product['price']             = $request->price;
         $product['ingredients']       = $request->ingredients;
         $product['product_type_id']   = $request->product_type_id;
-        $product['establishment_id']  = $request->establishment_id;
+        if (\Entrust::hasRole('admin')) {
+            $product['establishment_id'] = $request->establishment_id;
+        } elseif (\Entrust::hasRole('establishment', 'establishment_operator')) {
+            $product['establishment_id'] = session('establishment');
+        }
 
         $product->update();
         flash()->success('Cadastro salvo com sucesso!');
 
         return redirect('admin/products');
+    }
+
+    public function getDelete($id) {
+        $products = $id;
+        return view('admin/products/delete', compact('products'));
     }
 
     /**
@@ -123,26 +136,25 @@ class ProductsController extends AdminController {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function getDelete($id) {
-        $products = $id;
-        return view('admin/products/delete', compact('products'));
-    }
-
     public function postDelete(Request $request, $id) {
         $products = Product::find($id);
         $products->delete();
     }
 
     public function data() {
-        $product = Product::whereNull('products.deleted_at')
-            ->orderBy('products.id', 'DESC')
-            ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
-            ->select(array('products.id', 'products.name', 'product_types.description','products.price'));
+        $product = [];
+        if (\Entrust::hasRole('admin')) {
+            $product = Product::whereNull('products.deleted_at')
+                ->orderBy('products.id', 'DESC')
+                ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
+                ->select(array('products.id', 'products.name', 'product_types.description','products.price'));
+        } elseif (\Entrust::hasRole('establishment', 'establishment_operator')) {
+            $product = Product::whereNull('products.deleted_at')
+                ->whereIn('products.establishment_id', [session('establishment')])
+                ->orderBy('products.id', 'DESC')
+                ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
+                ->select(array('products.id', 'products.name', 'product_types.description','products.price'));
+        }
 
         return Datatables::of($product)
             ->add_column('actions',

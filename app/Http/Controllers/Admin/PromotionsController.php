@@ -10,6 +10,7 @@ use App\Models\Establishment;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\Http\Controllers\AdminController;
+use App\Http\Requests\Admin\PromotionGetEditRequest;
 
 use Datatables;
 use JsValidator;
@@ -72,7 +73,11 @@ class PromotionsController extends AdminController {
     public function create() {
         $validator = JsValidator::make($this->validationRules, $this->messages);        
         $establishments_list = Establishment::lists('name', 'id');
-        $products_list = Product::lists('name', 'id');
+        if (\Entrust::hasRole('admin')) {
+            $products_list = Product::lists('name', 'id');
+        } elseif (\Entrust::hasRole('establishment', 'establishment_operator')) {
+            $products_list = Product::whereIn('products.establishment_id', [session('establishment')])->lists('name', 'id');
+        }
         return view('admin.promotions.create', compact('establishments_list','products_list', 'validator'));
     }
 
@@ -96,8 +101,11 @@ class PromotionsController extends AdminController {
         //     return redirect()->back()->withErrors($validation->errors());
             
         // }
-
-        $input['establishment_id'] = $input['establishments_list'];
+        if (\Entrust::hasRole('admin')) {
+            $input['establishment_id'] = $input['establishments_list'];
+        } elseif (\Entrust::hasRole('establishment', 'establishment_operator')) {
+            $input['establishment_id'] = session('establishment');
+        }
         $this->createPromotion($input);
         flash()->success('Cadastro salvo com sucesso!');
         return redirect('admin/promotions');
@@ -109,11 +117,15 @@ class PromotionsController extends AdminController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id, PromotionGetEditRequest $request) {
         $validator = JsValidator::make($this->validationRules, $this->messages);
         $promotions = Promotion::with('Products')->find($id);
         $establishments_list = Establishment::lists('name', 'id');
-        $products_list = Product::lists('name', 'id');
+        if (\Entrust::hasRole('admin')) {
+            $products_list = Product::lists('name', 'id');
+        } elseif (\Entrust::hasRole('establishment', 'establishment_operator')) {
+            $products_list = Product::whereIn('products.establishment_id', [session('establishment')])->lists('name', 'id');
+        }
         return view('admin.promotions.edit', compact('promotions', 'validator', 'establishments_list', 'products_list'));
     }
 
@@ -126,8 +138,9 @@ class PromotionsController extends AdminController {
      */
     public function update(Request $request, $id) {
         $promotions = Promotion::find($id);
-        // $input = Input::all();
-        // dd($request);
+        if (\Entrust::hasRole('establishment', 'establishment_operator')) {
+            $request['establishment_id'] = session('establishment');
+        }
         $promotions->update($request->all());
 
         $this->syncProducts($promotions, $request->input('products_list'));
@@ -150,14 +163,22 @@ class PromotionsController extends AdminController {
         $promotions = Promotion::find($id);
         $promotions->products()->detach();
         $promotions->delete();
-        // flash()->success('Promoção excluída com sucesso!');
     }
 
     public function data() {
-        $promotion = Promotion::join('establishments', 'promotions.establishment_id', '=', 'establishments.id')
-            ->select(array('promotions.id', 'promotions.name', 'establishments.name as establishments',
-               'promotions.initial_period', 'promotions.final_period'))
-            ->orderBy('promotions.id', 'DESC');
+        $promotion = [];
+        if (\Entrust::hasRole('admin')) {
+            $promotion = Promotion::join('establishments', 'promotions.establishment_id', '=', 'establishments.id')
+                ->select(array('promotions.id', 'promotions.name', 'establishments.name as establishments',
+                   'promotions.initial_period', 'promotions.final_period'))
+                ->orderBy('promotions.id', 'DESC');
+        } elseif (\Entrust::hasRole('establishment', 'establishment_operator')) {
+            $promotion = Promotion::join('establishments', 'promotions.establishment_id', '=', 'establishments.id')
+                ->select(array('promotions.id', 'promotions.name', 'establishments.name as establishments',
+                   'promotions.initial_period', 'promotions.final_period'))
+                ->orderBy('promotions.id', 'DESC')
+                ->whereIn('promotions.establishment_id', [session('establishment')]);
+        }
 
         return Datatables::of($promotion)
             ->add_column('actions',

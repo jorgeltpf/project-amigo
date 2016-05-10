@@ -13,12 +13,14 @@
         	{!! Form::input('text', 'name', null, ['class' => 'form-control', 'id' => 'promo_name', 'placeholder' => 'Nome']) !!}
         </div>
     </div>
-    <div class="form-group">
-    	{!! Form::label('establishments_list', 'Estabelecimentos:', ['class' => 'control-label col-xs-2', 'for' => 'establishments_list']) !!}
-        <div class="col-xs-10">
-        	{!! Form::select('establishments_list', $establishments_list, null,['class' => 'form-control', 'id' => 'establishments_list']) !!}
+    @if (Entrust::hasRole('admin'))
+        <div class="form-group">
+        	{!! Form::label('establishments_list', 'Estabelecimentos:', ['class' => 'control-label col-xs-2', 'for' => 'establishments_list']) !!}
+            <div class="col-xs-10">
+            	{!! Form::select('establishments_list', $establishments_list, null,['class' => 'form-control', 'id' => 'establishments_list']) !!}
+            </div>
         </div>
-    </div>
+    @endif
     <div class="form-group">
     	{!! Form::label('products_list', 'Produtos:', ['class' => 'control-label col-xs-2', 'for' => 'products_list']) !!}
         <div class="col-xs-10">

@@ -18,13 +18,15 @@
 		        <div class="col-xs-10">
 		        	{!! Form::select('product_type_id', $product_types_list, null,['class' => 'form-control', 'id' => 'prod_type']) !!}
 		        </div>
-		    </div>  
-		     <div class="form-group">
-		    	{!! Form::label('establishments_list', 'Estabelecimento:', ['class' => 'control-label col-xs-2', 'for' => 'estab']) !!}
-		        <div class="col-xs-10">
-		        	{!! Form::select('establishment_id', $establishments_list, null,['class' => 'form-control', 'id' => 'estab']) !!}
-		        </div>
-		    </div>  
+		    </div>
+		    @if (Entrust::hasRole('admin'))
+			    <div class="form-group">
+			    	{!! Form::label('establishments_list', 'Estabelecimento:', ['class' => 'control-label col-xs-2', 'for' => 'estab']) !!}
+			        <div class="col-xs-10">
+			        	{!! Form::select('establishment_id', $establishments_list, null,['class' => 'form-control', 'id' => 'estab']) !!}
+			        </div>
+			    </div>
+			@endif
 		    <div class="form-group">
 		    	{!! Form::label('price', 'Preço:', ['class' => 'control-label col-xs-2', 'for' => 'prod_price']) !!}
 		        <div class="col-xs-10">

@@ -14,7 +14,7 @@
 @if(isset($products))
     <div class="page-header">
         <h3>
-            Editar Produto - {!! $products->description !!}
+            Editar Produto - {!! $products->name !!}
             <div class="pull-right">
                 <div class="pull-right">
                     <a href="{{{ URL::to('admin/products/') }}}"
