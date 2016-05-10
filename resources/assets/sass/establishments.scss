@@ -32,3 +32,10 @@ div > a > img {
 div h2 {
 	color: black;
 }
+
+p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}

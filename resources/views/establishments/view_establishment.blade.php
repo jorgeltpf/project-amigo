@@ -37,7 +37,7 @@
 	                            <input type="hidden" name="establishment_id" value="{{ $stab->id }}">
 	                            <h4 class="pull-right">{{$product['name']}}</h4>
 	                            <h4><a href="#">R${{$product['price']}}</a></h4>
-	                            <p>{{$product['description']}} <a target="_blank" href="http://www.bootsnipp.com">site</a>.</p>
+	                            <p>{{$product['ingredients']}}</p>
 	                        </div>
 	                        <div class="ratings">
 	                            <p class="pull-right">R${{$product['price']}}</p>
