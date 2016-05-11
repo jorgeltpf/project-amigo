@@ -41,7 +41,7 @@ class EstablishmentsController extends Controller {
 
 	public function view_establishment($id) {
 		$stab = Establishment::find($id);
-		$products = Product::paginate(10);
+		$products = Product::where('establishment_id', '=', $id)->paginate(10);
 		$stab['image'] = $stab['id'].'/'.$stab['image'];
 		$title = $stab['name'];
 		$menu_name = "";

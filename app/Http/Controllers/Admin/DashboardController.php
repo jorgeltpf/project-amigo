@@ -23,8 +23,14 @@ class DashboardController extends AdminController {
             $establishments = Establishment::where('establishments.id', '=', session('establishment'))->count();
             $users = User::userEstablishments(session('establishment'))->count();
         }
-        $products = Product::count();
-        $promotions = Promotion::count();
+
+        if (\Entrust::hasRole('establishment_operator')) {
+            $products = Product::where('establishment_id', '=', session('establishment'))->count();
+            $promotions = Promotion::where('establishment_id', '=', session('establishment'))->count();
+        } else {
+            $products = Product::count();
+            $promotions = Promotion::count();
+        }
 		return view('admin.dashboard.index',  compact('title',
             'users', 'establishments', 'products', 'promotions'));
 	}
