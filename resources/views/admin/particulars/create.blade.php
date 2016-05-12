@@ -1,6 +1,6 @@
 @extends('admin.layouts.default')
 
-@section('title') Produtos :: @parent @stop
+@section('title') Características :: @parent @stop
 
 @section('main')
 	<style type="text/css">
@@ -13,10 +13,10 @@
 	</style>
     <div class="page-header">
         <h3>
-            Novo Produto
+            Nova Característica
             <div class="pull-right">
                 <div class="pull-right">
-                    <a href="{{{ URL::to('admin/products/') }}}"
+                    <a href="{{{ URL::to('admin/particulars/') }}}"
                        class="btn btn-sm btn-primary iframe">
                        <span class="glyphicon glyphicon-backward"></span>
                        Voltar
@@ -29,7 +29,7 @@
 {!!
 	Form::open(
 		[
-			'action' => ['Admin\ProductsController@store'],
+			'action' => ['Admin\ParticularsController@store'],
 			'class' => 'form-horizontal',
 			'id' => 'form_new',
 			'enctype' => "multipart/form-data"
@@ -37,7 +37,7 @@
 	)
 !!}
 
-	@include('admin.products.form')
+	@include('admin.particulars.form')
 
 {!! Form::close() !!}
 @stop

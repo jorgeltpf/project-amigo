@@ -1,22 +1,22 @@
 @extends('admin.layouts.default')
 
-@section('title') Produtos :: @parent @stop
-
+@section('title') Características :: @parent @stop
 @section('main')
 	<style type="text/css">
-		#form_new fieldset legend {
+		#est fieldset legend {
     		font-size: 1.2em;
 		}
-		#form_new label {
+		#est label {
 			font-weight: bold;
 		}
 	</style>
+@if(isset($particulars))
     <div class="page-header">
         <h3>
-            Novo Produto
+            Editar Característica - {!! $particulars->description !!}
             <div class="pull-right">
                 <div class="pull-right">
-                    <a href="{{{ URL::to('admin/products/') }}}"
+                    <a href="{{{ URL::to('admin/particulars/') }}}"
                        class="btn btn-sm btn-primary iframe">
                        <span class="glyphicon glyphicon-backward"></span>
                        Voltar
@@ -25,19 +25,20 @@
             </div>
         </h3>
     </div>
-
 {!!
-	Form::open(
+	Form::model(
+		$particulars,
 		[
-			'action' => ['Admin\ProductsController@store'],
+			'method' => 'POST',
+			'id' => 'est',
 			'class' => 'form-horizontal',
-			'id' => 'form_new',
+			'action' => ['Admin\ParticularsController@update', $particulars->id],
 			'enctype' => "multipart/form-data"
 		]
 	)
 !!}
-
-	@include('admin.products.form')
+	@include('admin.particulars.form')
 
 {!! Form::close() !!}
+@endif
 @stop

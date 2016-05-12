@@ -53,7 +53,7 @@ class ProductsController extends AdminController {
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request){
+    public function store(Request $request) {
         $product = new Product();
 
         $product['name']              = $request->name;

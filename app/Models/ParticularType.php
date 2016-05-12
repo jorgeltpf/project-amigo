@@ -1,12 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ParticularsTypes extends Model
-{
-    
+class ParticularType extends Model {
     use SoftDeletes;
 
     protected $fillable = array(
@@ -14,6 +13,6 @@ class ParticularsTypes extends Model
 	);
 
 	public function particulars() {
-  		return $this->hasMany('App\Models\particulars');
+  		return $this->hasMany('App\Models\Particular');
   	}
 }

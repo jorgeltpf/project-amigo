@@ -18,14 +18,6 @@ class Product extends Model {
 		'price',
 		'image'
 	);
-/*
-    public function product_types() {
-    	return $this->belongsTo('App\Models\ProductType');
-    }
-
-    public function product_classes() {
-    	return $this->belongsTo('App\Models\ProductClass');
-    }*/
 
 	public function promotions() {
     	return $this->hasMany('App\Models\Promotion');
@@ -35,10 +27,6 @@ class Product extends Model {
   		return $this->hasMany('App\Models\ItemOrder');
   	}
 
-	//public function getProductTypesListAttribute() {
-		//return $this->product_types->lists('id');
-	//}
-
 	public function getPriceAttribute($price) {
 		return convertCurrency($price);
 	}
@@ -46,5 +34,4 @@ class Product extends Model {
 	public function setPriceAttribute($price) {
 	 	$this->attributes['price'] = convertCurrencyDB($price);
 	}
-
 }

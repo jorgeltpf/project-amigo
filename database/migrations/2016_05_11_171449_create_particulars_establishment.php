@@ -15,7 +15,7 @@ class CreateParticularsEstablishment extends Migration
         Schema::create('particular_types', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->string('description');
+            $table->string('description', 50);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -23,7 +23,7 @@ class CreateParticularsEstablishment extends Migration
         Schema::create('particulars', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->integer('description')->unsigned();
+            $table->string('description', 50);
             $table->integer('particular_type_id')->unsigned();
             $table->foreign('particular_type_id')->references('id')->on('particular_types');
             $table->timestamps();

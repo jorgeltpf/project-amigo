@@ -133,6 +133,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('producttypes/{id}/delete', 'ProductTypesController@getDelete');
     Route::post('producttypes/{id}/delete', 'ProductTypesController@postDelete');
 
+    //Particulars
+    Route::get('particulars/', 'ParticularsController@index');
+    Route::get('particulars/create', 'ParticularsController@create');
+    Route::post('particulars/create', 'ParticularsController@store');
+    Route::get('particulars/data', 'ParticularsController@data');
+    Route::get('particulars/{id}/edit', 'ParticularsController@edit');
+    Route::post('particulars/{id}/edit', 'ParticularsController@update');
+    Route::get('particulars/{id}/delete', 'ParticularsController@getDelete');
+    Route::post('particulars/{id}/delete', 'ParticularsController@postDelete');
 
-    Route::get('people/', 'PeopleController@index');
+    // Route::get('people/', 'PeopleController@index');
 });

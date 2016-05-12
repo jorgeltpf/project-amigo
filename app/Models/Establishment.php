@@ -94,6 +94,6 @@ class Establishment extends Model {
     }
 
     public function particulars() {
-        return $this->hasMany('App\Models\Particulars');
+        return $this->hasMany('App\Models\Particular');
     }
 }

@@ -48,5 +48,11 @@
             <span class="hidden-sm text"> Promoções</span>
         </a>
     </li>
+    <li class="{{set_active('admin/particulars')}}">
+        <a href="{{url('admin/particulars')}}">
+            <i class="glyphicon glyphicon-tag"></i>
+            <span class="hidden-sm text"> Características</span>
+        </a>
+    </li>
 </ul>
 </div>
